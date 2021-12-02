@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTabbedPane;
 import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
@@ -23,7 +24,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.FlowLayout;
 
@@ -221,8 +224,36 @@ public class AdminPage extends JFrame {
 
         JPanel deliveryTab = new JPanel();
         tabbedPane.addTab("DELIVERY", null, deliveryTab, null);
+        
+        
+        String[] column = { "Print ID", "User ID", "Name", "Room no", "Phone no", "Bill Status" }; 
+        String[][] data = {{ "", "", "", "", "", "" }, { "", "", "", "", "", "" }};
+        JTable table = new JTable(data, column);
+        JScrollPane sp = new JScrollPane(table);
 
+        JLabel status = new JLabel("UPDATE STATUS");
+        JLabel id = new JLabel("Print ID");
+        JTextField statusTextField=new JTextField();
+        JButton submit = new JButton("Update status to DELIVERED");
+        
+        sp.setBounds(120,120,800,80);
+        status.setBounds(240,260,150,30);
+        id.setBounds(370,320,100,30);
+        statusTextField.setBounds(520,325,100,20);
+        submit.setBounds(390,400,200,20);
+        
+        deliveryTab.add(sp);
+        deliveryTab.add(status);
+        deliveryTab.add(id);
+        deliveryTab.add(statusTextField);
+        deliveryTab.add(submit);
+        
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray,3),"DELIVERY QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
+        ((JComponent) deliveryTab).setBorder(titledBorder);
+        
+        deliveryTab.setLayout(null);
         JPanel manageTab = new JPanel();
+        
         tabbedPane.addTab("MANAGE", null, manageTab, null);
 
 
