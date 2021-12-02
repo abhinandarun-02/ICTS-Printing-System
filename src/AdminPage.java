@@ -218,9 +218,37 @@ public class AdminPage extends JFrame {
         DefaultTableCellRenderer Renderer = new DefaultTableCellRenderer();
         Renderer.setHorizontalAlignment(JLabel.CENTER);
         table_1.getColumnModel().getColumn(1).setCellRenderer(Renderer);
-
+/**************************************************************************************************************************************/
         JPanel printerTab = new JPanel();
         tabbedPane.addTab("PRINTER", null, printerTab, null);
+        
+        JLabel printerQueueLabel;
+        JButton AddButton;
+        JButton DeleteButton;
+        printerQueueLabel = new JLabel("Printer queue ");
+        AddButton = new JButton("Add record");
+        DeleteButton = new JButton("Delete record");
+        
+        
+        String[][] data4 = {{"..", "..", "..", "..", "..", "..", "..", ".."}, {"..", "..", "..", "..", "..", "..", "..", ".."},{"..", "..", "..", "..", "..", "..", "..", ".."},{"..", "..", "..", "..", "..", "..", "..", ".."},{"..", "..", "..", "..", "..", "..", "..", ".."},};
+        String[] column4 = {"Print ID", "User ID", "Paper size", "Print Type", "Single/Double side", "No. of pages", "Printer#"};
+        JTable printerQueue = new JTable(data4, column4);
+        JScrollPane sp4 = new JScrollPane(printerQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        printerTab.add(printerQueueLabel);
+        printerTab.add(sp4);
+        printerTab.add(AddButton);
+        printerTab.add(DeleteButton);
+        
+        printerQueueLabel.setBounds(100,112, 200, 30);
+        sp4.setBounds(100, 152, 850, 150);
+        AddButton.setBounds(348, 390, 120, 30);
+        DeleteButton.setBounds(498, 390, 120, 30);
+        
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "Printer Queue", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
+        printerTab.setBorder(titledBorder);
+        printerTab.setLayout(null);
+/**********************************************************************************************************************************************************/
 
         JPanel deliveryTab = new JPanel();
         tabbedPane.addTab("DELIVERY", null, deliveryTab, null);
@@ -248,10 +276,11 @@ public class AdminPage extends JFrame {
         deliveryTab.add(statusTextField);
         deliveryTab.add(submit);
         
-        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray,3),"DELIVERY QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
-        ((JComponent) deliveryTab).setBorder(titledBorder);
+        TitledBorder titledBorder2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray,3),"DELIVERY QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
+        ((JComponent) deliveryTab).setBorder(titledBorder2);
         
         deliveryTab.setLayout(null);
+/******************************************************************************************************************************************************************/
         JPanel manageTab = new JPanel();
         
         tabbedPane.addTab("MANAGE", null, manageTab, null);
