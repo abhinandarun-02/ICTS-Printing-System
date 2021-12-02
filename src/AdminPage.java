@@ -1,53 +1,48 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import javax.swing.JTabbedPane;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.JLabel;
-import java.awt.GridLayout;
-import javax.swing.SwingConstants;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.JTable;
-import javax.swing.border.LineBorder;
-import javax.swing.JTextField;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.FlowLayout;
-
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AdminPage extends JFrame {
 
     private JPanel contentPane;
-    private JTable table;
     private JTextField textField;
-    private JTable table_1;
-    private JTable table_2;
-    private JTable table_3;
+    private JTable orderTable;
+    private JTable reqTable;
+    private JTable paymentTable;
+    private JTable recentPaymentsTable;
+    private JTextField staffNameText;
+    private JTextField emailText;
+    private JTextField staffPhNoText;
+    private JTextField staffDateText;
 
-    /**
-     * Launch the application.
-     */
+
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -61,10 +56,9 @@ public class AdminPage extends JFrame {
         });
     }
 
-    /**
-     * Create the frame.
-     */
+
     public AdminPage() {
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(150, 75, 1250, 700);
         contentPane = new JPanel();
@@ -72,31 +66,31 @@ public class AdminPage extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        tabbedPane.setBounds(191, -29, 1057, 697);
-        contentPane.add(tabbedPane);
+        JTabbedPane homeTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        homeTabbedPane.setBounds(191, -30, 1057, 697);
+        contentPane.add(homeTabbedPane);
 
         JPanel homeTab = new JPanel();
-        tabbedPane.addTab("HOME", null, homeTab, null);
+        homeTabbedPane.addTab("HOME", null, homeTab, null);
         homeTab.setLayout(null);
 
         JPanel searchTab = new JPanel();
-        tabbedPane.addTab("SEARCH", null, searchTab, null);
+        homeTabbedPane.addTab("SEARCH", null, searchTab, null);
         searchTab.setLayout(null);
 
-        JPanel panel_4 = new JPanel();
-        panel_4.setBounds(10, 10, 1022, 60);
-        searchTab.add(panel_4);
-        panel_4.setLayout(null);
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBounds(10, 10, 1022, 60);
+        searchTab.add(headerPanel);
+        headerPanel.setLayout(null);
 
         JLabel lblNewLabel_3 = new JLabel("User ID :");
         lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
         lblNewLabel_3.setBounds(50, 10, 81, 40);
-        panel_4.add(lblNewLabel_3);
+        headerPanel.add(lblNewLabel_3);
 
         textField = new JTextField();
         textField.setBounds(150, 10, 130, 40);
-        panel_4.add(textField);
+        headerPanel.add(textField);
         textField.setColumns(10);
 
         JComboBox comboBox = new JComboBox();
@@ -104,33 +98,36 @@ public class AdminPage extends JFrame {
         comboBox.setModel(new DefaultComboBoxModel(new String[] {"Orders", "Requests", "Payment"}));
         comboBox.setSelectedIndex(0);
         comboBox.setBounds(400, 10, 120, 40);
-        panel_4.add(comboBox);
+        headerPanel.add(comboBox);
 
         JLabel lblNewLabel_3_1 = new JLabel("Type :");
         lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
         lblNewLabel_3_1.setBounds(336, 10, 81, 40);
-        panel_4.add(lblNewLabel_3_1);
+        headerPanel.add(lblNewLabel_3_1);
 
         JButton btnNewButton = new JButton("SEARCH");
         btnNewButton.setFont(new Font("Arial", Font.PLAIN, 18));
         btnNewButton.setBounds(850, 10, 120, 40);
-        panel_4.add(btnNewButton);
+        headerPanel.add(btnNewButton);
 
-        JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.RIGHT);
-        tabbedPane_1.setBounds(10, 80, 1022, 577);
-        searchTab.add(tabbedPane_1);
+        JTabbedPane searchTabbedPane = new JTabbedPane(JTabbedPane.RIGHT);
+        searchTabbedPane.setBounds(10, 80, 1022, 577);
+        searchTab.add(searchTabbedPane);
 
-        JPanel panel_5 = new JPanel();
-        tabbedPane_1.addTab("Request", null, panel_5, null);
-        panel_5.setLayout(null);
+        JPanel blankPanel = new JPanel();
+        searchTabbedPane.addTab("blank", null, blankPanel, null);
+
+        JPanel searchReqPanel = new JPanel();
+        searchTabbedPane.addTab("Request", null, searchReqPanel, null);
+        searchReqPanel.setLayout(null);
 
         JScrollPane scrollPane_1 = new JScrollPane();
         scrollPane_1.setBounds(10, 10, 942, 552);
-        panel_5.add(scrollPane_1);
+        searchReqPanel.add(scrollPane_1);
 
-        table_3 = new JTable();
-        scrollPane_1.setViewportView(table_3);
-        table_3.setModel(new DefaultTableModel(
+        reqTable = new JTable();
+        scrollPane_1.setViewportView(reqTable);
+        reqTable.setModel(new DefaultTableModel(
                 new Object[][] {
                         {null, null, null, null, null, null},
                         {null, null, null, null, null, null},
@@ -156,37 +153,55 @@ public class AdminPage extends JFrame {
                 return columnEditables[column];
             }
         });
-        table_3.getColumnModel().getColumn(0).setResizable(false);
-        table_3.getColumnModel().getColumn(1).setResizable(false);
-        table_3.getColumnModel().getColumn(2).setResizable(false);
-        table_3.getColumnModel().getColumn(3).setResizable(false);
-        table_3.getColumnModel().getColumn(4).setResizable(false);
-        table_3.getColumnModel().getColumn(5).setResizable(false);
-        table_3.setFillsViewportHeight(true);
 
-        JPanel panel_6 = new JPanel();
-        tabbedPane_1.addTab("Payment", null, panel_6, null);
-        panel_6.setLayout(null);
+        reqTable.setFillsViewportHeight(true);
 
-        table_2 = new JTable();
-        table_2.setBounds(10, 10, 942, 552);
-        panel_6.add(table_2);
+        JPanel searchPaymentPanel = new JPanel();
+        searchTabbedPane.addTab("Payment", null, searchPaymentPanel, null);
+        searchPaymentPanel.setLayout(null);
 
-        JPanel panel_3 = new JPanel();
-        tabbedPane_1.addTab("Order", null, panel_3, null);
-        tabbedPane_1.setEnabledAt(2, true);
-        panel_3.setLayout(null);
+        JScrollPane scrollPane_2 = new JScrollPane();
+        scrollPane_2.setBounds(10, 10, 942, 552);
+        searchPaymentPanel.add(scrollPane_2);
+
+        paymentTable = new JTable();
+        scrollPane_2.setViewportView(paymentTable);
+        paymentTable.setModel(new DefaultTableModel(
+                new Object[][] {
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                },
+                new String[] {
+                        "Name", "Status", "Amount", "Method", "Payment ID"
+                }
+        ));
+        paymentTable.setFillsViewportHeight(true);
+
+        JPanel searchOrderPanel = new JPanel();
+        searchTabbedPane.addTab("Order", null, searchOrderPanel, null);
+        searchTabbedPane.setEnabledAt(3, true);
+        searchOrderPanel.setLayout(null);
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(10, 10, 942, 552);
-        panel_3.add(scrollPane);
+        searchOrderPanel.add(scrollPane);
 
-        table_1 = new JTable();
-        table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table_1.setFillsViewportHeight(true);
-        scrollPane.setViewportView(table_1);
-        table_1.setModel(new DefaultTableModel(
+        orderTable = new JTable();
+        orderTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        orderTable.setFillsViewportHeight(true);
+        scrollPane.setViewportView(orderTable);
+        orderTable.setModel(new DefaultTableModel(
                 new Object[][] {
                         {null, null, null, null, null, null},
                         {null, null, null, null, null, null},
@@ -212,126 +227,265 @@ public class AdminPage extends JFrame {
                 return columnEditables[column];
             }
         });
-        table_1.getColumnModel().getColumn(0).setResizable(false);
-        table_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 
-        DefaultTableCellRenderer Renderer = new DefaultTableCellRenderer();
-        Renderer.setHorizontalAlignment(JLabel.CENTER);
-        table_1.getColumnModel().getColumn(1).setCellRenderer(Renderer);
+        orderTable.setBorder(new LineBorder(new Color(0, 0, 0)));
+
+
 /**************************************************************************************************************************************/
         JPanel printerTab = new JPanel();
-        tabbedPane.addTab("PRINTER", null, printerTab, null);
-        
+        homeTabbedPane.addTab("PRINTER", null, printerTab, null);
+
         JLabel printerQueueLabel;
         JButton AddButton;
         JButton DeleteButton;
         printerQueueLabel = new JLabel("Printer queue ");
         AddButton = new JButton("Add record");
         DeleteButton = new JButton("Delete record");
-        
-        
+
+
         String[][] data4 = {{"..", "..", "..", "..", "..", "..", "..", ".."}, {"..", "..", "..", "..", "..", "..", "..", ".."},{"..", "..", "..", "..", "..", "..", "..", ".."},{"..", "..", "..", "..", "..", "..", "..", ".."},{"..", "..", "..", "..", "..", "..", "..", ".."},};
         String[] column4 = {"Print ID", "User ID", "Paper size", "Print Type", "Single/Double side", "No. of pages", "Printer#"};
         JTable printerQueue = new JTable(data4, column4);
         JScrollPane sp4 = new JScrollPane(printerQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
+
         printerTab.add(printerQueueLabel);
         printerTab.add(sp4);
         printerTab.add(AddButton);
         printerTab.add(DeleteButton);
-        
+
         printerQueueLabel.setBounds(100,112, 200, 30);
         sp4.setBounds(100, 152, 850, 150);
         AddButton.setBounds(348, 390, 120, 30);
         DeleteButton.setBounds(498, 390, 120, 30);
-        
-        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "Printer Queue", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
+
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "PRINTER QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
         printerTab.setBorder(titledBorder);
         printerTab.setLayout(null);
 /**********************************************************************************************************************************************************/
 
-        JPanel deliveryTab = new JPanel();
-        tabbedPane.addTab("DELIVERY", null, deliveryTab, null);
-        
-        
-        String[] column = { "Print ID", "User ID", "Name", "Room no", "Phone no", "Bill Status" }; 
+
+        String[] column = { "Print ID", "User ID", "Name", "Room no", "Phone no", "Bill Status" };
         String[][] data = {{ "", "", "", "", "", "" }, { "", "", "", "", "", "" }};
-        JTable table = new JTable(data, column);
-        JScrollPane sp = new JScrollPane(table);
 
-        JLabel status = new JLabel("UPDATE STATUS");
-        JLabel id = new JLabel("Print ID");
-        JTextField statusTextField=new JTextField();
-        JButton submit = new JButton("Update status to DELIVERED");
-        
-        sp.setBounds(120,120,800,80);
-        status.setBounds(240,260,150,30);
-        id.setBounds(370,320,100,30);
-        statusTextField.setBounds(520,325,100,20);
-        submit.setBounds(390,400,200,20);
-        
-        deliveryTab.add(sp);
-        deliveryTab.add(status);
-        deliveryTab.add(id);
-        deliveryTab.add(statusTextField);
-        deliveryTab.add(submit);
-        
-        TitledBorder titledBorder2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray,3),"DELIVERY QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
-        ((JComponent) deliveryTab).setBorder(titledBorder2);
-        
+
+
+
+        JPanel pendingRequestPanel = new JPanel();
+        pendingRequestPanel.setBackground(Color.LIGHT_GRAY);
+        pendingRequestPanel.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
+        pendingRequestPanel.setBounds(70, 34, 250, 175);
+        homeTab.add(pendingRequestPanel);
+        pendingRequestPanel.setLayout(null);
+
+        JLabel reqPending = new JLabel("10");
+        reqPending.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 56));
+        reqPending.setHorizontalAlignment(SwingConstants.CENTER);
+        reqPending.setBounds(90, 50, 150, 90);
+        pendingRequestPanel.add(reqPending);
+
+        JPanel compleltedOrdersPanel = new JPanel();
+        compleltedOrdersPanel.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
+        compleltedOrdersPanel.setBackground(Color.LIGHT_GRAY);
+        compleltedOrdersPanel.setBounds(390, 34, 250, 175);
+        homeTab.add(compleltedOrdersPanel);
+        compleltedOrdersPanel.setLayout(null);
+
+        JLabel completedOrder = new JLabel("10");
+        completedOrder.setHorizontalAlignment(SwingConstants.CENTER);
+        completedOrder.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 56));
+        completedOrder.setBounds(90, 50, 150, 90);
+        compleltedOrdersPanel.add(completedOrder);
+
+        JPanel revenuePanel = new JPanel();
+        revenuePanel.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
+        revenuePanel.setBackground(Color.LIGHT_GRAY);
+        revenuePanel.setBounds(710, 34, 250, 175);
+        homeTab.add(revenuePanel);
+        revenuePanel.setLayout(null);
+
+        JLabel revenue = new JLabel("10");
+        revenue.setHorizontalAlignment(SwingConstants.CENTER);
+        revenue.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 56));
+        revenue.setBounds(90, 50, 147, 90);
+        revenuePanel.add(revenue);
+
+        JScrollPane scrollPane_3 = new JScrollPane();
+        scrollPane_3.setBounds(70, 293, 895, 341);
+        homeTab.add(scrollPane_3);
+
+        recentPaymentsTable = new JTable();
+        recentPaymentsTable.setFillsViewportHeight(true);
+        scrollPane_3.setViewportView(recentPaymentsTable);
+        recentPaymentsTable.setModel(new DefaultTableModel(
+                new Object[][] {
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                },
+                new String[] {
+                        "ID", "Name", "Amount", "Date", "Clerk"
+                }
+        ));
+
+        JLabel lblNewLabel_1 = new JLabel("RECENT ORDERS");
+        lblNewLabel_1.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 18));
+        lblNewLabel_1.setBounds(70, 237, 183, 46);
+        homeTab.add(lblNewLabel_1);
+
+        JPanel deliveryTab = new JPanel();
+        homeTabbedPane.addTab("DELIVERY", null, deliveryTab, null);
+        JTable deliveryQueueTable = new JTable(data, column);
+        deliveryQueueTable.setModel(new DefaultTableModel(
+                new Object[][] {
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                },
+                new String[] {
+                        "Print ID", "User ID", "Name", "Room no", "Phone no", "Bill Status"
+                }
+        ));
+
+        TitledBorder titledBorder1 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "DELIVERY QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
+
+        deliveryQueueTable.setFillsViewportHeight(true);
+        JScrollPane scrollPaneDelQueue = new JScrollPane(deliveryQueueTable);
+        scrollPaneDelQueue.setBounds(120, 120, 800, 275);
+        scrollPaneDelQueue.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        JLabel statusLabel = new JLabel("UPDATE STATUS");
+        statusLabel.setBounds(120, 430, 170, 30);
+        statusLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        JLabel print_idLabel = new JLabel("Print ID :");
+        print_idLabel.setBounds(222, 473, 84, 50);
+        print_idLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        JTextField print_idText=new JTextField();
+        print_idText.setBounds(316, 483, 110, 30);
+        JButton updateStatusButton = new JButton("UPDATE");
+        updateStatusButton.setBounds(422, 558, 95, 36);
+        updateStatusButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         deliveryTab.setLayout(null);
-/******************************************************************************************************************************************************************/
-        JPanel manageTab = new JPanel();
-        
-        tabbedPane.addTab("MANAGE", null, manageTab, null);
 
+        deliveryTab.add(scrollPaneDelQueue);
+        deliveryTab.add(statusLabel);
+        deliveryTab.add(print_idLabel);
+        deliveryTab.add(print_idText);
+        deliveryTab.add(updateStatusButton);
+        ((JComponent) deliveryTab).setBorder(titledBorder1);
 
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.LIGHT_GRAY);
-        panel.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
-        panel.setBounds(70, 34, 250, 175);
-        homeTab.add(panel);
-        panel.setLayout(null);
+        JComboBox comboBox_1 = new JComboBox();
+        comboBox_1.setBounds(544, 484, 130, 30);
+        comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Not Delivered", "Delivered"}));
+        deliveryTab.add(comboBox_1);
 
-        JLabel lblNewLabel = new JLabel("10");
-        lblNewLabel.setFont(new Font("Trebuchet MS", Font.PLAIN, 56));
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBounds(90, 50, 150, 90);
-        panel.add(lblNewLabel);
-
-        JPanel panel_1 = new JPanel();
-        panel_1.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
-        panel_1.setBackground(Color.LIGHT_GRAY);
-        panel_1.setBounds(390, 34, 250, 175);
-        homeTab.add(panel_1);
-        panel_1.setLayout(null);
-
-        JLabel lblNewLabel_1 = new JLabel("10");
-        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_1.setFont(new Font("Trebuchet MS", Font.PLAIN, 56));
-        lblNewLabel_1.setBounds(90, 50, 150, 90);
-        panel_1.add(lblNewLabel_1);
-
-        JPanel panel_2 = new JPanel();
-        panel_2.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
-        panel_2.setBackground(Color.LIGHT_GRAY);
-        panel_2.setBounds(710, 34, 250, 175);
-        homeTab.add(panel_2);
-        panel_2.setLayout(null);
-
-        JLabel lblNewLabel_2 = new JLabel("10");
-        lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_2.setFont(new Font("Trebuchet MS", Font.PLAIN, 56));
-        lblNewLabel_2.setBounds(90, 50, 147, 90);
-        panel_2.add(lblNewLabel_2);
+        JLabel print_idLabel_1 = new JLabel("Status :");
+        print_idLabel_1.setBounds(464, 473, 84, 50);
+        print_idLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        deliveryTab.add(print_idLabel_1);
 
 
         String[] column6 = {"Employee ID","Name", "Amount", "Room no.", "Phone no."};
-        table = new JTable();
-        table.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-        table.setBackground(new Color(128, 128, 128));
-        table.setBounds(907, 296, -836, 142);
-        homeTab.add(table);
+
+
+        JPanel manageTab = new JPanel();
+        homeTabbedPane.addTab("MANAGE", null, manageTab, null);
+        manageTab.setLayout(null);
+
+        JPanel addUserPanel = new JPanel();
+        addUserPanel.setBorder(new TitledBorder(BorderFactory.createLineBorder(Color.gray,2),"ADD STAFF", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Arial", Font.PLAIN, 24)));
+        addUserPanel.setBounds(105, 28, 787, 615);
+        manageTab.add(addUserPanel);
+        addUserPanel.setLayout(null);
+
+        JLabel staffNameLabel = new JLabel("Name :");
+        staffNameLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+        staffNameLabel.setBounds(218, 80, 150, 40);
+        addUserPanel.add(staffNameLabel);
+
+        staffNameText = new JTextField();
+        staffNameText.setBounds(386, 80, 150, 40);
+        addUserPanel.add(staffNameText);
+        staffNameText.setColumns(10);
+
+        JLabel staffTypeLabel = new JLabel("Type :");
+        staffTypeLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+        staffTypeLabel.setBounds(218, 227, 150, 40);
+        addUserPanel.add(staffTypeLabel);
+
+        JPanel comboBorderPanel = new JPanel();
+        comboBorderPanel.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+        comboBorderPanel.setBounds(386, 229, 150, 40);
+        addUserPanel.add(comboBorderPanel);
+        comboBorderPanel.setLayout(null);
+
+        JComboBox staffTypeCB = new JComboBox();
+        staffTypeCB.setBounds(2, 2, 146, 36);
+        comboBorderPanel.add(staffTypeCB);
+        staffTypeCB.setFont(new Font("Arial", Font.PLAIN, 16));
+        staffTypeCB.setModel(new DefaultComboBoxModel(new String[] {"DELIVERY BOY", "CLERK"}));
+
+        JLabel emailLabel = new JLabel("Email ID : ");
+        emailLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+        emailLabel.setBounds(218, 153, 150, 40);
+        addUserPanel.add(emailLabel);
+
+        emailText = new JTextField();
+        emailText.setColumns(10);
+        emailText.setBounds(386, 158, 150, 40);
+        addUserPanel.add(emailText);
+
+        JLabel staffPhNoLabel = new JLabel("Phone No :");
+        staffPhNoLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+        staffPhNoLabel.setBounds(218, 313, 150, 40);
+        addUserPanel.add(staffPhNoLabel);
+
+        JLabel staffDateLabel = new JLabel("Date :");
+        staffDateLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+        staffDateLabel.setBounds(218, 392, 150, 40);
+        addUserPanel.add(staffDateLabel);
+
+        staffPhNoText = new JTextField();
+        staffPhNoText.setColumns(10);
+        staffPhNoText.setBounds(386, 313, 150, 40);
+        addUserPanel.add(staffPhNoText);
+
+        staffDateText = new JTextField();
+        staffDateText.setColumns(10);
+        staffDateText.setBounds(386, 392, 150, 40);
+        addUserPanel.add(staffDateText);
+
+        JButton staffSubmitButton = new JButton("SUBMIT");
+        staffSubmitButton.setFont(new Font("Arial", Font.PLAIN, 18));
+        staffSubmitButton.setBounds(318, 490, 150, 50);
+        addUserPanel.add(staffSubmitButton);
+
 
         JPanel homePanel = new JPanel();
         homePanel.setBorder(new MatteBorder(0, 0, 0, 3, (Color) new Color(128, 128, 128)));
@@ -347,11 +501,13 @@ public class AdminPage extends JFrame {
         homePanel.add(homeButtonPanel);
         homeButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
 
+
+
         JLabel homeLabel = new JLabel("HOME");
         homeLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tabbedPane.setSelectedIndex(0);
+                homeTabbedPane.setSelectedIndex(0);
             }
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -384,7 +540,7 @@ public class AdminPage extends JFrame {
         searchLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tabbedPane.setSelectedIndex(1);
+                homeTabbedPane.setSelectedIndex(1);
             }
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -409,7 +565,7 @@ public class AdminPage extends JFrame {
         printerLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tabbedPane.setSelectedIndex(2);
+                homeTabbedPane.setSelectedIndex(2);
             }
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -430,11 +586,13 @@ public class AdminPage extends JFrame {
         tabPanel.add(deliveryButtonPanel);
         deliveryButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
 
+
+
         JLabel deliveryLabel = new JLabel("DELIVERY");
         deliveryLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tabbedPane.setSelectedIndex(3);
+                homeTabbedPane.setSelectedIndex(3);
             }
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -459,7 +617,7 @@ public class AdminPage extends JFrame {
         manageLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tabbedPane.setSelectedIndex(4);
+                homeTabbedPane.setSelectedIndex(4);
             }
             @Override
             public void mouseEntered(MouseEvent e) {
