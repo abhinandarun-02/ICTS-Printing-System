@@ -23,6 +23,11 @@ class statusFrame extends JFrame implements ActionListener {
         setLocationAndSize();
         setFont();
         addComponentsToContainer();
+        setTitle("Status");
+        setBounds(450,75,600,450);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setResizable(false);
  
     }
    public void setLayoutManager()
@@ -70,13 +75,7 @@ class statusFrame extends JFrame implements ActionListener {
  
 public class Status {
     public static void main(String[] a){
-        statusFrame frame=new statusFrame();
-        frame.setTitle("Status");
-        frame.setBounds(150,75,600,450);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setResizable(false);
- 
+        new statusFrame();
     }
  
 }
