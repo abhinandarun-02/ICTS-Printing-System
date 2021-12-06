@@ -4,20 +4,23 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.GridLayout;  
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.DateFormat;
 import javax.swing.JFormattedTextField;
-import javax.swing.text.DateFormatter;
+import javax.swing.text.DateFormatter;  
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class HomeScreen extends JFrame {
 
@@ -25,6 +28,7 @@ public class HomeScreen extends JFrame {
     JPanel requestFormPanel;
 
     JLabel userIDLabel;
+    JLabel passLabel;
     JLabel nameLabel;
     JLabel printTypeLabel;
     JLabel paperSizeLabel;
@@ -37,10 +41,10 @@ public class HomeScreen extends JFrame {
     JLabel dateLabel;
 
     JTextField userIDTextField;
+    JPasswordField passwordField;
     JTextField nameTextField;
     JTextField phoneTextField;
     JTextField roomTextField;
-    JTextField dateTextField;
 
     ButtonGroup buttonGroup1 = new ButtonGroup();
     JRadioButton officialRButton; JRadioButton personalRButton;
@@ -58,6 +62,7 @@ public class HomeScreen extends JFrame {
     JSpinner copyNoSpinner;
 
     JButton fileButton;
+    JFileChooser fc;
     JButton submitButton;
     JButton resetButton;
     /* ****************************** */
@@ -81,6 +86,7 @@ public class HomeScreen extends JFrame {
 
         requestFormPanel = new JPanel();
         userIDLabel = new JLabel("User ID : ");
+        passLabel = new JLabel("Password : ");
         nameLabel = new JLabel("Name");
         printTypeLabel = new JLabel("Print Type");
         paperSizeLabel = new JLabel("Paper Size");
@@ -96,9 +102,23 @@ public class HomeScreen extends JFrame {
         DateFormatter df = new DateFormatter(format);
         JFormattedTextField dateField = new JFormattedTextField(df);
         dateField.setValue(new Date());
+        dateField.setEditable(false);
+        Font f1 = new Font("Sans",Font.BOLD,15);
+        dateField.setFont(f1);
+        dateField.setForeground(Color.black);
+        dateField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        DateFormat shortTime = DateFormat.getTimeInstance(DateFormat.SHORT);
+        JFormattedTextField timeField = new JFormattedTextField(shortTime);
+        timeField.setValue(new Date());
+        timeField.setEditable(false);
+        timeField.setForeground(Color.black);
+        timeField.setFont(f1);
+        timeField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        
 
 
         userIDTextField = new JTextField();
+        passwordField=new JPasswordField();
         nameTextField = new JTextField();
         phoneTextField = new JTextField();
         roomTextField = new JTextField();
@@ -117,11 +137,13 @@ public class HomeScreen extends JFrame {
         copyNoSpinner = new JSpinner();
 
         fileButton = new JButton("Choose File...");
+        fc=new JFileChooser();  
         submitButton = new JButton("Submit");
         resetButton = new JButton("Reset");
 
 
         requestFormPanel.add(userIDLabel); requestFormPanel.add(userIDTextField);
+        requestFormPanel.add(passLabel); requestFormPanel.add(passwordField);
         requestFormPanel.add(nameLabel); requestFormPanel.add(nameTextField);
         requestFormPanel.add(printTypeLabel); requestFormPanel.add(officialRButton); requestFormPanel.add(personalRButton);
         requestFormPanel.add(paperSizeLabel); requestFormPanel.add(a3RButton); requestFormPanel.add(a4RButton); requestFormPanel.add(a5RButton);
@@ -131,23 +153,24 @@ public class HomeScreen extends JFrame {
         requestFormPanel.add(copyNoLabel); requestFormPanel.add(copyNoSpinner);
         requestFormPanel.add(phoneLabel); requestFormPanel.add(phoneTextField);
         requestFormPanel.add(roomLabel); requestFormPanel.add(roomTextField);
-        requestFormPanel.add(dateLabel); requestFormPanel.add(dateField);
+        requestFormPanel.add(dateField);requestFormPanel.add(timeField);
         requestFormPanel.add(fileButton);
         requestFormPanel.add(submitButton);
         requestFormPanel.add(resetButton);
 
-
-        userIDLabel.setBounds(150, 80, 100, 30); userIDTextField.setBounds(350, 80, 100, 25);
-        nameLabel.setBounds(150, 120, 100, 30); nameTextField.setBounds(350, 120, 100, 25);
-        printTypeLabel.setBounds(150, 160, 100, 30); officialRButton.setBounds(350, 160, 100, 25); personalRButton.setBounds(500, 160, 100, 25);
-        paperSizeLabel.setBounds(150, 200, 100, 30); a3RButton.setBounds(350, 200, 100, 25); a4RButton.setBounds(500, 200, 100, 25); a5RButton.setBounds(650, 200, 100, 25);
-        printPageTypeLabel.setBounds(150, 240, 100, 30); singlePrintRButton.setBounds(350, 240, 100, 25); doublePrintRButton.setBounds(500, 240, 100, 25);
-        colourLabel.setBounds(150, 280, 100, 30); grayscaleRButton.setBounds(350, 280, 100, 25); colourRButton.setBounds(500, 280, 100, 25);
-        pageNoLabel.setBounds(150, 320, 100, 30);pageNoSpinner.setBounds(350, 320, 42, 25);
-        copyNoLabel.setBounds(150, 360, 100, 30);copyNoSpinner.setBounds(350, 360, 42, 25);
-        phoneLabel.setBounds(150, 400, 100, 30); phoneTextField.setBounds(350, 400, 120, 25);
-        roomLabel.setBounds(150, 440, 100, 30); roomTextField.setBounds(350, 440, 120, 25);
-        dateLabel.setBounds(150, 480, 100, 30); dateField.setBounds(350, 480, 120, 25);
+        
+        dateField.setBounds(350, 50, 140, 24); timeField.setBounds(520, 50, 140, 24);
+        userIDLabel.setBounds(150, 110, 100, 30); userIDTextField.setBounds(350, 110, 100, 24);
+        passLabel.setBounds(500, 110, 100, 30); passwordField.setBounds(650, 110, 100, 24);
+        nameLabel.setBounds(150, 150, 100, 30); nameTextField.setBounds(350, 150, 100, 24);
+        printTypeLabel.setBounds(150, 190, 100, 30); officialRButton.setBounds(350, 190, 100, 25); personalRButton.setBounds(500, 190, 100, 25);
+        paperSizeLabel.setBounds(150, 230, 100, 30); a3RButton.setBounds(350, 230, 100, 25); a4RButton.setBounds(500, 230, 100, 25); a5RButton.setBounds(650, 230, 100, 25);
+        printPageTypeLabel.setBounds(150, 270, 100, 30); singlePrintRButton.setBounds(350, 270, 100, 25); doublePrintRButton.setBounds(500, 270, 100, 25);
+        colourLabel.setBounds(150, 310, 100, 30); grayscaleRButton.setBounds(350, 310, 100, 25); colourRButton.setBounds(500, 310, 100, 25);
+        pageNoLabel.setBounds(150, 350, 100, 30);pageNoSpinner.setBounds(350, 350, 42, 25);
+        copyNoLabel.setBounds(150, 390, 100, 30);copyNoSpinner.setBounds(350, 390, 42, 25);
+        phoneLabel.setBounds(150, 430, 100, 30); phoneTextField.setBounds(350, 430, 120, 24);
+        roomLabel.setBounds(150, 470, 100, 30); roomTextField.setBounds(350, 470, 120, 24);
         fileButton.setBounds(150, 540, 100, 25);
         fileButton.setFont( new Font("Arial", Font.PLAIN, 10));
         submitButton.setBounds(400, 580, 100, 30);
@@ -162,6 +185,7 @@ public class HomeScreen extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	userIDTextField.setText("");
             	nameTextField.setText("");
+            	passwordField.setText("");
             	buttonGroup1.clearSelection();
             	buttonGroup2.clearSelection();
             	buttonGroup3.clearSelection();
@@ -174,6 +198,25 @@ public class HomeScreen extends JFrame {
             	
             }
         });
+      /*  ***************************************************************************************/
+        fileButton.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e) {       
+        	    fc=new JFileChooser();     
+        	    fc.setAcceptAllFileFilterUsed(false);
+                FileNameExtensionFilter filter1 = new FileNameExtensionFilter("PDF files", "pdf");
+                fc.addChoosableFileFilter(filter1);
+                FileNameExtensionFilter filter2 = new FileNameExtensionFilter("Doc files", "docx");
+                fc.addChoosableFileFilter(filter2);
+                FileNameExtensionFilter filter3 = new FileNameExtensionFilter("Pictures", "jpg");
+                fc.addChoosableFileFilter(filter3);
+                FileNameExtensionFilter filter4 = new FileNameExtensionFilter("Excel sheets", "xlsx");
+                fc.addChoosableFileFilter(filter4);
+                fc.showOpenDialog(null);
+        	    
+        	    
+        }});
+        
+        
 
         /* ****************************** SIDE_PANEL_SECTION ****************************** */
         sidePanel = new JPanel();
@@ -187,19 +230,19 @@ public class HomeScreen extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                new LoginFrame().setVisible(true); 
-               dispose();
+               
             }
         });
         checkStatusButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                new statusFrame().setVisible(true); 
-               dispose();
+               
             }
         });
         paymentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                new PayFrame().setVisible(true); 
-               dispose();
+               
             }
         });
 

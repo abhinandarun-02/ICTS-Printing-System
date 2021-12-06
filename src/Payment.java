@@ -34,7 +34,7 @@ class PayFrame extends JFrame implements ActionListener {
         addComponentsToContainer();
         setTitle("Payment");
         setBounds(450,75,800,600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setResizable(false);
  

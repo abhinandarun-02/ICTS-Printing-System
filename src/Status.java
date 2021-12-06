@@ -25,7 +25,7 @@ class statusFrame extends JFrame implements ActionListener {
         addComponentsToContainer();
         setTitle("Status");
         setBounds(450,75,600,450);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //DefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setResizable(false);
  
