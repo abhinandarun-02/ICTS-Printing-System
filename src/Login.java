@@ -34,6 +34,10 @@ class LoginFrame extends JFrame implements ActionListener {
             passwordField.setText(null);
        }
    });
+   showPassword.addActionListener(ae -> {
+    JCheckBox c = (JCheckBox) ae.getSource();
+    passwordField.setEchoChar(c.isSelected() ? '\u0000' : (Character)          UIManager.get("PasswordField.echoChar"));
+ });
 }
    public void setLocationAndSize()
    {

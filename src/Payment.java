@@ -52,6 +52,7 @@ class PayFrame extends JFrame implements ActionListener {
 
        amount.setBounds(170,360,200,30);
        amountTextField.setBounds(420,360,150,20);
+       amountTextField.setEditable(false);
 
        note.setBounds(240,410,300,30);
     }
