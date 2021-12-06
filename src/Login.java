@@ -20,10 +20,16 @@ class LoginFrame extends JFrame implements ActionListener {
     {
        //Calling methods inside constructor.
         setLayoutManager();
-        setLocationAndSize();
+     setLocationAndSize();
         addComponentsToContainer();
- 
+        setTitle("Login Form");
+        setVisible(true);
+        setBounds(450,75,600,500);
+      //  setDefaultCloseOperation();
+        setResizable(false);
     }
+    
+    
    public void setLayoutManager()
    {
        container.setLayout(null);
@@ -49,7 +55,7 @@ class LoginFrame extends JFrame implements ActionListener {
        showPassword.setBounds(250,250,150,30);
        loginButton.setBounds(150,350,100,30);
        resetButton.setBounds(320,350,100,30);
- 
+      
       // title.setFont(new Font("Serif", Font.PLAIN, 18));
        
    }
@@ -64,6 +70,8 @@ class LoginFrame extends JFrame implements ActionListener {
        container.add(showPassword);
        container.add(loginButton);
        container.add(resetButton);
+
+
        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray,3),"ICTS PRINTING SYSTEM", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
        ((JComponent) container).setBorder(titledBorder);
    }
@@ -74,15 +82,12 @@ class LoginFrame extends JFrame implements ActionListener {
  
     }
 }
+
  
 public class Login {
     public static void main(String[] a){
-        LoginFrame frame=new LoginFrame();
-        frame.setTitle("Login Form");
-        frame.setVisible(true);
-        frame.setBounds(10,10,600,500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        new LoginFrame();
+
  
     }
  

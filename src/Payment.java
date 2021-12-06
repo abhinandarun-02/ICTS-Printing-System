@@ -32,6 +32,11 @@ class PayFrame extends JFrame implements ActionListener {
         setLocationAndSize();
         setFont();
         addComponentsToContainer();
+        setTitle("Payment");
+        setBounds(450,75,800,600);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setResizable(false);
  
     }
    public void setLayoutManager()
@@ -92,13 +97,7 @@ class PayFrame extends JFrame implements ActionListener {
  
 public class Payment {
     public static void main(String[] a){
-        PayFrame frame=new PayFrame();
-        frame.setTitle("Payment");
-        frame.setBounds(150,75,800,600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setResizable(false);
- 
+        new PayFrame();
     }
  
 }
