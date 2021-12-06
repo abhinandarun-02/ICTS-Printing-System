@@ -5,6 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+
 class statusFrame extends JFrame implements ActionListener {
 
     Container container=getContentPane(); 
@@ -13,9 +20,8 @@ class statusFrame extends JFrame implements ActionListener {
     JTextField idTextField=new JTextField();
     JButton submit = new JButton("SUBMIT");
 
-    JLabel status = new JLabel("Status of Print");
+    JLabel status = new JLabel("Status of Print:  ");
     JTextField statusTextField=new JTextField();
-
     statusFrame()
     {
        //Calling methods inside constructor.
@@ -44,6 +50,7 @@ class statusFrame extends JFrame implements ActionListener {
 
        status.setBounds(120,260,200,30);
        statusTextField.setBounds(280,260,150,20);
+       statusTextField.setEditable(false);
     }
 
     public void setFont()
@@ -62,6 +69,8 @@ class statusFrame extends JFrame implements ActionListener {
 
        container.add(status);
        container.add(statusTextField);
+      
+      
 
        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray,3),"CHECK STATUS", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
        ((JComponent) container).setBorder(titledBorder);

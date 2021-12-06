@@ -14,7 +14,7 @@ class LoginFrame extends JFrame implements ActionListener {
     JButton loginButton=new JButton("LOGIN");
     JButton resetButton=new JButton("RESET");
     JCheckBox showPassword=new JCheckBox("Show Password");
- 
+    
  
     LoginFrame()
     {
@@ -33,7 +33,18 @@ class LoginFrame extends JFrame implements ActionListener {
    public void setLayoutManager()
    {
        container.setLayout(null);
-   }
+   
+   resetButton.addActionListener(new ActionListener(){
+       public void actionPerformed(ActionEvent e){
+            userTextField.setText(null);
+            passwordField.setText(null);
+       }
+   });
+   showPassword.addActionListener(ae -> {
+    JCheckBox c = (JCheckBox) ae.getSource();
+    passwordField.setEchoChar(c.isSelected() ? '\u0000' : (Character)          UIManager.get("PasswordField.echoChar"));
+ });
+}
    public void setLocationAndSize()
    {
        //Setting location and Size of each components using setBounds() method.
@@ -60,7 +71,7 @@ class LoginFrame extends JFrame implements ActionListener {
        container.add(loginButton);
        container.add(resetButton);
 
-       
+
        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray,3),"ICTS PRINTING SYSTEM", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
        ((JComponent) container).setBorder(titledBorder);
    }
