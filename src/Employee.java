@@ -26,8 +26,8 @@ class EmpFrame extends JFrame implements ActionListener {
     JScrollPane sp2 = new JScrollPane(select);
     JButton submit3 = new JButton("SUBMIT");
 
-    String[] column = { "Print ID", "Date", "Time", "Use", "Status", "Bill Payment" }; 
-    String[][] data = {{ "", "", "", "", "", "" }, { "", "", "", "", "", "" }};
+    String[] column = { "Print ID", "Date", "Time", "Use", "Status","Credit" }; 
+    String[][] data = {{ "155", "2021-12-5", "15:38", "Official", "In Queue","10" }, { "101", "2021-8-16", "11:20", "Personal", "Delivered","15" },{"122","2021-11-28","10:00","Offical","Out for delivery","15"},{"110","2021-9-28","16:30","Offical","Delivered","15"},{"145","2021-12-1","12:45","Offical","In Queue","10"}};
     JTable table = new JTable(data, column);
     JScrollPane sp = new JScrollPane(table);
 
@@ -48,7 +48,7 @@ class EmpFrame extends JFrame implements ActionListener {
    public void setLocationAndSize()
    {
        //Setting location and Size of each components using setBounds() method.
-       sp.setBounds(200,100,700,50);
+       sp.setBounds(200,100,700,100);
 
        status.setBounds(200,220,100,30);
        id1.setBounds(400,260,100,30);
