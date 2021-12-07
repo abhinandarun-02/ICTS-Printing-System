@@ -607,6 +607,7 @@ public class AdminPage extends JFrame {
         print_idLabel.setBounds(222, 493, 84, 50);
         print_idLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
         JTextField print_idText = new JTextField();
+        print_idText.setFont(new Font("Arial", Font.PLAIN, 16));
         print_idText.setBounds(316, 503, 110, 30);
         JButton updateStatusButton = new JButton("UPDATE");
         updateStatusButton.setBounds(422, 578, 95, 36);
@@ -648,6 +649,7 @@ public class AdminPage extends JFrame {
         addUserPanel.add(staffNameLabel);
 
         staffNameText = new JTextField();
+        staffNameText.setFont(new Font("Arial", Font.PLAIN, 16));
         staffNameText.setBounds(386, 80, 150, 40);
         addUserPanel.add(staffNameText);
         staffNameText.setColumns(10);
@@ -675,6 +677,7 @@ public class AdminPage extends JFrame {
         addUserPanel.add(emailLabel);
 
         emailText = new JTextField();
+        emailText.setFont(new Font("Arial", Font.PLAIN, 16));
         emailText.setColumns(10);
         emailText.setBounds(386, 158, 150, 40);
         addUserPanel.add(emailText);
@@ -690,11 +693,13 @@ public class AdminPage extends JFrame {
         addUserPanel.add(staffDateLabel);
 
         staffPhNoText = new JTextField();
+        staffPhNoText.setFont(new Font("Arial", Font.PLAIN, 16));
         staffPhNoText.setColumns(10);
         staffPhNoText.setBounds(386, 313, 150, 40);
         addUserPanel.add(staffPhNoText);
 
         staffDateText = new JTextField();
+        staffDateText.setFont(new Font("Arial", Font.PLAIN, 16));
         staffDateText.setColumns(10);
         staffDateText.setBounds(386, 392, 150, 40);
         addUserPanel.add(staffDateText);

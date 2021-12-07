@@ -107,10 +107,15 @@ public class HomeScreen extends JFrame {
 
 
         userIDTextField = new JTextField();
+        userIDTextField.setFont(new Font("Arial", Font.PLAIN, 14));
         passwordField=new JPasswordField();
+        passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
         nameTextField = new JTextField();
+        nameTextField.setFont(new Font("Arial", Font.PLAIN, 14));
         phoneTextField = new JTextField();
+        phoneTextField.setFont(new Font("Arial", Font.PLAIN, 14));
         roomTextField = new JTextField();
+        roomTextField.setFont(new Font("Arial", Font.PLAIN, 14));
 
 
         officialRButton = new JRadioButton("Official"); personalRButton = new JRadioButton("Personal");
@@ -124,8 +129,10 @@ public class HomeScreen extends JFrame {
 
         SpinnerModel model1 = new SpinnerNumberModel(1, 1, 5000, 1);
         pageNoSpinner = new JSpinner(model1);
+        pageNoSpinner.setFont(new Font("Arial", Font.PLAIN, 14));
         SpinnerModel model2 = new SpinnerNumberModel(1, 1, 2000, 1);
         copyNoSpinner = new JSpinner(model2);
+        copyNoSpinner.setFont(new Font("Arial", Font.PLAIN, 14));
 
         fileButton = new JButton("Choose File...");
         fc=new JFileChooser();
