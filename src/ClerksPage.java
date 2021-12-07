@@ -77,26 +77,47 @@ public class ClerksPage extends JFrame {
                 tabbedPane.setSelectedIndex(1);
             }
         });
-        String[][] data1 = {{"..", "..", "..", "..", "..", "..", ".."}, {"..", "..", "..", "..", "..", "..", ".."}};
-        String[] column1 = {"User ID", "Name", "Print ID", "Use", "Date", "Time", "Accept/Reject"};
+        String[][] data1 = {};
+        String[] column1 = {};
         JTable pendingRequests = new JTable(data1, column1);
         pendingRequests.setModel(new DefaultTableModel(
                 new String[][]{
-                        {"", "", "", "", "", "", ""},
-                        {"", "", "", "", "", "", ""},
+                        {"E001", "Aman", "101", "Personal", "10", "2021-11-29", "10"},
+                        {"E002", "Rohit", "201", "Official", "1", "2021-11-30", "5"},
+                        {"E003", "Binoy", "125", "Personal", "50", "2021-12-05", "150"},
+                        {"E004", "Nirupama", "150", "Official", "250", "2021-12-12", "250"},
+                        {"E005", "Abhishek", "101", "Personal", "10", "2021-11-29", "10"},
+                        {"E006", "Joshua", "201", "Official", "15", "2021-11-30", "5"},
+                        {"E007", "Satyajit", "125", "Personal", "250", "2021-12-05", "150"},
+                        {"E008", "Gautham", "150", "Official", "50", "2021-12-12", "250"},
+                        {"E009", "Sahin", "101", "Personal", "14", "2021-11-29", "10"},
+                        {"E010", "Devika", "201", "Official", "11", "2021-11-30", "5"},
+                        {"E011", "Khushi", "125", "Personal", "50", "2021-12-05", "150"},
+                        {"E012", "Meghna", "150", "Official", "20", "2021-12-12", "360"},
+                        
                 },
                 new String[]{
                         "User ID", "Name", "Print ID", "Use", "No of Copies", "Date", "Credits"
                 }
         ));
         JScrollPane sp1 = new JScrollPane(pendingRequests, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        String[][] data4 = {{"..", "..", "..", "..", "..", "..", "..", ".."}, {"..", "..", "..", "..", "..", "..", "..", ".."}};
-        String[] column4 = {"Print ID", "User ID", "Paper size", "Print Type", "Single/Double side", "No. of pages", "Printer#"};
+        String[][] data4 = {};
+        String[] column4 = {};
         JTable printerQueue = new JTable(data4, column4);
         printerQueue.setModel(new DefaultTableModel(
                 new Object[][]{
-                        {"", "", "", "", "", "", ""},
-                        {"", "", "", "", "", "", ""},
+                        {"501", "E121", "A4", "B/W", "Single", "1", "4"},
+                        {"601", "E100", "A3", "Colour", "Single", "1", "2"},
+                        {"511", "E121", "A4", "B/W", "Double", "5", "5"},
+                        {"502", "E121", "A4", "B/W", "Single", "1", "1"},
+                        {"602", "E400", "A3", "Colour", "Single", "1", "3"},
+                        {"512", "E421", "A4", "B/W", "Double", "5", "4"},
+                        {"503", "E721", "A4", "B/W", "Single", "1", "2"},
+                        {"603", "E700", "A3", "Colour", "Single", "1", "5"},
+                        {"513", "E721", "A4", "B/W", "Double", "5", "1"},
+                        {"504", "E821", "A4", "B/W", "Single", "1", "3"},
+                        {"604", "E800", "A3", "Colour", "Single", "1", "4"},
+                        {"514", "E821", "A4", "B/W", "Double", "5", "2"},
                 },
                 new String[]{
                         "Print ID", "User ID", "Paper Size", "Print Type", "Single/Double side", "No of Pages", "Printer#"
@@ -143,13 +164,19 @@ public class ClerksPage extends JFrame {
             }
         });
 
-        String[][] data5 = {{"..", "..", "..", "..", "..", "..",}, {"..", "..", "..", "..", "..", ".."}};
-        String[] column5 = {"Print ID", "User ID", "Name", "Room no.", "Phone no.", "Status"};
+        String[][] data5 = {};
+        String[] column5 = {};
         JTable deliveryQueue = new JTable(data5, column5);
         deliveryQueue.setModel(new DefaultTableModel(
                 new Object[][]{
-                        {"", "", "", "", "", ""},
-                        {"", "", "", "", "", ""},
+                        {"220", "E051", "Noel", "S12", "8917155563", "Delivered"},
+                        {"210", "E078", "Aleena", "M2", "9632587410", "Out for delivery"},
+                        {"320", "E151", "Evan", "A12", "1477155563", "Delivered"},
+                        {"310", "E178", "Arjun", "GH2", "8931587410", "In queue"},
+                        {"420", "E651", "Govind", "S12", "8917155563", "Delivered"},
+                        {"410", "E378", "Aditya", "W2", "9632587717", "In queue"},
+                        {"420", "E851", "Anjali", "Q12", "1477114553", "Delivered"},
+                        {"710", "E878", "Manasi", "TH1", "8931587540", "In queue"},
                 },
                 new String[]{
                         "Print ID", "User ID", "Name", "Room No", "Phone No", "Status"
