@@ -25,6 +25,9 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.UIManager;
 
 public class AdminPage extends JFrame {
 
@@ -99,7 +102,7 @@ public class AdminPage extends JFrame {
 
 
         homePanel = new JPanel();
-        homePanel.setBounds(0, 0, 249, 185);
+        homePanel.setBounds(0, 0, 250, 160);
         sideBarPanel.add(homePanel);
         homePanel.setBorder(new MatteBorder(0, 0, 0, 3, (Color) new Color(128, 128, 128)));
         homePanel.setBackground(primaryColor);
@@ -148,14 +151,14 @@ public class AdminPage extends JFrame {
         tabPanel = new JPanel();
         tabPanel.setBorder(new MatteBorder(0, 0, 0, 3, (Color) new Color(128, 128, 128)));
         tabPanel.setBackground(primaryColor);
-        tabPanel.setBounds(-1, 178, 250, 480);
+        tabPanel.setBounds(-1, 143, 250, 515);
         sideBarPanel.add(tabPanel);
         tabPanel.setLayout(null);
 
         searchButtonPanel = new JPanel();
-        searchButtonPanel.setBorder(null);
+        searchButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         searchButtonPanel.setBackground(Color.WHITE);
-        searchButtonPanel.setBounds(10, 0, 230, 60);
+        searchButtonPanel.setBounds(10, 20, 230, 60);
         tabPanel.add(searchButtonPanel);
 
         JLabel searchLabel = new JLabel("   SEARCH");
@@ -192,8 +195,8 @@ public class AdminPage extends JFrame {
 
         printerButtonPanel = new JPanel();
         printerButtonPanel.setBackground(Color.WHITE);
-        printerButtonPanel.setBorder(null);
-        printerButtonPanel.setBounds(10, 119, 230, 60);
+        printerButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        printerButtonPanel.setBounds(10, 140, 230, 60);
         tabPanel.add(printerButtonPanel);
 
         JLabel printerLabel = new JLabel("  PRINTER");
@@ -230,8 +233,8 @@ public class AdminPage extends JFrame {
 
         deliveryButtonPanel = new JPanel();
         deliveryButtonPanel.setBackground(Color.WHITE);
-        deliveryButtonPanel.setBorder(null);
-        deliveryButtonPanel.setBounds(10, 240, 230, 60);
+        deliveryButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        deliveryButtonPanel.setBounds(10, 260, 230, 60);
         tabPanel.add(deliveryButtonPanel);
 
 
@@ -269,8 +272,8 @@ public class AdminPage extends JFrame {
 
         manageButtonPanel = new JPanel();
         manageButtonPanel.setBackground(Color.WHITE);
-        manageButtonPanel.setBorder(null);
-        manageButtonPanel.setBounds(10, 360, 230, 60);
+        manageButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        manageButtonPanel.setBounds(10, 390, 230, 60);
         tabPanel.add(manageButtonPanel);
 
         JLabel manageLabel = new JLabel("  MANAGE");
