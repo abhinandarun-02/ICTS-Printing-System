@@ -525,22 +525,33 @@ public class AdminPage extends JFrame {
         recentPaymentsTable = new JTable();
         scrollPane_3.setViewportView(recentPaymentsTable);
         recentPaymentsTable.setModel(new DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
+                new String[][]{
+                        {"E091","Sahil","15","2021-12-07","C011"},
+                        {"E081","Sihvam","115","2021-12-07","C012"},
+                        {"E071","Ritik","150","2021-12-07","C011"},
+                        {"E061","Yash","50","2021-12-06","C013"},
+                        {"E051","Bharti","150","2021-12-05","C012"},
+                        {"E092","Vaishali","10","2021-12-03","C012"},
+                        {"E093","Avika","25","2021-12-03","C013"},
+                        {"E094","Sanyog","215","2021-12-02","C013"},
+                        {"E095","Sarvagya","315","2021-12-01","C013"},
+                        {"E096","Prabhanu","155","2021-12-01","C011"},
+                        {"E097","Rohit","170","2021-11-30","C011"},
+                        {"E391","Vardaan","125","2021-11-30","C011"},
+                        {"E392","Jelin","115","2021-11-29","C011"},
+                        {"E491","Surya","150","2021-11-28","C012"},
+                        {"E311","Shreya","125","2021-11-27","C011"},
+                        {"E321","Emil","200","2021-11-27","C013"},
+                        {"E331","Meghna","240","2021-11-27","C012"},
+                        {"E315","Anjima","500","2021-11-25","C012"},
+                        {"E331","Riya","515","2021-11-24","C013"},
+                        {"E371","Varghese","715","2021-11-24","C013"},
+                        {"E041","Anirudhan","915","2021-11-24","C012"},
+                        {"E007","Steve","150","2021-11-22","C012"},
+                        
                 },
                 new String[]{
-                        "ID", "Name", "Amount", "Date", "Clerk"
+                        "User ID", "Name", "Amount/Credit", "Date", "Clerk"
                 }
         ));
 
