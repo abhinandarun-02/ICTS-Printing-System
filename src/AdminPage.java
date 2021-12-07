@@ -519,7 +519,7 @@ public class AdminPage extends JFrame {
 
         JScrollPane scrollPane_3 = new JScrollPane();
         scrollPane_3.setViewportBorder(new EmptyBorder(0, 0, 0, 0));
-        scrollPane_3.setBounds(70, 319, 895, 341);
+        scrollPane_3.setBounds(70, 319, 895, 311);
         homeTab.add(scrollPane_3);
 
         recentPaymentsTable = new JTable();
