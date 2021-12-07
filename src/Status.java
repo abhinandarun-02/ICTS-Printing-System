@@ -4,6 +4,9 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -78,7 +81,12 @@ class statusFrame extends JFrame implements ActionListener {
  
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/project", "postgres", "root");
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 }
  

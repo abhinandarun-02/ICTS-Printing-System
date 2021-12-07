@@ -3,10 +3,13 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 
 
-public class ClerksPage extends JFrame {
+public class ClerksPage extends JFrame implements ActionListener{
 
 
     JTabbedPane tabbedPane;
@@ -424,5 +427,15 @@ public class ClerksPage extends JFrame {
 
     public static void main(String[] args) {
         new ClerksPage("ICTS PRINTING SOFTWARE");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/project", "postgres", "root");
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 }

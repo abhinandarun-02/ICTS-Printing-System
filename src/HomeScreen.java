@@ -5,13 +5,16 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.DateFormat;
 import javax.swing.text.DateFormatter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class HomeScreen extends JFrame {
+public class HomeScreen extends JFrame implements ActionListener{
 
     /* *************** REQUEST_PANEL *************** */
     JPanel requestFormPanel;
@@ -272,5 +275,15 @@ public class HomeScreen extends JFrame {
 
     public static void main(String[] args) {
         new HomeScreen("ICTS PRINTING SOFTWARE");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/project", "postgres", "root");
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 }
