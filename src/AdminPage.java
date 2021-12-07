@@ -82,7 +82,7 @@ public class AdminPage extends JFrame {
         JButton DeleteButton;
 
 
-        String[][] data4 = {{"..", "..", "..", "..", "..", "..", "..", ".."}, {"..", "..", "..", "..", "..", "..", "..", ".."}, {"..", "..", "..", "..", "..", "..", "..", ".."}, {"..", "..", "..", "..", "..", "..", "..", ".."}, {"..", "..", "..", "..", "..", "..", "..", ".."},};
+        String[][] data4 = {{"110", "E001", "A3", "Color", "Single", "25", "1"}, {"112", "E055", "A4", "Grey Scale", "Double", "10", "2"}, {"115", "E074", "A4", "Grey Scale", "Double", "15", "3"}, {"117", "E059", "A5", "Color", "Single", "30", "4"}, {"121", "E099", "A3", "Grey Scale", "Double", "20", "5"},{"125", "E039", "A4", "Color", "Single", "5", "1"}, {"129", "E077", "A3", "Grey Scale", "Double", "15", "2"},{"130", "E042", "A3", "Color", "Double", "3", "3"}, {"133", "E022", "A4", "Grey Scale", "Double", "20", "4"}};
         String[] column4 = {"Print ID", "User ID", "Paper size", "Print Type", "Single/Double side", "No. of pages", "Printer#"};
 
         TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "PRINTER QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
