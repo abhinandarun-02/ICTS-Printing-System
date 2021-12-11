@@ -61,14 +61,14 @@ public class AdminPage extends JFrame {
 
 
     public static void main(String[] args) {
-        AdminPage frame = new AdminPage();
-        frame.setVisible(true);
+        new AdminPage();
     }
 
 
     public AdminPage() {
 
         setResizable(false);
+        setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(150, 75, 1250, 700);
         contentPane = new JPanel();

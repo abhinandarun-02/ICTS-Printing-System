@@ -58,9 +58,7 @@ public class ClerksPage extends JFrame {
     JRadioButton acceptButton;
     JRadioButton rejectButton;
 
-    public ClerksPage(String title) {
-
-        super(title); //Frame title
+    public ClerksPage() {
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
@@ -125,8 +123,8 @@ public class ClerksPage extends JFrame {
                         "Print ID", "User ID", "Paper Size", "Print Type", "Single/Double side", "No of Pages", "Printer#"
                 }
         ));
-        JScrollPane sp4 = new JScrollPane(printerQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+        JScrollPane sp4 = new JScrollPane(printerQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         ClerkPanel1.add(pendingRequestsLabel);
         ClerkPanel1.add(sp1);
@@ -425,6 +423,6 @@ public class ClerksPage extends JFrame {
     }
 
     public static void main(String[] args) {
-        new ClerksPage("ICTS PRINTING SOFTWARE");
+        new ClerksPage();
     }
 }
