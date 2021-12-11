@@ -2,64 +2,77 @@ package GUI;
 
 import main.Person;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
-class LoginFrame extends JFrame implements ActionListener {
+class LoginPage extends JFrame implements ActionListener {
 
-    Container container = getContentPane();
-    JLabel userLabel = new JLabel("USERNAME");
-    JLabel passwordLabel = new JLabel("PASSWORD");
-    JTextField userTextField = new JTextField();
-    JPasswordField passwordField = new JPasswordField();
-    JButton loginButton = new JButton("LOGIN");
-    JButton resetButton = new JButton("RESET");
-    JCheckBox showPassword = new JCheckBox("Show Password");
+    Container container;
+    JLabel userLabel;
+    JLabel passwordLabel;
+    JTextField userTextField;
+    JPasswordField passwordField;
+    JButton loginButton;
+    JButton resetButton;
+    JCheckBox showPassword;
 
-    Person user = new Person();
+    // Using Person Class
+    Person user;
 
-    LoginFrame() {
+    LoginPage() {
+        userTextField = new JTextField();
+        userTextField.setFont(new Font("Arial ", Font.PLAIN, 15));
+        passwordField = new JPasswordField();
+        passwordField.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        container = getContentPane();
+        userLabel = new JLabel("USERNAME");
+        passwordLabel = new JLabel("PASSWORD");
+        loginButton = new JButton("LOGIN");
+        resetButton = new JButton("RESET");
+        showPassword = new JCheckBox("Show Password");
+
+        user = new Person();
+
         //Calling methods inside constructor.
         setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
+
         setTitle("Login Form");
         setVisible(true);
         setBounds(450, 75, 600, 500);
-        //  setDefaultCloseOperation();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-
-
-        userTextField.setFont(new Font("Arial ", Font.PLAIN, 15));
-        passwordField.setFont(new Font("Arial", Font.PLAIN, 16));
-
-        try {
-            Class.forName("org.postgresql.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void setLayoutManager() {
-        container.setLayout(null);
 
         loginButton.addActionListener(this);
         resetButton.addActionListener(this);
         showPassword.addActionListener(this);
     }
 
+
+    public void setLayoutManager() {
+        container.setLayout(null);
+    }
+
     public void setLocationAndSize() {
-        //Setting location and Size of each components using setBounds() method.
+        //Setting location and Size of each component using setBounds() method.
         userLabel.setBounds(150, 150, 100, 30);
         passwordLabel.setBounds(150, 220, 100, 30);
         userTextField.setBounds(250, 150, 150, 30);
@@ -68,12 +81,10 @@ class LoginFrame extends JFrame implements ActionListener {
         loginButton.setBounds(150, 350, 100, 30);
         resetButton.setBounds(320, 350, 100, 30);
 
-        // title.setFont(new Font("Serif", Font.PLAIN, 18));
-
     }
 
     public void addComponentsToContainer() {
-        //Adding each components to the Container
+        //Adding each component to the Container
         container.add(userLabel);
         container.add(passwordLabel);
         container.add(userTextField);
@@ -90,9 +101,11 @@ class LoginFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (e.getActionCommand().equals("LOGIN")) {
+
             String username = userTextField.getText();
-            String password = passwordField.getText();
+            String password = String.valueOf(passwordField.getPassword());
 
             if (user.verifyUser(username, password)) {
                 if (username.startsWith("ADM")) {
@@ -124,14 +137,12 @@ class LoginFrame extends JFrame implements ActionListener {
             passwordField.setText(null);
         }
     }
-}
 
-
-public class Login {
-    public static void main(String[] a) {
-        new LoginFrame();
-
-
+    public static void main(String[] args) {
+        new LoginPage();
     }
-
 }
+
+
+
+
