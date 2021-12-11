@@ -239,13 +239,13 @@ public class HomeScreen extends JFrame {
         });
         checkStatusButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               new statusFrame().setVisible(true);
+               new Status().setVisible(true);
 
             }
         });
         paymentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               new PayFrame().setVisible(true);
+               new Payment().setVisible(true);
 
             }
         });
