@@ -105,7 +105,7 @@ class LoginFrame extends JFrame implements ActionListener {
                     new EmployeePage();
                 }
                 else if (username.startsWith("DEL")) {
-                    new Delivery();
+                    new DeliveryPage();
                 }
                 this.dispose();
             }
