@@ -2,3 +2,9 @@
 /.idea/discord.xml
 /bin
 *.class
+
+.idea/dataSources/
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/sqldialects.xml
+.idea/codeStyles/codeStyleConfig.xml
