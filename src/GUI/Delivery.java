@@ -28,6 +28,12 @@ class DeliFrame extends JFrame implements ActionListener {
         setLocationAndSize();
         setFont();
         addComponentsToContainer();
+        
+        setTitle("Delivery boy Login");
+        setBounds(150,75,800,500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setResizable(false);
  
     }
    public void setLayoutManager()
@@ -72,13 +78,6 @@ public void actionPerformed(ActionEvent e) {
 
 public class Delivery {
 public static void main(String[] a){
-    DeliFrame frame=new DeliFrame();
-    frame.setTitle("Delivery boy Login");
-    frame.setBounds(150,75,800,500);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setVisible(true);
-    frame.setResizable(false);
-
+    new DeliFrame();
 }
-
 }
