@@ -1,11 +1,17 @@
 package GUI;
 
+import main.Person;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 class LoginFrame extends JFrame implements ActionListener {
 
@@ -18,6 +24,7 @@ class LoginFrame extends JFrame implements ActionListener {
     JButton resetButton = new JButton("RESET");
     JCheckBox showPassword = new JCheckBox("Show Password");
 
+    Person user = new Person();
 
     LoginFrame() {
         //Calling methods inside constructor.
@@ -33,22 +40,22 @@ class LoginFrame extends JFrame implements ActionListener {
 
         userTextField.setFont(new Font("Arial ", Font.PLAIN, 15));
         passwordField.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public void setLayoutManager() {
         container.setLayout(null);
 
-        resetButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                userTextField.setText(null);
-                passwordField.setText(null);
-            }
-        });
-        showPassword.addActionListener(ae -> {
-            JCheckBox c = (JCheckBox) ae.getSource();
-            passwordField.setEchoChar(c.isSelected() ? '\u0000' : (Character) UIManager.get("PasswordField.echoChar"));
-        });
+        loginButton.addActionListener(this);
+        resetButton.addActionListener(this);
+        showPassword.addActionListener(this);
     }
 
     public void setLocationAndSize() {
@@ -83,7 +90,39 @@ class LoginFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("LOGIN")) {
+            String username = userTextField.getText();
+            String password = passwordField.getText();
 
+            if (user.verifyUser(username, password)) {
+                if (username.startsWith("ADM")) {
+                    new AdminPage();
+                }
+                else if (username.startsWith("CLK")) {
+                    new ClerksPage();
+                }
+                else if (username.startsWith("EMP")) {
+                    new Employee();
+                }
+                else if (username.startsWith("DEL")) {
+                    new Delivery();
+                }
+                this.dispose();
+            }
+            else {
+                JOptionPane.showMessageDialog(loginButton, "Invalid Credentials", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        if (e.getActionCommand().equals("Show Password")) {
+            JCheckBox c = (JCheckBox) e.getSource();
+            passwordField.setEchoChar(c.isSelected() ? '\u0000' : (Character) UIManager.get("PasswordField.echoChar"));
+        }
+
+        if (e.getActionCommand().equals("RESET")) {
+            userTextField.setText(null);
+            passwordField.setText(null);
+        }
     }
 }
 

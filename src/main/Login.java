@@ -3,7 +3,7 @@ package main;
 public interface Login {
 
 
-    public boolean checkUser(String user, String pass);
+    public boolean verifyUser(String user, String pass);
 
 
 }
