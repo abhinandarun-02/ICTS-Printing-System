@@ -102,7 +102,7 @@ class LoginFrame extends JFrame implements ActionListener {
                     new ClerksPage();
                 }
                 else if (username.startsWith("EMP")) {
-                    new Employee();
+                    new EmployeePage();
                 }
                 else if (username.startsWith("DEL")) {
                     new Delivery();
