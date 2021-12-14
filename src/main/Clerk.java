@@ -1,6 +1,6 @@
 package main;
 
-public class Clerk extends Person {
+public class Clerk extends Staff {
 
     private String date_joined;
     private int approvedRequests;

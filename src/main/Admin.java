@@ -1,6 +1,6 @@
 package main;
 
-public class Admin extends Person {
+public class Admin extends Staff {
 
     private boolean resourcesStatus;
 
