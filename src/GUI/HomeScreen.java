@@ -1,5 +1,7 @@
 package GUI;
 
+import main.Person;
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -7,6 +9,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -30,6 +33,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class HomeScreen extends JFrame implements ActionListener {
 
+    Person user = new Person();
+
     /* *************** REQUEST_PANEL *************** */
     JPanel requestFormPanel;
 
@@ -37,7 +42,7 @@ public class HomeScreen extends JFrame implements ActionListener {
     DateFormat format;
     DateFormatter df;
 
-    JLabel userIDLabel;
+    JLabel usernameLabel;
     JLabel passLabel;
     JLabel nameLabel;
     JLabel printTypeLabel;
@@ -50,7 +55,7 @@ public class HomeScreen extends JFrame implements ActionListener {
     JLabel roomLabel;
     JLabel dateLabel;
 
-    JTextField userIDTextField;
+    JTextField usernameTextField;
     JPasswordField passwordField;
     JTextField nameTextField;
     JTextField phoneTextField;
@@ -98,7 +103,7 @@ public class HomeScreen extends JFrame implements ActionListener {
         requestFormPanel = new JPanel();
 
         requestFormPanel = new JPanel();
-        userIDLabel = new JLabel("User ID : ");
+        usernameLabel = new JLabel("Username : ");
         passLabel = new JLabel("Password : ");
         nameLabel = new JLabel("Name");
         printTypeLabel = new JLabel("Print Type");
@@ -129,8 +134,8 @@ public class HomeScreen extends JFrame implements ActionListener {
         timeField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
 
-        userIDTextField = new JTextField();
-        userIDTextField.setFont(new Font("Arial", Font.PLAIN, 14));
+        usernameTextField = new JTextField();
+        usernameTextField.setFont(new Font("Arial", Font.PLAIN, 14));
         passwordField = new JPasswordField();
         passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
         nameTextField = new JTextField();
@@ -142,21 +147,33 @@ public class HomeScreen extends JFrame implements ActionListener {
 
 
         officialRButton = new JRadioButton("Official");
+        officialRButton.setActionCommand("Official");
         personalRButton = new JRadioButton("Personal");
+        personalRButton.setActionCommand("Personal");
         buttonGroup1.add(officialRButton);
         buttonGroup1.add(personalRButton);
+
         a3RButton = new JRadioButton("A3");
+        a3RButton.setActionCommand("A3");
         a4RButton = new JRadioButton("A4");
+        a4RButton.setActionCommand("A4");
         a5RButton = new JRadioButton("A5");
+        a5RButton.setActionCommand("A5");
         buttonGroup2.add(a3RButton);
         buttonGroup2.add(a4RButton);
         buttonGroup2.add(a5RButton);
+
         singlePrintRButton = new JRadioButton("Single Side");
+        singlePrintRButton.setActionCommand("Single");
         doublePrintRButton = new JRadioButton("Double Side");
+        doublePrintRButton.setActionCommand("Double");
         buttonGroup3.add(singlePrintRButton);
         buttonGroup3.add(doublePrintRButton);
+
         grayscaleRButton = new JRadioButton("Grayscale");
+        grayscaleRButton.setActionCommand("Grayscale");
         colourRButton = new JRadioButton("Colour");
+        colourRButton.setActionCommand("Colour");
         buttonGroup4.add(grayscaleRButton);
         buttonGroup4.add(colourRButton);
 
@@ -173,8 +190,8 @@ public class HomeScreen extends JFrame implements ActionListener {
         resetButton = new JButton("Reset");
 
 
-        requestFormPanel.add(userIDLabel);
-        requestFormPanel.add(userIDTextField);
+        requestFormPanel.add(usernameLabel);
+        requestFormPanel.add(usernameTextField);
         requestFormPanel.add(passLabel);
         requestFormPanel.add(passwordField);
         requestFormPanel.add(nameLabel);
@@ -209,8 +226,8 @@ public class HomeScreen extends JFrame implements ActionListener {
 
         dateField.setBounds(350, 50, 140, 24);
         timeField.setBounds(520, 50, 140, 24);
-        userIDLabel.setBounds(185, 110, 100, 30);
-        userIDTextField.setBounds(355, 110, 100, 24);
+        usernameLabel.setBounds(185, 110, 100, 30);
+        usernameTextField.setBounds(355, 110, 100, 24);
         passLabel.setBounds(505, 110, 100, 30);
         passwordField.setBounds(655, 110, 100, 24);
         nameLabel.setBounds(185, 150, 100, 30);
@@ -248,6 +265,7 @@ public class HomeScreen extends JFrame implements ActionListener {
 
         resetButton.addActionListener(this);
         fileButton.addActionListener(this);
+        submitButton.addActionListener(this);
         /* *************************************************************************** */
         /*  ***************************************************************************************/
 
@@ -298,8 +316,23 @@ public class HomeScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if (e.getActionCommand().equals("Submit")) {
+            String username = usernameTextField.getText();
+            String password = String.valueOf(passwordField.getPassword());
+
+            if (user.verifyUser(username, password)) {
+                String phone_no = phoneTextField.getText();
+                String paper_type = buttonGroup2.getSelection().getActionCommand();
+                String page_type = buttonGroup3.getSelection().getActionCommand();
+                String colour_type = buttonGroup4.getSelection().getActionCommand();
+                String status = buttonGroup1.getSelection().getActionCommand();
+
+                user.sendRequest(username, phone_no, paper_type, page_type, colour_type, status);
+            }
+        }
+
         if (e.getActionCommand().equals("Reset")) {
-            userIDTextField.setText("");
+            usernameTextField.setText("");
             nameTextField.setText("");
             passwordField.setText("");
             buttonGroup1.clearSelection();
@@ -328,7 +361,7 @@ public class HomeScreen extends JFrame implements ActionListener {
         }
 
         if (e.getActionCommand().equals("LOGIN")) {
-            new LoginPage().setVisible(true);
+            new LoginPage();
         }
 
         if (e.getActionCommand().equals("CHECK STATUS")) {
