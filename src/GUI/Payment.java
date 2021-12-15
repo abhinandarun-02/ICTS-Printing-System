@@ -1,10 +1,11 @@
 package GUI;
-
+import main.Person;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -15,8 +16,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class Payment extends JFrame implements ActionListener {
+class Payment extends JFrame {
 
+	Person user = new Person();
     JPanel panel = (JPanel) getContentPane();
 
     JLabel bill;
@@ -107,13 +109,27 @@ class Payment extends JFrame implements ActionListener {
 
         TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "PAYMENT PORTAL", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
         panel.setBorder(titledBorder);
-    }
+    
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    submit.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {     
 
-    }
-
+            String e_id = billTextField.getText();
+            double x = user.viewAmount(e_id);
+            double y = user.viewCredit(e_id);
+            if(x==-1)
+            {
+            	amountTextField.setText("null");
+                creditTextField.setText("null");
+            	JOptionPane.showMessageDialog(submit, "Employee ID not found", "INVALID ID", JOptionPane.ERROR_MESSAGE, null);
+            }
+            else {
+            amountTextField.setText(String.valueOf(x));
+            creditTextField.setText(String.valueOf(y));
+            }
+        }});
+        
+}
     public static void main(String[] a) {
         new Payment();
     }
