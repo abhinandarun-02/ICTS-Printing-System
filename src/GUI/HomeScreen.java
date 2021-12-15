@@ -325,7 +325,7 @@ public class HomeScreen extends JFrame implements ActionListener {
                 String paper_type = buttonGroup2.getSelection().getActionCommand();
                 String page_type = buttonGroup3.getSelection().getActionCommand();
                 String colour_type = buttonGroup4.getSelection().getActionCommand();
-                String status = buttonGroup1.getSelection().getActionCommand();
+                String status = "Not Accepted";
 
                 user.sendRequest(username, phone_no, paper_type, page_type, colour_type, status);
             }
