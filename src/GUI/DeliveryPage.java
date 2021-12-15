@@ -31,7 +31,7 @@ class DeliveryPage extends JFrame implements ActionListener {
 
     DeliveryPage() {
         column = new String[]{"Print ID", "User ID", "Name", "Room no", "Phone no", "Bill Status"};
-        data = new String[][]{{"", "", "", "", "", ""}, {"", "", "", "", "", ""}};
+        data = new String[][]{};
         table = new JTable(data, column);
         sp = new JScrollPane(table);
         status = new JLabel("UPDATE STATUS");

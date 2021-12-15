@@ -56,7 +56,7 @@ class EmployeePage extends JFrame implements ActionListener {
         submit3 = new JButton("SUBMIT");
 
         column = new String[]{"Print ID", "Date", "Time", "Use", "Status", "Credit"};
-        data = new String[][]{{"155", "2021-12-5", "15:38", "Official", "In Queue", "10"}, {"101", "2021-8-16", "11:20", "Personal", "Delivered", "15"}, {"122", "2021-11-28", "10:00", "Official", "Out for delivery", "15"}, {"110", "2021-9-28", "16:30", "Official", "Delivered", "15"}, {"145", "2021-12-1", "12:45", "Official", "In Queue", "10"}};
+        data = new String[][]{};
         table = new JTable(data, column);
         sp = new JScrollPane(table);
 
