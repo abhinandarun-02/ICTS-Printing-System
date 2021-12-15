@@ -27,9 +27,6 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.UIManager;
 
 public class AdminPage extends JFrame {
 
@@ -84,7 +81,7 @@ public class AdminPage extends JFrame {
         JButton DeleteButton;
 
 
-        String[][] data4 = {{"110", "E001", "A3", "Color", "Single", "25", "1"}, {"112", "E055", "A4", "Grey Scale", "Double", "10", "2"}, {"115", "E074", "A4", "Grey Scale", "Double", "15", "3"}, {"117", "E059", "A5", "Color", "Single", "30", "4"}, {"121", "E099", "A3", "Grey Scale", "Double", "20", "5"},{"125", "E039", "A4", "Color", "Single", "5", "1"}, {"129", "E077", "A3", "Grey Scale", "Double", "15", "2"},{"130", "E042", "A3", "Color", "Double", "3", "3"}, {"133", "E022", "A4", "Grey Scale", "Double", "20", "4"}};
+        String[][] data4 = {};
         String[] column4 = {"Print ID", "User ID", "Paper size", "Print Type", "Single/Double side", "No. of pages", "Printer#"};
 
         TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "PRINTER QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
@@ -106,12 +103,12 @@ public class AdminPage extends JFrame {
         homePanel = new JPanel();
         homePanel.setBounds(0, 0, 250, 160);
         sideBarPanel.add(homePanel);
-        homePanel.setBorder(new MatteBorder(0, 0, 0, 3, (Color) new Color(128, 128, 128)));
+        homePanel.setBorder(new MatteBorder(0, 0, 0, 3, new Color(128, 128, 128)));
         homePanel.setBackground(primaryColor);
 
         homeButtonPanel = new JPanel();
         homeButtonPanel.setBounds(10, 34, 229, 70);
-        homeButtonPanel.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
+        homeButtonPanel.setBorder(new MatteBorder(2, 2, 2, 2, new Color(0, 0, 0)));
         homeButtonPanel.setBackground(Color.WHITE);
 
 
@@ -151,14 +148,14 @@ public class AdminPage extends JFrame {
         homePanel.add(homeButtonPanel);
 
         tabPanel = new JPanel();
-        tabPanel.setBorder(new MatteBorder(0, 0, 0, 3, (Color) new Color(128, 128, 128)));
+        tabPanel.setBorder(new MatteBorder(0, 0, 0, 3, new Color(128, 128, 128)));
         tabPanel.setBackground(primaryColor);
         tabPanel.setBounds(-1, 143, 250, 515);
         sideBarPanel.add(tabPanel);
         tabPanel.setLayout(null);
 
         searchButtonPanel = new JPanel();
-        searchButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        searchButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
         searchButtonPanel.setBackground(Color.WHITE);
         searchButtonPanel.setBounds(10, 20, 230, 60);
         tabPanel.add(searchButtonPanel);
@@ -197,7 +194,7 @@ public class AdminPage extends JFrame {
 
         printerButtonPanel = new JPanel();
         printerButtonPanel.setBackground(Color.WHITE);
-        printerButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        printerButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
         printerButtonPanel.setBounds(10, 140, 230, 60);
         tabPanel.add(printerButtonPanel);
 
@@ -235,7 +232,7 @@ public class AdminPage extends JFrame {
 
         deliveryButtonPanel = new JPanel();
         deliveryButtonPanel.setBackground(Color.WHITE);
-        deliveryButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        deliveryButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
         deliveryButtonPanel.setBounds(10, 260, 230, 60);
         tabPanel.add(deliveryButtonPanel);
 
@@ -274,7 +271,7 @@ public class AdminPage extends JFrame {
 
         manageButtonPanel = new JPanel();
         manageButtonPanel.setBackground(Color.WHITE);
-        manageButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        manageButtonPanel.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
         manageButtonPanel.setBounds(10, 390, 230, 60);
         tabPanel.add(manageButtonPanel);
 
@@ -374,19 +371,7 @@ public class AdminPage extends JFrame {
         reqTable = new JTable();
         scrollPane_1.setViewportView(reqTable);
         reqTable.setModel(new DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
+                new String[][]{
                 },
                 new String[]{
                         "Name", "Status", "Date", "Type", "Copies", "Paper"
@@ -404,18 +389,6 @@ public class AdminPage extends JFrame {
         scrollPane_2.setViewportView(paymentTable);
         paymentTable.setModel(new DefaultTableModel(
                 new Object[][]{
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
                 },
                 new String[]{
                         "Name", "Status", "Amount", "Method", "Payment ID"
@@ -436,19 +409,7 @@ public class AdminPage extends JFrame {
         orderTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(orderTable);
         orderTable.setModel(new DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
+                new String[][]{
                 },
                 new String[]{
                         "Print ID", "Clerk", "Date", "Type", "Delivered By", "Cost"
@@ -528,29 +489,6 @@ public class AdminPage extends JFrame {
         scrollPane_3.setViewportView(recentPaymentsTable);
         recentPaymentsTable.setModel(new DefaultTableModel(
                 new String[][]{
-                        {"E091","Sahil","15","2021-12-07","C011"},
-                        {"E081","Sihvam","115","2021-12-07","C012"},
-                        {"E071","Ritik","150","2021-12-07","C011"},
-                        {"E061","Yash","50","2021-12-06","C013"},
-                        {"E051","Bharti","150","2021-12-05","C012"},
-                        {"E092","Vaishali","10","2021-12-03","C012"},
-                        {"E093","Avika","25","2021-12-03","C013"},
-                        {"E094","Sanyog","215","2021-12-02","C013"},
-                        {"E095","Sarvagya","315","2021-12-01","C013"},
-                        {"E096","Prabhanu","155","2021-12-01","C011"},
-                        {"E097","Rohit","170","2021-11-30","C011"},
-                        {"E391","Vardaan","125","2021-11-30","C011"},
-                        {"E392","Jelin","115","2021-11-29","C011"},
-                        {"E491","Surya","150","2021-11-28","C012"},
-                        {"E311","Shreya","125","2021-11-27","C011"},
-                        {"E321","Emil","200","2021-11-27","C013"},
-                        {"E331","Meghna","240","2021-11-27","C012"},
-                        {"E315","Anjima","500","2021-11-25","C012"},
-                        {"E331","Riya","515","2021-11-24","C013"},
-                        {"E371","Varghese","715","2021-11-24","C013"},
-                        {"E041","Anirudhan","915","2021-11-24","C012"},
-                        {"E007","Steve","150","2021-11-22","C012"},
-                        
                 },
                 new String[]{
                         "User ID", "Name", "Amount/Credit", "Date", "Clerk"
@@ -582,27 +520,6 @@ public class AdminPage extends JFrame {
         JTable deliveryQueueTable = new JTable(data, column);
         deliveryQueueTable.setModel(new DefaultTableModel(
         	new String[][] {
-        		{"101", "E101", "Suhail", "101", "9878465434", "In Queue"},
-        		{"785", "E111", "Rahul", "141", "9878465233", "In Queue"},
-        		{"456", "E864", "Jay", "104", "9878464145", "In Queue"},
-        		{"247", "E246", "Kiran", "232", "9878465453", "In Queue"},
-        		{"456", "E464", "Ram", "321", "9878465332", "In Queue"},
-        		{"545", "E321", "Setu", "234", "9878465434", "In Queue"},
-        		{"459", "E556", "Jack", "232", "9878465434", "In Queue"},
-        		{"244", "E532", "John", "342", "9878465423", "In Queue"},
-        		{"454", "E454", "Abhishek", "123", "9878465431", "In Queue"},
-        		{"154", "E232", "Sam", "432", "9855365433", "In Queue"},
-        		{"445", "E233", "James", "443", "9878465324", "In Queue"},
-        		{"474", "E2323", "Ajay", "231", "9878442142", "In Queue"},
-        		{"779", "E2442", "Vicky", "453", "9878465423", "In Queue"},
-        		{"494", "E432", "Abhinand", "231", "9878465232", "In Queue"},
-        		{"944", "E123", "Nikhil", "455", "9878465422", "In Queue"},
-                {"247", "E246", "Kiran", "232", "9878465453", "In Queue"},
-                {"456", "E464", "Ram", "321", "9878465332", "In Queue"},
-                {"545", "E321", "Setu", "234", "9878465434", "In Queue"},
-                {"459", "E556", "Jack", "232", "9878465434", "In Queue"},
-                {"244", "E532", "John", "342", "9878465423", "In Queue"},
-                {"454", "E454", "Abhishek", "123", "9878465431", "In Queue"},
         	},
         	new String[] {
         		"Print ID", "User ID", "Name", "Room no", "Phone no", "Bill Status"
