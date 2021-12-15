@@ -190,4 +190,26 @@ public class Person implements Login {
     
     
     
+    public String getUser_Id(String username){
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+        } catch (SQLException | ClassNotFoundException e) {
+            
+            e.printStackTrace();
+        }
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select Employee_id from(select username,Employee_id from Employee union select username,staff_id from staff) as uEiusi where username=?");
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()) {
+                return resultSet.getString(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
 }
