@@ -1,7 +1,7 @@
 package GUI;
 
 import main.Person;
-
+import java.util.Random;   
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -326,11 +326,32 @@ public class HomeScreen extends JFrame implements ActionListener {
                 String page_type = buttonGroup3.getSelection().getActionCommand();
                 String colour_type = buttonGroup4.getSelection().getActionCommand();
                 String status = "Not Accepted";
-
-                user.sendRequest(username, phone_no, paper_type, page_type, colour_type, status);
+                
+                Random random = new Random();
+                int id = random.nextInt(1000);
+                String p_id ="P"+String.valueOf(id);
+                
+                JOptionPane.showInternalMessageDialog(null, "Request ID : "+ p_id);
+                
+                String print_id = p_id;
+                
+                
+                 try {
+                	 user.sendRequest(print_id,username, phone_no, paper_type, page_type, colour_type, status);
+         	}
+         	catch(Exception ex) {
+         		ex.printStackTrace();
+         		JOptionPane.showInternalMessageDialog(null, "Please click submit again..\nSorry for the inconvenience");
+         		
+         	}
+               
             }
-        }
+            else 
+            	JOptionPane.showMessageDialog(null, "User credentials not registered", "INVALID LOGIN", JOptionPane.ERROR_MESSAGE, null);
 
+            
+        }
+       
         if (e.getActionCommand().equals("Reset")) {
             usernameTextField.setText("");
             nameTextField.setText("");
