@@ -107,19 +107,19 @@ class LoginPage extends JFrame implements ActionListener {
             String username = userTextField.getText();
             String password = String.valueOf(passwordField.getPassword());
             String usertype = user.getUser_Id(username);
-            usertype=usertype.substring(0,3);
+            usertype = usertype.substring(0, 3);
 
             if (user.verifyUser(username, password)) {
-                if (usertype=="ADM") {
+                if (usertype.equals("ADM")) {
                     new AdminPage();
                 }
-                else if (usertype=="CLK") {
+                if (usertype.equals("CLK")) {
                     new ClerksPage();
                 }
-                else if (usertype=="EMP") {
+                if (usertype.equals("EMP")) {
                     new EmployeePage();
                 }
-                else if (usertype=="DEL") {
+                if (usertype.equals("DEL")) {
                     new DeliveryPage();
                 }
                 this.dispose();
