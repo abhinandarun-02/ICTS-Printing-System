@@ -90,10 +90,10 @@ public class Person implements Login {
         return false;
     }
 
-    public void sendRequest(String username, String phone_no, String paper_type, String page_type, String colour_type, String status) {
+    public void sendRequest(String print_id,String username, String phone_no, String paper_type, String page_type, String colour_type, String status) {
 
         /* TODO */
-        int print_id = 12;
+    //    int print_id = 12;
 //        String room_no = "001";
 
         java.util.Date utilDate = new java.util.Date();
@@ -113,7 +113,7 @@ public class Person implements Login {
             setAddress(username);
 
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO request_details (print_id, employee_id, name, phone_no, room_no, paper_type, page_type, colour_type, status, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-            preparedStatement.setInt(1, print_id);
+            preparedStatement.setString(1, print_id);
             preparedStatement.setString(2, "EMP001");
             preparedStatement.setString(3, this.getName());
             preparedStatement.setInt(4, Integer.parseInt(phone_no));
