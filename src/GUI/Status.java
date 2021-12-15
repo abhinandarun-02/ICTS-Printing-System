@@ -13,6 +13,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import main.Person;
+
 
 class Status extends JFrame implements ActionListener {
 
@@ -24,6 +26,8 @@ class Status extends JFrame implements ActionListener {
 
     JLabel status;
     JTextField statusTextField;
+
+    Person user;
 
     Status() {
 
@@ -59,7 +63,7 @@ class Status extends JFrame implements ActionListener {
 
         status.setBounds(120, 260, 200, 30);
         statusTextField.setBounds(280, 260, 150, 20);
-        statusTextField.setEditable(false);
+        statusTextField.setEditable(true);
     }
 
     public void setFont() {
@@ -85,6 +89,25 @@ class Status extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if (e.getActionCommand().equals("SUBMIT"))
+        {
+            String id=idTextField.getText();
+
+            // if id present in request_details
+            if(user.check1(id)=="Accepted")
+                statusTextField.setText("Accepted");
+            else 
+                statusTextField.setText("Rejected");
+
+            // else if id present in log_details
+            if(user.check2(id)=="Delivered")
+                statusTextField.setText("Delivered");
+            else
+                statusTextField.setText("Out for delivery");
+            
+            // else
+                statusTextField.setText("Printing");
+        }
     }
 
     public static void main(String[] args) {

@@ -132,4 +132,51 @@ public class Person implements Login {
             e.printStackTrace();
         }
     }
+
+    public String check1(String id)
+    {
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select status from request_details where print_id=?");
+            preparedStatement.setString(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next())
+               return resultSet.getString(1); 
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+public String check2(String id)
+    {
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+    PreparedStatement preparedStatement = connection.prepareStatement("select delivery_status from log_details where print_id=?");
+    preparedStatement.setString(1, id);
+    ResultSet resultSet = preparedStatement.executeQuery();
+    if(resultSet.next())
+       return resultSet.getString(1); 
+
+} catch (SQLException e) {
+    e.printStackTrace();
 }
+
+        return null;
+    }
+}
+
