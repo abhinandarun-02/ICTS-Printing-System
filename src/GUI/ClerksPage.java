@@ -58,6 +58,7 @@ public class ClerksPage extends JFrame {
     JRadioButton acceptButton;
     JRadioButton rejectButton;
 
+    private JTextField textField;
     public ClerksPage() {
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -114,8 +115,8 @@ public class ClerksPage extends JFrame {
         sp1.setBounds(78, 82, 900, 200);
         printerQueueLabel.setBounds(78, 315, 200, 30);
         sp4.setBounds(78, 360, 900, 200);
-        AddButton.setBounds(1020, 402, 180, 40);
-        DeleteButton.setBounds(1020, 475, 180, 40);
+        AddButton.setBounds(1000, 402, 200, 40);
+        DeleteButton.setBounds(1000, 475, 200, 40);
         NextButton.setBounds(545, 600, 140, 30);
 
 
@@ -175,18 +176,21 @@ public class ClerksPage extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setBorder(null);
-        panel.setBounds(1020, 130, 180, 91);
+        panel.setBounds(1000, 152, 200, 130);
         ClerkPanel1.add(panel);
         panel.setLayout(null);
 
         acceptButton = new JRadioButton("Accept");
-        acceptButton.setFont(new Font("Calibri", Font.PLAIN, 16));
-        acceptButton.setBounds(6, 16, 80, 20);
+        acceptButton.setHorizontalAlignment(SwingConstants.CENTER);
+        acceptButton.setSelected(true);
+        acceptButton.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        acceptButton.setBounds(0, 30, 99, 20);
         panel.add(acceptButton);
 
         rejectButton = new JRadioButton("Reject");
-        rejectButton.setFont(new Font("Calibri", Font.PLAIN, 16));
-        rejectButton.setBounds(104, 16, 70, 20);
+        rejectButton.setHorizontalAlignment(SwingConstants.CENTER);
+        rejectButton.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        rejectButton.setBounds(101, 30, 93, 20);
         panel.add(rejectButton);
 
         buttonGroup1 = new ButtonGroup();
@@ -199,9 +203,20 @@ public class ClerksPage extends JFrame {
                 JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             }
         });
-        requestSubmitButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        requestSubmitButton.setBounds(6, 54, 164, 37);
+        requestSubmitButton.setFont(new Font("Arial", Font.PLAIN, 18));
+        requestSubmitButton.setBounds(0, 83, 200, 37);
         panel.add(requestSubmitButton);
+
+        textField = new JTextField();
+        textField.setEditable(false);
+        textField.setBounds(1104, 101, 96, 30);
+        ClerkPanel1.add(textField);
+        textField.setColumns(10);
+
+        JLabel lblNewLabel = new JLabel("Print ID :");
+        lblNewLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
+        lblNewLabel.setBounds(1000, 102, 80, 30);
+        ClerkPanel1.add(lblNewLabel);
         tabbedPane.setTitleAt(0, "Page 1");
         tabbedPane.add(ClerkPanel2);
 
