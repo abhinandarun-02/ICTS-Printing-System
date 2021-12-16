@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class ClerksPage extends JFrame {
@@ -90,6 +93,19 @@ public class ClerksPage extends JFrame {
         requestModel = new DefaultTableModel();
         pendingRequests = new JTable(requestModel);
 
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        pendingRequests.setDefaultRenderer(String.class, centerRenderer);
+
+
+        pendingRequests.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String print_id = requestModel.getValueAt(pendingRequests.getSelectedRow(), 0).toString();
+                textField.setText(print_id);
+            }
+        });
+
         requestModel.addColumn("Print ID");
         requestModel.addColumn("Name");
         requestModel.addColumn("Employee ID");
@@ -102,6 +118,10 @@ public class ClerksPage extends JFrame {
 
         //Populating values inside JTable
         loadRequestTable();
+
+        for (int x = 0; x < pendingRequests.getColumnCount(); x++) {
+            pendingRequests.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
+        }
 
 
         JTable printerQueue = new JTable();
@@ -220,6 +240,8 @@ public class ClerksPage extends JFrame {
         panel.add(requestSubmitButton);
 
         textField = new JTextField();
+        textField.setHorizontalAlignment(SwingConstants.CENTER);
+        textField.setFont(new Font("SansSerif", Font.PLAIN, 18));
         textField.setEditable(false);
         textField.setBounds(1104, 101, 96, 30);
         ClerkPanel1.add(textField);
