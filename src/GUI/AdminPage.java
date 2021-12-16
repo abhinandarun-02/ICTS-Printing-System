@@ -30,6 +30,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 
+import main.Admin;
 import main.Person;
 
 public class AdminPage extends JFrame implements ActionListener {
@@ -63,7 +64,7 @@ public class AdminPage extends JFrame implements ActionListener {
     Color primaryColor = new Color(255, 255, 255);
     Color secondaryColor = new Color(70, 100, 130);
 
-    Person user;
+    Admin admin;
 
 
     public static void main(String[] args) {
@@ -73,7 +74,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
     public AdminPage() {
 
-        user = new Person();
+        admin = new Admin();
 
         setResizable(false);
         setVisible(true);
@@ -678,7 +679,7 @@ public class AdminPage extends JFrame implements ActionListener {
             String pass = staffpassText.getText();
 
             try {
-                user.staff(name, mail, phone, username, pass);
+                admin.addUser(name, mail, phone, username, pass);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
