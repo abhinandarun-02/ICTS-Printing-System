@@ -1,5 +1,5 @@
 package GUI;
-
+import main.Person;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ClerksPage extends JFrame {
 
-
+    Person user = new Person();
     JTabbedPane tabbedPane;
 
     JPanel ClerkPanel1;
@@ -309,7 +309,12 @@ public class ClerksPage extends JFrame {
         notifyButton = new JButton("Notify Admin");
         notifyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int ans = JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(ans==JOptionPane.YES_OPTION)
+                {
+                	user.setNotification();
+                	JOptionPane.showMessageDialog(null, "Notification sent");
+                }
             }
         });
         notifyButton.setFont(new Font("Arial", Font.PLAIN, 16));

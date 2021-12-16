@@ -133,62 +133,7 @@ public class Person implements Login {
             e.printStackTrace();
         }
     }
-    
-    
-    public double viewAmount(String emp_id)
-    {
-    	ResultSet rs =null;
-    	 try {
-             Class.forName("org.postgresql.Driver");
-             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
-         } 
-    	 catch (SQLException | ClassNotFoundException e) {
-             e.printStackTrace();
-         }
-    	 try {
-    		 Statement stmt = connection.createStatement();
-    		 String query = "SELECT amount FROM EMPLOYEE WHERE employee_id= '"+ emp_id+ "';";
-    		 rs = stmt.executeQuery(query);
-             while(rs.next())
-             {
-            	 return(rs.getDouble("amount"));
-             }
-             rs.close();
-    	 }
-    	 catch(SQLException e){
-    		 e.printStackTrace();
-    	 }
-    	 return -1;    	
-    }
-    
-    public double viewCredit(String emp_id)
-    {
-    	ResultSet rs =null;
-    	 try {
-             Class.forName("org.postgresql.Driver");
-             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
-         } 
-    	 catch (SQLException | ClassNotFoundException e) {
-             e.printStackTrace();
-         }
-    	 try {
-    		 Statement stmt = connection.createStatement();
-    		 String query = "SELECT credits FROM EMPLOYEE WHERE employee_id= '"+ emp_id+ "';";
-    		 rs = stmt.executeQuery(query);
-             while(rs.next())
-             {
-            	 return(rs.getDouble("credits"));
-             }
-             rs.close();
-    	 }
-    	 catch(SQLException e){
-    		 e.printStackTrace();
-    	 }
-    	 return -1;    	
-    }
-    
-    
-    
+       
     
     public String getUser_Id(String username){
         try {
@@ -212,4 +157,70 @@ public class Person implements Login {
         return null;
 
     }
+    
+    public boolean getNotification()
+    {
+    	ResultSet rs = null;
+    	try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+        } catch (SQLException | ClassNotFoundException e) {
+            
+            e.printStackTrace();
+        }
+    	try {
+   		 Statement s = connection.createStatement();
+   		 String query ="SELECT availability FROM resource_details; ";
+   		 rs = s.executeQuery(query);
+            while(rs.next())
+            {
+           	 return(rs.getBoolean("availability"));
+            }
+            
+   	 }
+   	 catch(SQLException e){
+   		 e.printStackTrace();
+   	 }
+    	return false;
+    }
+    
+    public void setNotification()
+    {
+    	try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+        } catch (SQLException | ClassNotFoundException e) {
+            
+            e.printStackTrace();
+        }
+    	try {
+    		Statement s = connection.createStatement();
+    		String query ="UPDATE resource_details SET availability='false';";
+    		s.executeUpdate(query);
+    		
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateResources()
+    {
+    	try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+        } catch (SQLException | ClassNotFoundException e) {
+            
+            e.printStackTrace();
+        }
+    	try {
+    		Statement s = connection.createStatement();
+    		String query ="UPDATE resource_details SET availability='true';";
+    		s.executeUpdate(query);
+    		
+    		
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

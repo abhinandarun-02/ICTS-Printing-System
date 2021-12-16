@@ -1,11 +1,12 @@
 package GUI;
-
+import main.Person;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -30,6 +31,7 @@ import javax.swing.ImageIcon;
 
 public class AdminPage extends JFrame {
 
+	Person user = new Person();
     JPanel contentPane;
     JTextField user_idText;
     JTable orderTable;
@@ -55,11 +57,9 @@ public class AdminPage extends JFrame {
 
     Color primaryColor = new Color(255, 255, 255);
     Color secondaryColor = new Color(70, 100, 130);
+    int s=0;
 
-
-    public static void main(String[] args) {
-        new AdminPage();
-    }
+   
 
 
     public AdminPage() {
@@ -72,7 +72,6 @@ public class AdminPage extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
-
 
         /* *************************************************************************************************************************************/
 
@@ -460,12 +459,44 @@ public class AdminPage extends JFrame {
         completedOrdersPanel.setBounds(390, 70, 230, 175);
         homeTab.add(completedOrdersPanel);
         completedOrdersPanel.setLayout(null);
-
-        JLabel completedOrder = new JLabel("   4");
+        
+        
+        if(user.getNotification()==false)
+        {
+        	s =1;
+        }
+        JLabel completedOrder = new JLabel(String.valueOf(s)+"..");
         completedOrder.setIcon(new ImageIcon("assets\\images\\Admin\\home-page\\queue.png"));
         completedOrder.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 56));
         completedOrder.setBounds(10, 50, 210, 90);
         completedOrdersPanel.add(completedOrder);
+        
+        
+        completedOrder.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
+				if (s!=0)
+				{
+            	int ans=JOptionPane.showConfirmDialog(null, "Resources have depleted..\nUpdate status if replenished","Clerk's notification",JOptionPane.YES_NO_OPTION);
+            	if(JOptionPane.YES_NO_OPTION==ans)
+					{
+            		user.updateResources();
+            		completedOrder.setText(" 0");
+            		s=0;
+            		
+					}
+				}
+            }
+            public void mouseEntered(MouseEvent e) {
+                 completedOrdersPanel.setBackground(Color.GRAY);
+                
+            }
+            public void mouseExited(MouseEvent e) {               
+                 completedOrdersPanel.setBackground(Color.LIGHT_GRAY);
+                
+            }
+            });
+        
 
         JPanel revenuePanel = new JPanel();
         revenuePanel.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
@@ -499,16 +530,22 @@ public class AdminPage extends JFrame {
         recentOrderLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
         recentOrderLabel.setBounds(70, 263, 183, 46);
         homeTab.add(recentOrderLabel);
+        
+        JLabel recentOrderLabel2 = new JLabel("RECENT ORDERS");
+        recentOrderLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+        recentOrderLabel.setBounds(70, 263, 183, 46);
+        homeTab.add(recentOrderLabel);
 
         JLabel pendingRequestsLabel = new JLabel("PENDING REQUESTS");
         pendingRequestsLabel.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 20));
         pendingRequestsLabel.setBounds(70, 37, 230, 30);
         homeTab.add(pendingRequestsLabel);
 
-        JLabel netRevenueLabel = new JLabel("IN QUEUE");
-        netRevenueLabel.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 20));
-        netRevenueLabel.setBounds(390, 37, 230, 30);
-        homeTab.add(netRevenueLabel);
+        
+        JLabel notificationLabel = new JLabel("NOTIFICATIONS");
+        notificationLabel.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 20));
+        notificationLabel.setBounds(390, 37, 230, 30);
+        homeTab.add(notificationLabel);
 
         JLabel lblNetRevenue = new JLabel("NET REVENUE");
         lblNetRevenue.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 20));
@@ -641,5 +678,8 @@ public class AdminPage extends JFrame {
         addUserPanel.add(staffSubmitButton);
 
 
+    }
+    public static void main(String[] args) {
+        new AdminPage();
     }
 }
