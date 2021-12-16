@@ -32,7 +32,7 @@ import javax.swing.ImageIcon;
 
 import main.Person;
 
-public class AdminPage extends JFrame implements ActionListener{
+public class AdminPage extends JFrame implements ActionListener {
 
     JPanel contentPane;
     JTextField user_idText;
@@ -58,11 +58,12 @@ public class AdminPage extends JFrame implements ActionListener{
     JPanel deliveryButtonPanel;
     JPanel manageButtonPanel;
 
+    JComboBox staffTypeCB;
+
     Color primaryColor = new Color(255, 255, 255);
     Color secondaryColor = new Color(70, 100, 130);
 
     Person user;
-    String value;
 
 
     public static void main(String[] args) {
@@ -71,6 +72,8 @@ public class AdminPage extends JFrame implements ActionListener{
 
 
     public AdminPage() {
+
+        user = new Person();
 
         setResizable(false);
         setVisible(true);
@@ -527,11 +530,11 @@ public class AdminPage extends JFrame implements ActionListener{
         homeTabbedPane.addTab("DELIVERY", null, deliveryTab, null);
         JTable deliveryQueueTable = new JTable(data, column);
         deliveryQueueTable.setModel(new DefaultTableModel(
-        	new String[][] {
-        	},
-        	new String[] {
-        		"Print ID", "User ID", "Name", "Room no", "Phone no", "Bill Status"
-        	}
+                new String[][]{
+                },
+                new String[]{
+                        "Print ID", "User ID", "Name", "Room no", "Phone no", "Bill Status"
+                }
         ));
 
         deliveryQueueTable.setFillsViewportHeight(true);
@@ -604,12 +607,12 @@ public class AdminPage extends JFrame implements ActionListener{
         addUserPanel.add(comboBorderPanel);
         comboBorderPanel.setLayout(null);
 
-        JComboBox staffTypeCB = new JComboBox(new String[]{"DELIVERY BOY", "CLERK"});
+        staffTypeCB = new JComboBox(new String[]{"DELIVERY BOY", "CLERK"});
         staffTypeCB.setBounds(2, 2, 146, 36);
         comboBorderPanel.add(staffTypeCB);
         staffTypeCB.setFont(new Font("Arial", Font.PLAIN, 16));
         //        staffTypeCB.setModel(new DefaultComboBoxModel());
-        value= staffTypeCB.getItemAt(staffTypeCB.getSelectedIndex()).toString();
+
 
         JLabel emailLabel = new JLabel("Email ID : ");
         emailLabel.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -661,32 +664,25 @@ public class AdminPage extends JFrame implements ActionListener{
         addUserPanel.add(staffSubmitButton);
         staffSubmitButton.addActionListener(this);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if (e.getActionCommand().equals("SUBMIT")) {
 
-            String name=staffNameText.getText();
+            String name = staffNameText.getText();
             String mail = emailText.getText();
-            String phone =staffPhNoText.getText();
+            String phone = staffPhNoText.getText();
+            String value = staffTypeCB.getItemAt(staffTypeCB.getSelectedIndex()).toString();
             String username = staffDateText.getText();
             String pass = staffpassText.getText();
-            try {
-                System.out.print(name);
-                System.out.print(mail);
-                System.out.print(value);
-                System.out.print(phone);
-                System.out.print(username);
-                System.out.print(pass);
-                user.staff(name,mail,value,phone,username,pass);
-                
-        }
-        catch(Exception ex) {
-            ex.printStackTrace();
-            
-        }
-    }
 
-    
+            try {
+                user.staff(name, mail, phone, username, pass);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
     }
 }
