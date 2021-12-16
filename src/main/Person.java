@@ -176,7 +176,6 @@ public class Person implements Login {
         int cost_per_page = colour_type.equals("Grayscale") ? Printer.getCostPerBw() : Printer.getCostPerColour();
         int total_cost = cost_per_page * no_of_pages * no_of_copies;
 
-        System.out.println("Hello");
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO  print_details (print_id, status, employee_id, priority, date, time, cost_per_pg, no_of_pages, no_of_copies, total_cost) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
