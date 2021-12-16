@@ -5,6 +5,10 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -58,7 +62,11 @@ public class ClerksPage extends JFrame {
     JRadioButton acceptButton;
     JRadioButton rejectButton;
 
+    DefaultTableModel requestModel;
+    JTable pendingRequests;
     private JTextField textField;
+
+
     public ClerksPage() {
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -78,21 +86,25 @@ public class ClerksPage extends JFrame {
                 tabbedPane.setSelectedIndex(1);
             }
         });
-        String[][] data1 = {};
-        String[] column1 = {};
-        JTable pendingRequests = new JTable(data1, column1);
-        pendingRequests.setModel(new DefaultTableModel(
-                new String[][]{
-                        
-                },
-                new String[]{
-                        "User ID", "Name", "Print ID", "Use", "No of Copies", "Date", "Credits"
-                }
-        ));
+
+        requestModel = new DefaultTableModel();
+        pendingRequests = new JTable(requestModel);
+
+        requestModel.addColumn("Print ID");
+        requestModel.addColumn("Name");
+        requestModel.addColumn("Employee ID");
+        requestModel.addColumn("Page Type");
+        requestModel.addColumn("Paper Type");
+        requestModel.addColumn("Colour Type");
+        requestModel.addColumn("Date");
+
         JScrollPane sp1 = new JScrollPane(pendingRequests, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        String[][] data4 = {};
-        String[] column4 = {};
-        JTable printerQueue = new JTable(data4, column4);
+
+        //Populating values inside JTable
+        loadRequestTable();
+
+
+        JTable printerQueue = new JTable();
         printerQueue.setModel(new DefaultTableModel(
                 new Object[][]{
                 },
@@ -403,6 +415,30 @@ public class ClerksPage extends JFrame {
         /* *************************************************************************** */
 
 
+    }
+
+    public void loadRequestTable() {
+        Connection con;
+        Statement st;
+        ResultSet rs;
+
+        int i = 0;
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+            st = con.createStatement();
+            String query = "SELECT  print_id, name, employee_id, page_type, paper_type, colour_type, date FROM request_details;";
+            rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                requestModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
     }
 
     public static void main(String[] args) {
