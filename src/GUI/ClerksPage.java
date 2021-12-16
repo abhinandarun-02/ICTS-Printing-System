@@ -1,14 +1,14 @@
 package GUI;
 
+import main.Clerk;
+import main.Staff;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
@@ -39,6 +39,7 @@ public class ClerksPage extends JFrame {
     JTextField userId;
     JTextField costPerPage;
     JTextField totalNoPages;
+    JTextField printer_id_tf;
     JButton GenerateButton;
     JButton PrevButton;
     JPanel billPanel;
@@ -66,11 +67,18 @@ public class ClerksPage extends JFrame {
     JRadioButton rejectButton;
 
     DefaultTableModel requestModel;
+    DefaultTableModel queueModel;
     JTable pendingRequests;
-    private JTextField textField;
+    JTable printerQueue;
+
+    Staff user;
+    Clerk clerk;
 
 
     public ClerksPage() {
+
+        user = new Clerk();
+        clerk = new Clerk();
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
@@ -84,25 +92,19 @@ public class ClerksPage extends JFrame {
         DeleteButton = new JButton("Remove Record");
         NextButton = new JButton("Next Page");
         NextButton.setFont(new Font("Arial", Font.BOLD, 14));
-        NextButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                tabbedPane.setSelectedIndex(1);
-            }
-        });
+        NextButton.addActionListener(e -> tabbedPane.setSelectedIndex(1));
 
         requestModel = new DefaultTableModel();
         pendingRequests = new JTable(requestModel);
 
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        pendingRequests.setDefaultRenderer(String.class, centerRenderer);
-
+        queueModel = new DefaultTableModel();
+        printerQueue = new JTable(queueModel);
 
         pendingRequests.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 String print_id = requestModel.getValueAt(pendingRequests.getSelectedRow(), 0).toString();
-                textField.setText(print_id);
+                printer_id_tf.setText(print_id);
             }
         });
 
@@ -116,22 +118,32 @@ public class ClerksPage extends JFrame {
 
         JScrollPane sp1 = new JScrollPane(pendingRequests, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        //Populating values inside JTable
-        loadRequestTable();
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        pendingRequests.setDefaultRenderer(String.class, centerRenderer);
+        printerQueue.setDefaultRenderer(String.class, centerRenderer);
 
+        //Populating values inside JTable
+        this.loadRequestTable();
+
+        //Aligning table values
         for (int x = 0; x < pendingRequests.getColumnCount(); x++) {
             pendingRequests.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
         }
 
+        queueModel.addColumn("Print ID");
+        queueModel.addColumn("Employee ID");
+        queueModel.addColumn("Paper Type");
+        queueModel.addColumn("Colour Type");
+        queueModel.addColumn("Page Type");
+        queueModel.addColumn("No of Pages");
+        queueModel.addColumn("No of Copies");
 
-        JTable printerQueue = new JTable();
-        printerQueue.setModel(new DefaultTableModel(
-                new Object[][]{
-                },
-                new String[]{
-                        "Print ID", "User ID", "Paper Size", "Print Type", "Single/Double side", "No of Pages", "Printer#"
-                }
-        ));
+        this.loadPrintTable();
+
+        for (int x = 0; x < printerQueue.getColumnCount(); x++) {
+            printerQueue.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
+        }
 
         JScrollPane sp4 = new JScrollPane(printerQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -167,11 +179,8 @@ public class ClerksPage extends JFrame {
         DeleteButton2 = new JButton("Delete record");
         PrevButton = new JButton("Previous Page");
         PrevButton.setFont(new Font("Arial", Font.BOLD, 14));
-        PrevButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                tabbedPane.setSelectedIndex(0);
-            }
-        });
+
+        PrevButton.addActionListener(e -> tabbedPane.setSelectedIndex(0));
 
         String[][] data5 = {};
         String[] column5 = {};
@@ -213,6 +222,7 @@ public class ClerksPage extends JFrame {
         panel.setLayout(null);
 
         acceptButton = new JRadioButton("Accept");
+        acceptButton.setActionCommand("Accept");
         acceptButton.setHorizontalAlignment(SwingConstants.CENTER);
         acceptButton.setSelected(true);
         acceptButton.setFont(new Font("SansSerif", Font.PLAIN, 16));
@@ -220,6 +230,7 @@ public class ClerksPage extends JFrame {
         panel.add(acceptButton);
 
         rejectButton = new JRadioButton("Reject");
+        rejectButton.setActionCommand("Reject");
         rejectButton.setHorizontalAlignment(SwingConstants.CENTER);
         rejectButton.setFont(new Font("SansSerif", Font.PLAIN, 16));
         rejectButton.setBounds(101, 30, 93, 20);
@@ -231,21 +242,18 @@ public class ClerksPage extends JFrame {
 
         JButton requestSubmitButton = new JButton("Submit");
         requestSubmitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            }
-        });
+
         requestSubmitButton.setFont(new Font("Arial", Font.PLAIN, 18));
         requestSubmitButton.setBounds(0, 83, 200, 37);
         panel.add(requestSubmitButton);
 
-        textField = new JTextField();
-        textField.setHorizontalAlignment(SwingConstants.CENTER);
-        textField.setFont(new Font("SansSerif", Font.PLAIN, 18));
-        textField.setEditable(false);
-        textField.setBounds(1104, 101, 96, 30);
-        ClerkPanel1.add(textField);
-        textField.setColumns(10);
+        printer_id_tf = new JTextField();
+        printer_id_tf.setHorizontalAlignment(SwingConstants.CENTER);
+        printer_id_tf.setFont(new Font("SansSerif", Font.PLAIN, 18));
+        printer_id_tf.setEditable(false);
+        printer_id_tf.setBounds(1104, 101, 96, 30);
+        ClerkPanel1.add(printer_id_tf);
+        printer_id_tf.setColumns(10);
 
         JLabel lblNewLabel = new JLabel("Print ID :");
         lblNewLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
@@ -356,11 +364,7 @@ public class ClerksPage extends JFrame {
         resourcesPanel.add(a4resLabel);
 
         notifyButton = new JButton("Notify Admin");
-        notifyButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            }
-        });
+        notifyButton.addActionListener(e -> JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE));
         notifyButton.setFont(new Font("Arial", Font.PLAIN, 16));
         notifyButton.setBounds(110, 255, 150, 30);
         resourcesPanel.add(notifyButton);
@@ -440,30 +444,38 @@ public class ClerksPage extends JFrame {
     }
 
     public void loadRequestTable() {
-        Connection con;
-        Statement st;
-        ResultSet rs;
 
         int i = 0;
+        ResultSet rs = user.getRequestTable();
 
         try {
-            Class.forName("org.postgresql.Driver");
-            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
-            st = con.createStatement();
-            String query = "SELECT  print_id, name, employee_id, page_type, paper_type, colour_type, date FROM request_details;";
-            rs = st.executeQuery(query);
-
             while (rs.next()) {
                 requestModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
                 i++;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void loadPrintTable() {
+
+        int i = 0;
+        ResultSet rs = user.getPrintTable();
+        System.out.println(queueModel.getColumnCount());
+        try {
+            while (rs.next()) {
+                queueModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7)});
+                i++;
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(0);
         }
     }
 
     public static void main(String[] args) {
         new ClerksPage();
     }
+
 }
