@@ -15,7 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class ClerksPage extends JFrame {
+public class ClerksPage extends JFrame implements ActionListener {
 
 
     JTabbedPane tabbedPane;
@@ -241,7 +241,7 @@ public class ClerksPage extends JFrame {
         buttonGroup1.add(rejectButton);
 
         JButton requestSubmitButton = new JButton("Submit");
-        requestSubmitButton.addActionListener(new ActionListener() {
+        requestSubmitButton.addActionListener(this);
 
         requestSubmitButton.setFont(new Font("Arial", Font.PLAIN, 18));
         requestSubmitButton.setBounds(0, 83, 200, 37);
@@ -478,4 +478,25 @@ public class ClerksPage extends JFrame {
         new ClerksPage();
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Submit")) {
+            if (buttonGroup1.getSelection().getActionCommand().equals("Accept")) {
+                String print_id = printer_id_tf.getText();
+
+                if (!print_id.equals("")) {
+                    clerk.verifyPrintouts(print_id);
+                    printer_id_tf.setText("");
+                    requestModel.removeRow(pendingRequests.getSelectedRow());
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Please Select a Row", "TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
+            /*TODO*/
+//            else {
+//            }
+        }
+    }
 }
