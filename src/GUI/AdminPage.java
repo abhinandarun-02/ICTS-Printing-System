@@ -26,9 +26,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 
-public class AdminPage extends JFrame {
+import main.Person;
+
+public class AdminPage extends JFrame implements ActionListener{
 
     JPanel contentPane;
     JTextField user_idText;
@@ -40,6 +44,7 @@ public class AdminPage extends JFrame {
     JTextField emailText;
     JTextField staffPhNoText;
     JTextField staffDateText;
+    JTextField staffpassText;
 
     JTabbedPane homeTabbedPane;
 
@@ -55,6 +60,9 @@ public class AdminPage extends JFrame {
 
     Color primaryColor = new Color(255, 255, 255);
     Color secondaryColor = new Color(70, 100, 130);
+
+    Person user;
+    String value;
 
 
     public static void main(String[] args) {
@@ -601,6 +609,7 @@ public class AdminPage extends JFrame {
         comboBorderPanel.add(staffTypeCB);
         staffTypeCB.setFont(new Font("Arial", Font.PLAIN, 16));
         //        staffTypeCB.setModel(new DefaultComboBoxModel());
+        value= staffTypeCB.getItemAt(staffTypeCB.getSelectedIndex()).toString();
 
         JLabel emailLabel = new JLabel("Email ID : ");
         emailLabel.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -618,10 +627,15 @@ public class AdminPage extends JFrame {
         staffPhNoLabel.setBounds(218, 313, 150, 40);
         addUserPanel.add(staffPhNoLabel);
 
-        JLabel staffDateLabel = new JLabel("Date :");
+        JLabel staffDateLabel = new JLabel("Username :");
         staffDateLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         staffDateLabel.setBounds(218, 392, 150, 40);
         addUserPanel.add(staffDateLabel);
+
+        JLabel staffpassLabel = new JLabel("Password :");
+        staffpassLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+        staffpassLabel.setBounds(218, 471, 150, 40);
+        addUserPanel.add(staffpassLabel);
 
         staffPhNoText = new JTextField();
         staffPhNoText.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -635,11 +649,44 @@ public class AdminPage extends JFrame {
         staffDateText.setBounds(386, 392, 150, 40);
         addUserPanel.add(staffDateText);
 
+        staffpassText = new JTextField();
+        staffpassText.setFont(new Font("Arial", Font.PLAIN, 16));
+        staffpassText.setColumns(10);
+        staffpassText.setBounds(386, 471, 150, 40);
+        addUserPanel.add(staffpassText);
+
         JButton staffSubmitButton = new JButton("SUBMIT");
         staffSubmitButton.setFont(new Font("Arial", Font.PLAIN, 18));
-        staffSubmitButton.setBounds(318, 490, 150, 50);
+        staffSubmitButton.setBounds(318, 520, 150, 50);
         addUserPanel.add(staffSubmitButton);
+        staffSubmitButton.addActionListener(this);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
+        if (e.getActionCommand().equals("SUBMIT")) {
 
+            String name=staffNameText.getText();
+            String mail = emailText.getText();
+            String phone =staffPhNoText.getText();
+            String username = staffDateText.getText();
+            String pass = staffpassText.getText();
+            try {
+                System.out.print(name);
+                System.out.print(mail);
+                System.out.print(value);
+                System.out.print(phone);
+                System.out.print(username);
+                System.out.print(pass);
+                user.staff(name,mail,value,phone,username,pass);
+                
+        }
+        catch(Exception ex) {
+            ex.printStackTrace();
+            
+        }
+    }
+
+    
     }
 }

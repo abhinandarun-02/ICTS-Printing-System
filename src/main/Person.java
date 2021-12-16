@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 
 public class Person implements Login {
 
@@ -188,8 +189,6 @@ public class Person implements Login {
     }
     
     
-    
-    
     public String getUser_Id(String username){
         try {
             Class.forName("org.postgresql.Driver");
@@ -210,6 +209,56 @@ public class Person implements Login {
             e.printStackTrace();
         }
         return null;
+
+    }
+
+    public void staff(String name, String email, String type, String no, String username,String pass){
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+        } catch (SQLException | ClassNotFoundException e) {
+            
+            e.printStackTrace();
+        }
+
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+        Random random = new Random();
+        int id = random.nextInt(1000);
+        String s_id;
+        if(username.substring(0,3)=="CLK")
+            s_id ="CLK"+String.valueOf(id);
+        else
+            s_id ="DEL"+String.valueOf(id);
+        
+        String user_type;
+        if(username.substring(0,3)=="CLK")
+            user_type = "Clerk";
+        else
+            user_type="Delivery";
+    
+
+            try {
+                PreparedStatement ps1 = connection.prepareStatement("insert into login values(?,?);");
+                ps1.setString(1,username);
+                ps1.setString(2,pass);
+                PreparedStatement ps2 = connection.prepareStatement("INSERT INTO staff values(?, ?, ?, ?, ?, ?, ?);");
+                ps2.setString(1, s_id);
+                ps2.setString(2, name);
+                ps2.setInt(3, Integer.parseInt(no));
+                ps2.setString(4, user_type);
+                ps2.setString(5, email);
+                ps2.setDate(6, sqlDate);
+                ps2.setString(7, username);
+    
+                ps2.executeUpdate();
+                
+    
+            } catch (Exception e) {
+                e.printStackTrace();
+                
+            }
 
     }
 }
