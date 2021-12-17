@@ -1,9 +1,17 @@
 package main;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Employee extends Person {
 
     private String roomNo;
     private String department;
+    
+    
     public int usageCount;
     public int requestCount;
     public int pendingCash;
@@ -11,11 +19,7 @@ public class Employee extends Person {
     public String getRoomNo() {
         return roomNo;
     }
-
-    public void viewBill() {
-
-    }
-
+    
     public void payBill() {
 
     }

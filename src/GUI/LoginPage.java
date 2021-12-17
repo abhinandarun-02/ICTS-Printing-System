@@ -117,7 +117,7 @@ class LoginPage extends JFrame implements ActionListener {
                     new ClerksPage();
                 }
                 if (usertype.equals("EMP")) {
-                    new EmployeePage();
+                    new EmployeePage(username);
                 }
                 if (usertype.equals("DEL")) {
                     new DeliveryPage();

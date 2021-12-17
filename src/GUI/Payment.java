@@ -1,5 +1,5 @@
 package GUI;
-import main.Person;
+import main.Employee;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 
 class Payment extends JFrame {
 
-	Person user = new Person();
+	Employee user = new Employee();
     JPanel panel = (JPanel) getContentPane();
 
     JLabel bill;

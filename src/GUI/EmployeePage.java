@@ -1,9 +1,9 @@
 package GUI;
-
+import main.Employee;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -13,7 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 class EmployeePage extends JFrame implements ActionListener {
-
+	
+    Employee user = new Employee();
+    String username;
     JLabel status;
     JLabel id1;
     JTextField statusTextField;
@@ -25,9 +27,11 @@ class EmployeePage extends JFrame implements ActionListener {
     JButton submit2;
 
     JLabel bill;
-    JLabel month;
+    JLabel amount;
+    JTextField amountField;
+    JTextField creditsField;
+    JLabel credits;
     String[] list;
-    JScrollPane sp2;
     JButton submit3;
 
     String[] column;
@@ -35,11 +39,11 @@ class EmployeePage extends JFrame implements ActionListener {
     JTable table;
     JScrollPane sp;
 
-
-    EmployeePage() {
-
+    EmployeePage(String u) {
+    	
+        this.username = u;
         status = new JLabel("CHECK STATUS");
-        id1 = new JLabel("Request ID");
+        id1 = new JLabel("REQUEST ID");
         statusTextField = new JTextField();
         submit1 = new JButton("SUBMIT");
 
@@ -48,12 +52,12 @@ class EmployeePage extends JFrame implements ActionListener {
         reqTextField = new JTextField();
         submit2 = new JButton("SUBMIT");
 
-        bill = new JLabel("VIEW MONTHLY BILL");
-        month = new JLabel("Month");
-        list = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-        JList<String> select = new JList<>(list);
-        sp2 = new JScrollPane(select);
+        bill = new JLabel("VIEW AMOUNT/CREDITS");
+        amount = new JLabel("Amount:");
+        credits = new JLabel("Credits:");
         submit3 = new JButton("SUBMIT");
+        amountField = new JTextField("");
+        creditsField = new JTextField("");
 
         column = new String[]{"Print ID", "Date", "Time", "Use", "Status", "Credit"};
         data = new String[][]{};
@@ -61,7 +65,7 @@ class EmployeePage extends JFrame implements ActionListener {
         sp = new JScrollPane(table);
 
 
-        setLayout(null);
+        getContentPane().setLayout(null);
 
         setTitle("Employee Login");
         setBounds(150, 75, 1015, 700);
@@ -81,10 +85,12 @@ class EmployeePage extends JFrame implements ActionListener {
         reqTextField.setBounds(550, 390, 100, 20);
         submit2.setBounds(480, 430, 100, 20);
 
-        bill.setBounds(200, 480, 150, 30);
-        month.setBounds(400, 510, 100, 30);
-        sp2.setBounds(550, 510, 100, 25);
-        submit3.setBounds(480, 560, 100, 20);
+        bill.setBounds(200, 480, 180, 30);
+        amount.setBounds(400, 510, 100, 30);
+        amountField.setBounds(510, 509, 100, 30);
+        credits.setBounds(400, 550, 100, 30);
+        creditsField.setBounds(510, 550, 100, 30);
+        submit3.setBounds(480, 600, 100, 20);
 
 
         status.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -92,35 +98,45 @@ class EmployeePage extends JFrame implements ActionListener {
         req.setFont(new Font("Calibri", Font.BOLD, 16));
         id2.setFont(new Font("Calibri", Font.PLAIN, 16));
         bill.setFont(new Font("Calibri", Font.BOLD, 16));
-        month.setFont(new Font("Calibri", Font.PLAIN, 16));
+        credits.setFont(new Font("Calibri", Font.PLAIN, 16));
+        amount.setFont(new Font("Calibri", Font.PLAIN, 16));
 
         //Adding each component to the Container
-        this.add(sp);
+        getContentPane().add(sp);
 
-        this.add(status);
-        this.add(id1);
-        this.add(statusTextField);
-        this.add(submit1);
+        getContentPane().add(status);
+        getContentPane().add(id1);
+        getContentPane().add(statusTextField);
+        getContentPane().add(submit1);
 
-        this.add(req);
-        this.add(id2);
-        this.add(reqTextField);
-        this.add(submit2);
+        getContentPane().add(req);
+        getContentPane().add(id2);
+        getContentPane().add(reqTextField);
+        getContentPane().add(submit2);
 
-        this.add(bill);
-        this.add(month);
-        this.add(sp2);
-        this.add(submit3);
+        getContentPane().add(bill);
+        getContentPane().add(credits);
+        getContentPane().add(amount);
+        getContentPane().add(amountField);
+        getContentPane().add(creditsField);
+        getContentPane().add(submit3);
+        submit3.addActionListener(this);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        double x = user.viewAmount(username);
+        double y = user.viewCredit(username);
+        amountField.setText(String.valueOf(x));
+        creditsField.setText(String.valueOf(y));
+        
+    
 
     }
 
     public static void main(String[] args) {
-        new EmployeePage();
+        new EmployeePage("/null");
     }
 
 }
