@@ -159,24 +159,5 @@ public class Person implements Login {
     }
     
  
-    public void setNotification()
-    {
-    	try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
-        } catch (SQLException | ClassNotFoundException e) {
-            
-            e.printStackTrace();
-        }
-    	try {
-    		Statement s = connection.createStatement();
-    		String query ="UPDATE resource_details SET availability='false';";
-    		s.executeUpdate(query);
-    		
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
     
 }

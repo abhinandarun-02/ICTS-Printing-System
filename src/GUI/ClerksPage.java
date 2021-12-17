@@ -1,5 +1,5 @@
 package GUI;
-import main.Person;
+import main.Clerk;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ClerksPage extends JFrame {
 
-    Person user = new Person();
+    Clerk clerk = new Clerk();
     JTabbedPane tabbedPane;
 
     JPanel ClerkPanel1;
@@ -312,7 +312,7 @@ public class ClerksPage extends JFrame {
                 int ans = JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(ans==JOptionPane.YES_OPTION)
                 {
-                	user.setNotification();
+                	clerk.setNotification();
                 	JOptionPane.showMessageDialog(null, "Notification sent");
                 }
             }
