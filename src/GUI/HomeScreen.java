@@ -1,7 +1,8 @@
 package GUI;
 
 import main.Person;
-import java.util.Random;   
+
+import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -32,8 +33,6 @@ import javax.swing.text.DateFormatter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class HomeScreen extends JFrame implements ActionListener {
-
-    Person user = new Person();
 
     /* *************** REQUEST_PANEL *************** */
     JPanel requestFormPanel;
@@ -320,38 +319,53 @@ public class HomeScreen extends JFrame implements ActionListener {
             String username = usernameTextField.getText();
             String password = String.valueOf(passwordField.getPassword());
 
+            Person user = new Person(username);
+            user.setName(username);
+            user.setPerson_id(username);
+            user.setEmail_id(username);
+            user.setAddress(username);
+            user.setPhoneNO(username);
+
+
             if (user.verifyUser(username, password)) {
                 String phone_no = phoneTextField.getText();
+
+                String print_type = buttonGroup1.getSelection().getActionCommand();
                 String paper_type = buttonGroup2.getSelection().getActionCommand();
                 String page_type = buttonGroup3.getSelection().getActionCommand();
                 String colour_type = buttonGroup4.getSelection().getActionCommand();
+
                 String status = "Not Accepted";
-                
+
+                int no_of_pages = (int) pageNoSpinner.getValue();
+                int no_of_copies = (int) copyNoSpinner.getValue();
+
+
                 Random random = new Random();
                 int id = random.nextInt(1000);
-                String p_id ="P"+String.valueOf(id);
-                
-                JOptionPane.showInternalMessageDialog(null, "Request ID : "+ p_id);
-                
-                String print_id = p_id;
-                
-                
-                 try {
-                	 user.sendRequest(print_id,username, phone_no, paper_type, page_type, colour_type, status);
-         	}
-         	catch(Exception ex) {
-         		ex.printStackTrace();
-         		JOptionPane.showInternalMessageDialog(null, "Please click submit again..\nSorry for the inconvenience");
-         		
-         	}
-               
-            }
-            else 
-            	JOptionPane.showMessageDialog(null, "User credentials not registered", "INVALID LOGIN", JOptionPane.ERROR_MESSAGE, null);
+                String p_id = "P" + id;
 
-            
+                JOptionPane.showInternalMessageDialog(null, "Request ID : " + p_id);
+
+                String print_id = p_id;
+
+
+                try {
+                    user.sendRequest(print_id, username, phone_no, paper_type, page_type, colour_type, status);
+                    user.sendRequest(print_id, print_type, colour_type, no_of_pages, no_of_copies);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showInternalMessageDialog(null, "Please click submit again..\nSorry for the inconvenience");
+
+                }
+
+            }
+            else
+                JOptionPane.showMessageDialog(null, "User credentials not registered", "INVALID LOGIN", JOptionPane.ERROR_MESSAGE, null);
+
+
         }
-       
+
         if (e.getActionCommand().equals("Reset")) {
             usernameTextField.setText("");
             nameTextField.setText("");
