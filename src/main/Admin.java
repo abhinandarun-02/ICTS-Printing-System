@@ -1,15 +1,65 @@
 package main;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Collection;
+import java.sql.*;
 import java.util.Random;
 
 public class Admin extends Staff {
 
     private boolean resourcesStatus;
+    private Connection connection;
+    
+    
+    
+    public boolean getNotification()
+    {
+    	ResultSet rs = null;
+    	try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+        } catch (SQLException | ClassNotFoundException e) {
+            
+            e.printStackTrace();
+        }
+    	try {
+   		 Statement s = connection.createStatement();
+   		 String query ="SELECT availability FROM resource_details; ";
+   		 rs = s.executeQuery(query);
+            while(rs.next())
+            {
+           	 return(rs.getBoolean("availability"));
+            }
+            
+   	 }
+   	 catch(SQLException e){
+   		 e.printStackTrace();
+   	 }
+    	return false;
+    }
+    
+    
+    public void updateResources()
+    {
+    	try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+        } catch (SQLException | ClassNotFoundException e) {
+            
+            e.printStackTrace();
+        }
+    	try {
+    		Statement s = connection.createStatement();
+    		String query ="UPDATE resource_details SET availability='true';";
+    		s.executeUpdate(query);
+    		
+    		
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    
 
     public void addUser(String name, String email, String no, String username, String pass) {
 

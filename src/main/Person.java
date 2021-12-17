@@ -275,4 +275,7 @@ public class Person implements Login {
     public void setEmail_id(String email_id) {
         this.email_id = email_id;
     }
+    
+ 
+    
 }

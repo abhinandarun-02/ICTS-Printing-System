@@ -1,7 +1,6 @@
 package GUI;
 
 import main.Clerk;
-import main.Staff;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -16,7 +15,6 @@ import java.awt.event.MouseEvent;
 
 
 public class ClerksPage extends JFrame implements ActionListener {
-
 
     JTabbedPane tabbedPane;
 
@@ -71,14 +69,14 @@ public class ClerksPage extends JFrame implements ActionListener {
     JTable pendingRequests;
     JTable printerQueue;
 
-    Staff user;
+
     Clerk clerk;
 
 
     public ClerksPage() {
 
-        user = new Clerk();
         clerk = new Clerk();
+
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
@@ -446,7 +444,7 @@ public class ClerksPage extends JFrame implements ActionListener {
     public void loadRequestTable() {
 
         int i = 0;
-        ResultSet rs = user.getRequestTable();
+        ResultSet rs = clerk.getRequestTable();
 
         try {
             while (rs.next()) {
@@ -462,7 +460,7 @@ public class ClerksPage extends JFrame implements ActionListener {
     public void loadPrintTable() {
 
         int i = 0;
-        ResultSet rs = user.getPrintTable();
+        ResultSet rs = clerk.getPrintTable();
         try {
             while (rs.next()) {
                 queueModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7)});
