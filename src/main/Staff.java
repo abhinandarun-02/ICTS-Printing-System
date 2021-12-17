@@ -44,4 +44,23 @@ public abstract class Staff extends Person {
         }
         return rs;
     }
+
+    public ResultSet getDeliveryTable() {
+        Connection connection;
+        Statement st;
+        ResultSet rs = null;
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+            st = connection.createStatement();
+            String query = "select print_id, employee_id, employee_name, room_no, phone_no, status from employee natural join print_details pd where pd.status = 'To be Delivered';";
+            rs = st.executeQuery(query);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
 }
