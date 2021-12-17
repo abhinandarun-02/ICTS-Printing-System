@@ -1,5 +1,5 @@
 package GUI;
-import main.Person;
+import main.Admin;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,7 +31,7 @@ import javax.swing.ImageIcon;
 
 public class AdminPage extends JFrame {
 
-	Person user = new Person();
+	Admin admin = new Admin();
     JPanel contentPane;
     JTextField user_idText;
     JTable orderTable;
@@ -461,7 +461,7 @@ public class AdminPage extends JFrame {
         completedOrdersPanel.setLayout(null);
         
         
-        if(user.getNotification()==false)
+        if(admin.getNotification()==false)
         {
         	s =1;
         }
@@ -480,7 +480,7 @@ public class AdminPage extends JFrame {
             	int ans=JOptionPane.showConfirmDialog(null, "Resources have depleted..\nUpdate status if replenished","Clerk's notification",JOptionPane.YES_NO_OPTION);
             	if(JOptionPane.YES_NO_OPTION==ans)
 					{
-            		user.updateResources();
+            		admin.updateResources();
             		completedOrder.setText(" 0");
             		s=0;
             		
