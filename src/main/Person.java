@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Random;
 
 public class Person implements Login {
 
@@ -16,8 +15,6 @@ public class Person implements Login {
     public Person(String username) {
         this.username = username;
     }
-
-    private Connection connection;
 
     private String name;
     private String username;
@@ -50,8 +47,7 @@ public class Person implements Login {
 
     public void setName(String username) {
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT employee_name FROM employee WHERE username = ?;");
             preparedStatement.setString(1, username);
 
@@ -66,8 +62,7 @@ public class Person implements Login {
 
     public void setPerson_id(String username) {
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("select Employee_id from(select username,Employee_id from Employee union select username,staff_id from staff) as uEiusi where username=?;");
             preparedStatement.setString(1, username);
 
@@ -82,8 +77,7 @@ public class Person implements Login {
 
     public void setAddress(String username) {
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT room_no FROM employee WHERE username = ?;");
             preparedStatement.setString(1, username);
 
@@ -99,8 +93,7 @@ public class Person implements Login {
 
     public void setPhoneNO(String phoneNO) {
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
+            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT phone_no FROM employee WHERE username = ?;");
             preparedStatement.setString(1, username);
 
@@ -117,13 +110,7 @@ public class Person implements Login {
     @Override
     public boolean verifyUser(String user, String pass) {
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
+            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT username, password FROM LOGIN WHERE username = ? AND password=?;");
             preparedStatement.setString(1, user);
             preparedStatement.setString(2, pass);
@@ -138,21 +125,32 @@ public class Person implements Login {
         return false;
     }
 
+    @Override
+    public Connection getConnection() {
+
+        String url = "jdbc:postgresql://localhost:5432/printing-system";
+        String username = "root";
+        String password = "root";
+        Connection connection = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
     public void sendRequest(String print_id, String username, String phone_no, String paper_type, String page_type, String colour_type, String status) {
 
         java.util.Date utilDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
 
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
         try {
 
+            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO request_details (print_id, employee_id, name, phone_no, room_no, paper_type, page_type, colour_type, status, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
             preparedStatement.setString(1, print_id);
             preparedStatement.setString(2, this.getPerson_id());
@@ -178,7 +176,7 @@ public class Person implements Login {
         int total_cost = cost_per_page * no_of_pages * no_of_copies;
 
         try {
-
+            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO  print_details (print_id, status, employee_id, priority, date, time, cost_per_pg, no_of_pages, no_of_copies, total_cost) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
             preparedStatement.setString(1, print_id);
             preparedStatement.setString(2, "Pending");
@@ -202,13 +200,10 @@ public class Person implements Login {
 
     public double viewAmount(String emp_id) {
         ResultSet rs = null;
+
+
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
+            Connection connection = getConnection();
             Statement stmt = connection.createStatement();
             String query = "SELECT amount FROM EMPLOYEE WHERE employee_id= '" + emp_id + "';";
             rs = stmt.executeQuery(query);
@@ -224,13 +219,10 @@ public class Person implements Login {
 
     public double viewCredit(String emp_id) {
         ResultSet rs = null;
+
+
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
+            Connection connection = getConnection();
             Statement stmt = connection.createStatement();
             String query = "SELECT credits FROM EMPLOYEE WHERE employee_id= '" + emp_id + "';";
             rs = stmt.executeQuery(query);
@@ -246,14 +238,9 @@ public class Person implements Login {
 
 
     public String getUser_Id(String username) {
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/printing-system", "root", "root");
-        } catch (SQLException | ClassNotFoundException e) {
 
-            e.printStackTrace();
-        }
         try {
+            Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("select Employee_id from(select username,Employee_id from Employee union select username,staff_id from staff) as uEiusi where username=?");
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -275,7 +262,6 @@ public class Person implements Login {
     public void setEmail_id(String email_id) {
         this.email_id = email_id;
     }
-    
- 
-    
+
+
 }
