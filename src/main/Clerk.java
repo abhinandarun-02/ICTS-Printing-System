@@ -23,11 +23,6 @@ public class Clerk extends Staff {
     }
     
 
-
-    public boolean checkStaffEligility() {
-        return true;
-    }
-
     public void verifyPrintouts(String print_id) {
 
 
@@ -65,22 +60,6 @@ public class Clerk extends Staff {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void pushToQueue() {
-
-    }
-
-    public void getPrintQueue() {
-
-    }
-
-    public void checkDeliveryQueue() {
-
-    }
-
-    public void checkStatus() {
 
     }
 
