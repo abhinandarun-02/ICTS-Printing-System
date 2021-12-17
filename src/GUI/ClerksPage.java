@@ -362,7 +362,16 @@ public class ClerksPage extends JFrame implements ActionListener {
         resourcesPanel.add(a4resLabel);
 
         notifyButton = new JButton("Notify Admin");
-        notifyButton.addActionListener(e -> JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE));
+        notifyButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int ans = JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(ans==JOptionPane.YES_OPTION)
+                {
+                	clerk.setNotification();
+                	JOptionPane.showMessageDialog(null, "Notification sent");
+                }
+            }
+        });
         notifyButton.setFont(new Font("Arial", Font.PLAIN, 16));
         notifyButton.setBounds(110, 255, 150, 30);
         resourcesPanel.add(notifyButton);
