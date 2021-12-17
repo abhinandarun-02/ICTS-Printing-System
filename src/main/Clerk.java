@@ -9,7 +9,7 @@ public class Clerk extends Staff {
     private int rejectedRequests;
 
 
-    public void setNotification()
+    public void alertAdmin()
     {
     	try {
             Connection connection = getConnection();

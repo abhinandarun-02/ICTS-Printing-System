@@ -367,7 +367,7 @@ public class ClerksPage extends JFrame implements ActionListener {
                 int ans = JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(ans==JOptionPane.YES_OPTION)
                 {
-                	clerk.setNotification();
+                	clerk.alertAdmin();
                 	JOptionPane.showMessageDialog(null, "Notification sent");
                 }
             }
