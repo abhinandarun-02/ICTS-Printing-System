@@ -12,10 +12,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 import main.Person;
 
@@ -34,11 +30,15 @@ class Status extends JFrame implements ActionListener {
 
     Status() {
 
+        user = new Person();
+
         id = new JLabel("Request ID");
         idTextField = new JTextField();
         submit = new JButton("SUBMIT");
         status = new JLabel("Status of Print:  ");
         statusTextField = new JTextField();
+
+        submit.addActionListener(this);
 
         //Calling methods inside constructor.
         setLayoutManager();
@@ -92,7 +92,8 @@ class Status extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("SUBMIT")) {
-            String value = user.setstatus(idTextField.getText());
+            String print_id = idTextField.getText();
+            String value = user.setstatus(print_id);
             statusTextField.setText(value);
         }
     }
