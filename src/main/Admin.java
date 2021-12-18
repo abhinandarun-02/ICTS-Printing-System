@@ -82,22 +82,71 @@ public class Admin extends Staff {
 
     }
 
-
-    public void deleteUser() {
-
+    public int getNoOfPendingRequests() {
+        Connection connection = getConnection();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT count(print_id) FROM request_details WHERE status = 'Not Accepted'");
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
-    public void viewPaymentDetails() {
-
+    public long getTotalRevenue() {
+        Connection connection = getConnection();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT sum(total_cost) FROM print_details");
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
-    public void viewDeliveryQueue() {
 
+    public void updateDeliveryStatus(String print_id, String status) {
+
+        Connection connection = getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE print_details set status = ? WHERE print_id = ?");
+            preparedStatement.setString(1, status);
+            preparedStatement.setString(2, print_id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void checkStatus() {
+    /*TODO
+    public void getRecentOrders() {
+        Connection connection = getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT employee_id, total_cost, date  FROM print_details");
+            ResultSet resultSet = preparedStatement.executeQuery();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    /*TODO
+    public void getDeliveryQueue() {
+        Connection connection = getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT print_id, employee_id, status FROM print_details WHERE status = 'To be Delivered';");
+            ResultSet resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
+*/
 
 }
