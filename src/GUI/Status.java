@@ -93,8 +93,8 @@ class Status extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("SUBMIT")) {
             String print_id = idTextField.getText();
-            String value = user.setstatus(print_id);
-            statusTextField.setText(value);
+            String status = user.checkStatus(print_id);
+            statusTextField.setText(status);
         }
     }
 

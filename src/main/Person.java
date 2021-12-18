@@ -110,7 +110,7 @@ public class Person implements Login {
             e.printStackTrace();
         }
     }
-    public String setstatus(String print_id) {
+    public String checkStatus(String print_id) {
         try {
             Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("select status from request_details where print_id=?;");
