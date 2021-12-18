@@ -320,12 +320,6 @@ public class HomeScreen extends JFrame implements ActionListener {
             String password = String.valueOf(passwordField.getPassword());
 
             Person user = new Person(username);
-            user.setName(username);
-            user.setPerson_id(username);
-            user.setEmail_id(username);
-            user.setAddress(username);
-            user.setPhoneNO(username);
-
 
             if (user.verifyUser(username, password)) {
                 String phone_no = phoneTextField.getText();

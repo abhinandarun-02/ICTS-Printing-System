@@ -9,107 +9,99 @@ import java.sql.Statement;
 
 public class Person implements Login {
 
-    public Person() {
-    }
-
-    public Person(String username) {
-        this.username = username;
-    }
-
     private String name;
-    private String username;
     private String person_id;
     private String email_id;
     private String phoneNO;
     private String address;
-    private String print_id;
-    public String status;
 
 
-    public String getName() {
-        return name;
+    public Person() {
+
     }
 
-    public String getUsername() {
-        return username;
-    }
+    public Person(String username) {
 
-    public String getPerson_id() {
-        return person_id;
-    }
+        Connection connection = getConnection();
 
-    public String getAddress() {
-        return address;
-    }
-
-    public String getPhoneNO() {
-        return phoneNO;
-    }
-    public String status(){
-        return print_id;
-    }
-
-
-    public void setName(String username) {
         try {
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT employee_name FROM employee WHERE username = ?;");
-            preparedStatement.setString(1, username);
+            PreparedStatement preparedStatement1 = connection.prepareStatement("select employee_name from(select username,employee_name from Employee union select username,staff_name from staff) as uEiusi where username=?;");
+            preparedStatement1.setString(1, username);
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            if (resultSet1.next()) this.name = resultSet1.getString(1);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                this.name = resultSet.getString(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+            PreparedStatement preparedStatement2 = connection.prepareStatement("select Employee_id from(select username,Employee_id from Employee union select username,staff_id from staff) as uEiusi where username=?;");
+            preparedStatement2.setString(1, username);
+            ResultSet resultSet2 = preparedStatement2.executeQuery();
+            if (resultSet2.next()) this.person_id = resultSet2.getString(1);
 
-    public void setPerson_id(String username) {
-        try {
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select Employee_id from(select username,Employee_id from Employee union select username,staff_id from staff) as uEiusi where username=?;");
-            preparedStatement.setString(1, username);
+            PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT room_no FROM employee WHERE username = ?;");
+            preparedStatement3.setString(1, username);
+            ResultSet resultSet3 = preparedStatement3.executeQuery();
+            if (resultSet3.next()) this.address = resultSet3.getString(1);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                this.person_id = resultSet.getString(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+            PreparedStatement preparedStatement4 = connection.prepareStatement("select phone_no from(select username,phone_no from Employee union select username, phone_no from staff) as uEiusi where username=?;");
+            preparedStatement4.setString(1, username);
+            ResultSet resultSet4 = preparedStatement4.executeQuery();
+            if (resultSet4.next()) this.phoneNO = resultSet4.getString(1);
 
-    public void setAddress(String username) {
-        try {
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT room_no FROM employee WHERE username = ?;");
-            preparedStatement.setString(1, username);
+            PreparedStatement preparedStatement5 = connection.prepareStatement("select email_id from(select username,email_id from Employee union select username, email_id from staff) as uEiusi where username=?;");
+            preparedStatement5.setString(1, username);
+            ResultSet resultSet5 = preparedStatement5.executeQuery();
+            if (resultSet5.next()) this.email_id = resultSet5.getString(1);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                this.address = resultSet.getString(1);
-            }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
-    public void setPhoneNO(String phoneNO) {
+
+
+    @Override
+    public boolean verifyUser(String user, String pass) {
+
+        Connection connection = getConnection();
+
         try {
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT phone_no FROM employee WHERE username = ?;");
-            preparedStatement.setString(1, username);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT username, password FROM LOGIN WHERE username = ? AND password=?;");
+            preparedStatement.setString(1, user);
+            preparedStatement.setString(2, pass);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                this.phoneNO = resultSet.getString(1);
-            }
-        } catch (Exception e) {
+            //returns true/false if given credentials exist
+            return resultSet.next();
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return false;
     }
+
+
+    @Override
+    public Connection getConnection() {
+
+        String url = "jdbc:postgresql://localhost:5432/printing-system";
+        String username = "root";
+        String password = "root";
+
+        Connection connection = null;
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
+
+
+
+
     public String checkStatus(String print_id) {
         try {
             Connection connection = getConnection();
@@ -126,57 +118,20 @@ public class Person implements Login {
         return null;
     }
 
-
-    @Override
-    public boolean verifyUser(String user, String pass) {
-        try {
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT username, password FROM LOGIN WHERE username = ? AND password=?;");
-            preparedStatement.setString(1, user);
-            preparedStatement.setString(2, pass);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.next(); //returns true/false if given credentials exist
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    @Override
-    public Connection getConnection() {
-
-        String url = "jdbc:postgresql://localhost:5432/printing-system";
-        String username = "root";
-        String password = "root";
-        Connection connection = null;
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-
     public void sendRequest(String print_id, String username, String phone_no, String paper_type, String page_type, String colour_type, String status) {
 
         java.util.Date utilDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
 
-
         try {
-
             Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO request_details (print_id, employee_id, name, phone_no, room_no, paper_type, page_type, colour_type, status, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
             preparedStatement.setString(1, print_id);
-            preparedStatement.setString(2, this.getPerson_id());
-            preparedStatement.setString(3, this.getName());
-            preparedStatement.setLong(4, Long.parseLong(this.getPhoneNO()));
-            preparedStatement.setString(5, this.getAddress());
+            preparedStatement.setString(2, this.person_id);
+            preparedStatement.setString(3, this.name);
+            preparedStatement.setLong(4, Long.parseLong(this.phoneNO));
+            preparedStatement.setString(5, this.address);
             preparedStatement.setString(6, paper_type);
             preparedStatement.setString(7, page_type);
             preparedStatement.setString(8, colour_type);
@@ -184,11 +139,11 @@ public class Person implements Login {
             preparedStatement.setDate(10, sqlDate);
             preparedStatement.setTime(11, sqlTime);
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     public void sendRequest(String print_id, String priority, String colour_type, int no_of_pages, int no_of_copies) {
 
@@ -200,7 +155,7 @@ public class Person implements Login {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO  print_details (print_id, status, employee_id, priority, date, time, cost_per_pg, no_of_pages, no_of_copies, total_cost) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
             preparedStatement.setString(1, print_id);
             preparedStatement.setString(2, "Pending");
-            preparedStatement.setString(3, this.getPerson_id());
+            preparedStatement.setString(3, this.person_id);
             preparedStatement.setString(4, priority);
             preparedStatement.setDate(5, null);
             preparedStatement.setTime(6, null);
@@ -208,9 +163,7 @@ public class Person implements Login {
             preparedStatement.setInt(8, no_of_pages);
             preparedStatement.setInt(9, no_of_copies);
             preparedStatement.setInt(10, total_cost);
-
             preparedStatement.executeUpdate();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -219,15 +172,13 @@ public class Person implements Login {
 
 
     public double viewAmount(String emp_id) {
-        ResultSet rs = null;
-
-
+        ResultSet rs;
         try {
             Connection connection = getConnection();
             Statement stmt = connection.createStatement();
             String query = "SELECT amount FROM EMPLOYEE WHERE employee_id= '" + emp_id + "';";
             rs = stmt.executeQuery(query);
-            while (rs.next()) {
+            if (rs.next()) {
                 return (rs.getDouble("amount"));
             }
             rs.close();
@@ -239,14 +190,12 @@ public class Person implements Login {
 
     public double viewCredit(String emp_id) {
         ResultSet rs = null;
-
-
         try {
             Connection connection = getConnection();
             Statement stmt = connection.createStatement();
             String query = "SELECT credits FROM EMPLOYEE WHERE employee_id= '" + emp_id + "';";
             rs = stmt.executeQuery(query);
-            while (rs.next()) {
+            if (rs.next()) {
                 return (rs.getDouble("credits"));
             }
             rs.close();
@@ -261,27 +210,17 @@ public class Person implements Login {
 
         try {
             Connection connection = getConnection();
+
             PreparedStatement preparedStatement = connection.prepareStatement("select Employee_id from(select username,Employee_id from Employee union select username,staff_id from staff) as uEiusi where username=?");
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getString(1);
-            }
+
+            if (resultSet.next()) return resultSet.getString(1);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
-
     }
-
-    public String getEmail_id() {
-        return email_id;
-    }
-
-    public void setEmail_id(String email_id) {
-        this.email_id = email_id;
-    }
-
 
 }
