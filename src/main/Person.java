@@ -22,6 +22,8 @@ public class Person implements Login {
     private String email_id;
     private String phoneNO;
     private String address;
+    private String print_id;
+    public String status;
 
 
     public String getName() {
@@ -42,6 +44,9 @@ public class Person implements Login {
 
     public String getPhoneNO() {
         return phoneNO;
+    }
+    public String status(){
+        return print_id;
     }
 
 
@@ -104,6 +109,21 @@ public class Person implements Login {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public String setstatus(String print_id) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("select status from request_details where print_id=?;");
+            preparedStatement.setString(1, print_id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

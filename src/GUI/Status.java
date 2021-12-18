@@ -12,7 +12,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
+import main.Person;
 
 class Status extends JFrame implements ActionListener {
 
@@ -24,6 +29,8 @@ class Status extends JFrame implements ActionListener {
 
     JLabel status;
     JTextField statusTextField;
+
+    Person user;
 
     Status() {
 
@@ -82,9 +89,12 @@ class Status extends JFrame implements ActionListener {
         panel.setBorder(titledBorder);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("SUBMIT")) {
+            String value = user.setstatus(idTextField.getText());
+            statusTextField.setText(value);
+        }
     }
 
     public static void main(String[] args) {
