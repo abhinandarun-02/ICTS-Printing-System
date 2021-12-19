@@ -223,4 +223,31 @@ public class Person implements Login {
         return null;
     }
 
+
+public void getDeliveryQueue()
+{
+    try {
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("select print_id, employee_id, name, room_no, phone_no, status from request_details where status='Out for delivery';");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while(resultSet.next())  
+            System.out.print(resultSet.getString(1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+public void updateDeliveryStatus(String id)
+{
+    try {
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("update request_details set status='Delivered' where print_id = ?;");
+        preparedStatement.setString(1, id);
+        preparedStatement.executeQuery();
+        
+    }
+     catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 }
