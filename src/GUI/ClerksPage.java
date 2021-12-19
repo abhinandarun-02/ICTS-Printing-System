@@ -1,6 +1,7 @@
 package GUI;
 
 import main.Clerk;
+import main.Printer;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -30,11 +31,11 @@ public class ClerksPage extends JFrame implements ActionListener {
     JButton AddButton2;
     JButton DeleteButton2;
     JLabel printIdLabel;
-    JLabel userIdLabel;
+    JLabel noOfCopiesLabel;
     JLabel costPerPageLabel;
     JLabel totalNoPagesLabel;
     JTextField printId;
-    JTextField userId;
+    JTextField noOfCopiesText;
     JTextField costPerPage;
     JTextField totalNoPages;
     JTextField printer_id_tf;
@@ -47,11 +48,11 @@ public class ClerksPage extends JFrame implements ActionListener {
     JLabel a5Label;
     JLabel blackLabel;
     JLabel colourLabel;
-    JLabel a3resLabel;
-    JLabel a5resLabel;
-    JLabel blackresLabel;
-    JLabel colourresLabel;
-    JLabel a4resLabel;
+    JTextField a3resLabel;
+    JTextField a5resLabel;
+    JTextField blackresLabel;
+    JTextField colourresLabel;
+    JTextField a4resLabel;
     JPanel printerDetailsPanel;
     JLabel printer1Label;
     JLabel printer2Label;
@@ -142,6 +143,20 @@ public class ClerksPage extends JFrame implements ActionListener {
         for (int x = 0; x < printerQueue.getColumnCount(); x++) {
             printerQueue.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
         }
+
+        printerQueue.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                printId.setText(queueModel.getValueAt(printerQueue.getSelectedRow(), 0).toString());
+                if (queueModel.getValueAt(printerQueue.getSelectedRow(), 3).toString().equals("Grayscale"))
+                    costPerPage.setText(String.valueOf(Printer.getCostPerBw()));
+                else
+                    costPerPage.setText(String.valueOf(Printer.getCostPerColour()));
+                totalNoPages.setText(queueModel.getValueAt(printerQueue.getSelectedRow(), 5).toString());
+                noOfCopiesText.setText(queueModel.getValueAt(printerQueue.getSelectedRow(), 6).toString());
+            }
+        });
 
         JScrollPane sp4 = new JScrollPane(printerQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -268,36 +283,40 @@ public class ClerksPage extends JFrame implements ActionListener {
         billPanel.setLayout(null);
         printIdLabel = new JLabel("Print ID : ");
         printIdLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        printIdLabel.setBounds(30, 70, 80, 30);
+        printIdLabel.setBounds(36, 45, 80, 30);
         billPanel.add(printIdLabel);
         printId = new JTextField();
-        printId.setBounds(160, 70, 150, 30);
+        printId.setFont(new Font("Arial", Font.PLAIN, 16));
+        printId.setBounds(166, 45, 150, 30);
         billPanel.add(printId);
-        userIdLabel = new JLabel("User ID : ");
-        userIdLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        userIdLabel.setBounds(30, 110, 80, 30);
-        billPanel.add(userIdLabel);
-        userId = new JTextField();
-        userId.setBounds(160, 110, 150, 30);
-        billPanel.add(userId);
         costPerPageLabel = new JLabel("Cost per Page : ");
         costPerPageLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        costPerPageLabel.setBounds(30, 149, 120, 30);
+        costPerPageLabel.setBounds(36, 95, 120, 30);
         billPanel.add(costPerPageLabel);
         costPerPage = new JTextField();
-        costPerPage.setBounds(160, 150, 150, 30);
+        costPerPage.setFont(new Font("Arial", Font.PLAIN, 16));
+        costPerPage.setBounds(166, 96, 150, 30);
         billPanel.add(costPerPage);
         totalNoPagesLabel = new JLabel("Total Page : ");
         totalNoPagesLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        totalNoPagesLabel.setBounds(30, 187, 120, 30);
+        totalNoPagesLabel.setBounds(36, 148, 120, 30);
         billPanel.add(totalNoPagesLabel);
         totalNoPages = new JTextField();
-        totalNoPages.setBounds(160, 190, 150, 30);
+        totalNoPages.setFont(new Font("Arial", Font.PLAIN, 16));
+        totalNoPages.setBounds(166, 148, 150, 30);
         billPanel.add(totalNoPages);
         GenerateButton = new JButton("Generate Bill");
         GenerateButton.setFont(new Font("Arial", Font.BOLD, 14));
         GenerateButton.setBounds(100, 255, 150, 30);
         billPanel.add(GenerateButton);
+        noOfCopiesText = new JTextField();
+        noOfCopiesText.setFont(new Font("Arial", Font.PLAIN, 16));
+        noOfCopiesText.setBounds(166, 201, 150, 30);
+        billPanel.add(noOfCopiesText);
+        noOfCopiesLabel = new JLabel("No of Copies :");
+        noOfCopiesLabel.setBounds(36, 201, 120, 30);
+        billPanel.add(noOfCopiesLabel);
+        noOfCopiesLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
         resourcesPanel = new JPanel();
         TitledBorder resourcesBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 2), "RESOURCES", TitledBorder.CENTER, TitledBorder.TOP, new Font("Ariel", Font.PLAIN, 18));
@@ -331,31 +350,36 @@ public class ClerksPage extends JFrame implements ActionListener {
         colourLabel.setBounds(55, 210, 120, 30);
         resourcesPanel.add(colourLabel);
 
-        a3resLabel = new JLabel("2400");
+        a3resLabel = new JTextField("2400");
+        a3resLabel.setEditable(false);
         a3resLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         a3resLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         a3resLabel.setBounds(210, 50, 80, 30);
         resourcesPanel.add(a3resLabel);
 
-        a5resLabel = new JLabel("1700");
+        a5resLabel = new JTextField("1700");
+        a5resLabel.setEditable(false);
         a5resLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         a5resLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         a5resLabel.setBounds(210, 130, 80, 30);
         resourcesPanel.add(a5resLabel);
 
-        blackresLabel = new JLabel("90");
+        blackresLabel = new JTextField("90");
+        blackresLabel.setEditable(false);
         blackresLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         blackresLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         blackresLabel.setBounds(210, 170, 80, 30);
         resourcesPanel.add(blackresLabel);
 
-        colourresLabel = new JLabel("120");
+        colourresLabel = new JTextField("120");
+        colourresLabel.setEditable(false);
         colourresLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         colourresLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         colourresLabel.setBounds(210, 210, 80, 30);
         resourcesPanel.add(colourresLabel);
 
-        a4resLabel = new JLabel("3200");
+        a4resLabel = new JTextField("3200");
+        a4resLabel.setEditable(false);
         a4resLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         a4resLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         a4resLabel.setBounds(210, 90, 80, 30);
@@ -365,10 +389,9 @@ public class ClerksPage extends JFrame implements ActionListener {
         notifyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int ans = JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(ans==JOptionPane.YES_OPTION)
-                {
-                	clerk.alertAdmin();
-                	JOptionPane.showMessageDialog(null, "Notification sent");
+                if (ans == JOptionPane.YES_OPTION) {
+                    clerk.alertAdmin();
+                    JOptionPane.showMessageDialog(null, "Notification sent");
                 }
             }
         });
