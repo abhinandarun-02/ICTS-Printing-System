@@ -306,6 +306,7 @@ public class ClerksPage extends JFrame implements ActionListener {
         totalNoPages.setBounds(166, 148, 150, 30);
         billPanel.add(totalNoPages);
         GenerateButton = new JButton("Generate Bill");
+        GenerateButton.addActionListener(this);
         GenerateButton.setFont(new Font("Arial", Font.BOLD, 14));
         GenerateButton.setBounds(100, 255, 150, 30);
         billPanel.add(GenerateButton);
@@ -527,5 +528,14 @@ public class ClerksPage extends JFrame implements ActionListener {
 //            else {
 //            }
         }
+        if (e.getActionCommand().equals("Generate Bill")) {
+            String print_id = printId.getText();
+            int cost_per_page = Integer.parseInt(costPerPage.getText());
+            int total_pages = Integer.parseInt(totalNoPages.getText());
+            int no_of_copies = Integer.parseInt(noOfCopiesText.getText());
+            clerk.generateBill(print_id, cost_per_page, total_pages, no_of_copies);
+        }
+
+
     }
 }

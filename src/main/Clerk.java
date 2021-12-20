@@ -75,6 +75,8 @@ public class Clerk extends Staff {
             preparedStatement.setInt(3, no_of_copies);
             preparedStatement.setInt(4, total_cost);
             preparedStatement.setString(5, print_id);
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
