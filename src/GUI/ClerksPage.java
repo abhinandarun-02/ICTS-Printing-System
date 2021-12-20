@@ -341,12 +341,12 @@ public class ClerksPage extends JFrame implements ActionListener {
         a5Label.setBounds(55, 130, 80, 30);
         resourcesPanel.add(a5Label);
 
-        blackLabel = new JLabel("Black Catridge");
+        blackLabel = new JLabel("Black Cartridge");
         blackLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         blackLabel.setBounds(55, 170, 120, 30);
         resourcesPanel.add(blackLabel);
 
-        colourLabel = new JLabel("Colour Catridge");
+        colourLabel = new JLabel("Colour Cartridge");
         colourLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         colourLabel.setBounds(55, 210, 120, 30);
         resourcesPanel.add(colourLabel);
@@ -433,27 +433,27 @@ public class ClerksPage extends JFrame implements ActionListener {
         printer5Label.setBounds(30, 250, 100, 30);
         printerDetailsPanel.add(printer5Label);
 
-        JComboBox printer1CB = new JComboBox(new String[]{"Available", "Running", "Out of Order"});
+        JComboBox<String> printer1CB = new JComboBox<>(new String[]{"Available", "Running", "Out of Order"});
         printer1CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer1CB.setBounds(200, 50, 110, 30);
         printerDetailsPanel.add(printer1CB);
 
-        JComboBox printer2CB = new JComboBox(new String[]{"Available", "Running", "Out of Order"});
+        JComboBox<String> printer2CB = new JComboBox<>(new String[]{"Available", "Running", "Out of Order"});
         printer2CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer2CB.setBounds(200, 100, 110, 30);
         printerDetailsPanel.add(printer2CB);
 
-        JComboBox printer3CB = new JComboBox(new String[]{"Available", "Running", "Out of Order"});
+        JComboBox<String> printer3CB = new JComboBox<>(new String[]{"Available", "Running", "Out of Order"});
         printer3CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer3CB.setBounds(200, 150, 110, 30);
         printerDetailsPanel.add(printer3CB);
 
-        JComboBox printer4CB = new JComboBox(new String[]{"Available", "Running", "Out of Order"});
+        JComboBox<String> printer4CB = new JComboBox<>(new String[]{"Available", "Running", "Out of Order"});
         printer4CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer4CB.setBounds(200, 200, 110, 30);
         printerDetailsPanel.add(printer4CB);
 
-        JComboBox printer5CB = new JComboBox(new String[]{"Available", "Running", "Out of Order"});
+        JComboBox<String> printer5CB = new JComboBox<>(new String[]{"Available", "Running", "Out of Order"});
         printer5CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer5CB.setBounds(200, 250, 110, 30);
         printerDetailsPanel.add(printer5CB);
