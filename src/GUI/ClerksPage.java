@@ -67,8 +67,10 @@ public class ClerksPage extends JFrame implements ActionListener {
 
     DefaultTableModel requestModel;
     DefaultTableModel queueModel;
+    DefaultTableModel deliveryModel;
     JTable pendingRequests;
     JTable printerQueue;
+    JTable deliveryQueue;
 
 
     Clerk clerk;
@@ -195,18 +197,19 @@ public class ClerksPage extends JFrame implements ActionListener {
 
         PrevButton.addActionListener(e -> tabbedPane.setSelectedIndex(0));
 
-        String[][] data5 = {};
-        String[] column5 = {};
-        JTable deliveryQueue = new JTable(data5, column5);
-        deliveryQueue.setModel(new DefaultTableModel(
-                new Object[][]{
-                },
-                new String[]{
-                        "Print ID", "User ID", "Name", "Room No", "Phone No", "Status"
-                }
-        ));
-        JScrollPane sp5 = new JScrollPane(deliveryQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        deliveryModel = new DefaultTableModel();
+        deliveryQueue = new JTable(deliveryModel);
+        deliveryQueue.setModel(deliveryModel);
+        deliveryModel.addColumn("Print ID");
+        deliveryModel.addColumn("User ID");
+        deliveryModel.addColumn("Name");
+        deliveryModel.addColumn("Room No");
+        deliveryModel.addColumn("Phone NO");
+        deliveryModel.addColumn("Status");
 
+        this.loadDeliveryTable();
+
+        JScrollPane sp5 = new JScrollPane(deliveryQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         ClerkPanel2.add(deliveryQueueLabel);
         ClerkPanel2.add(sp5);
@@ -387,15 +390,7 @@ public class ClerksPage extends JFrame implements ActionListener {
         resourcesPanel.add(a4resLabel);
 
         notifyButton = new JButton("Notify Admin");
-        notifyButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int ans = JOptionPane.showConfirmDialog(requestSubmitButton, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (ans == JOptionPane.YES_OPTION) {
-                    clerk.alertAdmin();
-                    JOptionPane.showMessageDialog(null, "Notification sent");
-                }
-            }
-        });
+        notifyButton.addActionListener(this);
         notifyButton.setFont(new Font("Arial", Font.PLAIN, 16));
         notifyButton.setBounds(110, 255, 150, 30);
         resourcesPanel.add(notifyButton);
@@ -433,30 +428,33 @@ public class ClerksPage extends JFrame implements ActionListener {
         printer5Label.setBounds(30, 250, 100, 30);
         printerDetailsPanel.add(printer5Label);
 
-        JComboBox<String> printer1CB = new JComboBox<>(new String[]{"Available", "Running", "Out of Order"});
+        String[] options = new String[] {"Available", "Running", "Out of Order"};
+        
+        JComboBox<String> printer1CB = new JComboBox<>(options);
         printer1CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer1CB.setBounds(200, 50, 110, 30);
         printerDetailsPanel.add(printer1CB);
 
-        JComboBox<String> printer2CB = new JComboBox<>(new String[]{"Available", "Running", "Out of Order"});
+        JComboBox<String> printer2CB = new JComboBox<>(options);
         printer2CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer2CB.setBounds(200, 100, 110, 30);
         printerDetailsPanel.add(printer2CB);
 
-        JComboBox<String> printer3CB = new JComboBox<>(new String[]{"Available", "Running", "Out of Order"});
+        JComboBox<String> printer3CB = new JComboBox<>(options);
         printer3CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer3CB.setBounds(200, 150, 110, 30);
         printerDetailsPanel.add(printer3CB);
 
-        JComboBox<String> printer4CB = new JComboBox<>(new String[]{"Available", "Running", "Out of Order"});
+        JComboBox<String> printer4CB = new JComboBox<>(options);
         printer4CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer4CB.setBounds(200, 200, 110, 30);
         printerDetailsPanel.add(printer4CB);
 
-        JComboBox<String> printer5CB = new JComboBox<>(new String[]{"Available", "Running", "Out of Order"});
+        JComboBox<String> printer5CB = new JComboBox<>(options);
         printer5CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer5CB.setBounds(200, 250, 110, 30);
         printerDetailsPanel.add(printer5CB);
+
         tabbedPane.setTitleAt(1, "Page 2");
         tabbedPane.setBounds(0, -23, 1236, 685);
         /* *************************************************************************** */
@@ -504,6 +502,19 @@ public class ClerksPage extends JFrame implements ActionListener {
         }
     }
 
+    public void loadDeliveryTable() {
+        int i = 0;
+        ResultSet rs = clerk.getDeliveryTable();
+        try {
+            while (rs.next()) {
+                deliveryModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBigDecimal(5), rs.getString(6)});
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         new ClerksPage();
     }
@@ -534,6 +545,14 @@ public class ClerksPage extends JFrame implements ActionListener {
             int total_pages = Integer.parseInt(totalNoPages.getText());
             int no_of_copies = Integer.parseInt(noOfCopiesText.getText());
             clerk.generateBill(print_id, cost_per_page, total_pages, no_of_copies);
+        }
+
+        if (e.getActionCommand().equals("Notify Admin")) {
+            int ans = JOptionPane.showConfirmDialog(null, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (ans == JOptionPane.YES_OPTION) {
+                clerk.alertAdmin();
+                JOptionPane.showMessageDialog(null, "Notification sent");
+            }
         }
 
 
