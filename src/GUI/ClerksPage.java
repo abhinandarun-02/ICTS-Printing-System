@@ -94,7 +94,9 @@ public class ClerksPage extends JFrame implements ActionListener {
         printerQueueLabel = new JLabel("PRINTER QUEUE");
         printerQueueLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 24));
         AddButton = new JButton("Update Status");
+        AddButton.addActionListener(this);
         DeleteButton = new JButton("Remove Record");
+        DeleteButton.addActionListener(this);
         NextButton = new JButton("Next Page");
         NextButton.setFont(new Font("Arial", Font.BOLD, 14));
         NextButton.addActionListener(e -> tabbedPane.setSelectedIndex(1));
@@ -433,8 +435,8 @@ public class ClerksPage extends JFrame implements ActionListener {
         printer5Label.setBounds(30, 250, 100, 30);
         printerDetailsPanel.add(printer5Label);
 
-        String[] options = new String[] {"Available", "Running", "Out of Order"};
-        
+        String[] options = new String[]{"Available", "Running", "Out of Order"};
+
         JComboBox<String> printer1CB = new JComboBox<>(options);
         printer1CB.setFont(new Font("Arial", Font.PLAIN, 16));
         printer1CB.setBounds(200, 50, 110, 30);
@@ -550,6 +552,7 @@ public class ClerksPage extends JFrame implements ActionListener {
             int total_pages = Integer.parseInt(totalNoPages.getText());
             int no_of_copies = Integer.parseInt(noOfCopiesText.getText());
             clerk.generateBill(print_id, cost_per_page, total_pages, no_of_copies);
+            queueModel.setValueAt("Print Completed", printerQueue.getSelectedRow(), 7);
         }
 
         if (e.getActionCommand().equals("Notify Admin")) {
@@ -557,6 +560,32 @@ public class ClerksPage extends JFrame implements ActionListener {
             if (ans == JOptionPane.YES_OPTION) {
                 clerk.alertAdmin();
                 JOptionPane.showMessageDialog(null, "Notification sent");
+            }
+        }
+
+        if (e.getActionCommand().equals("Update Status")) {
+            try {
+                String print_id = queueModel.getValueAt(printerQueue.getSelectedRow(), 0).toString();
+                String print_status = queueModel.getValueAt(printerQueue.getSelectedRow(), 7).toString();
+                if (print_status.equals("Print Completed")) {
+                    clerk.updatePrinterStatus(print_id, "To be Delivered");
+                    queueModel.removeRow(printerQueue.getSelectedRow());
+                }
+                else {
+                    JOptionPane.showMessageDialog(DeleteButton, "PLEASE GENERATE BILL", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(null, "Please Select a Row", "TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        if (e.getActionCommand().equals("Remove Record")) {
+            try {
+                String print_id = queueModel.getValueAt(printerQueue.getSelectedRow(), 0).toString();
+                clerk.updatePrinterStatus(print_id, "Removed");
+                queueModel.removeRow(printerQueue.getSelectedRow());
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(null, "Please Select a Row", "TRY AGAIN", JOptionPane.ERROR_MESSAGE);
             }
         }
 
