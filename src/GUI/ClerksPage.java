@@ -143,6 +143,7 @@ public class ClerksPage extends JFrame implements ActionListener {
         queueModel.addColumn("Page Type");
         queueModel.addColumn("No of Pages");
         queueModel.addColumn("No of Copies");
+        queueModel.addColumn("Status");
 
         this.loadPrintTable();
 
@@ -498,7 +499,7 @@ public class ClerksPage extends JFrame implements ActionListener {
         ResultSet rs = clerk.getPrintTable();
         try {
             while (rs.next()) {
-                queueModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7)});
+                queueModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8)});
                 i++;
             }
         } catch (Exception e) {

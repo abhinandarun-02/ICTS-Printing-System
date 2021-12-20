@@ -25,7 +25,7 @@ public abstract class Staff extends Person {
         try {
             Connection connection = getConnection();
             Statement st = connection.createStatement();
-            String query = "select r.print_id, r.employee_id, r.paper_type, r.colour_type, r.page_type, p.no_of_pages, p.no_of_copies from request_details r, print_details p where r.status = 'Accepted' and r.print_id = p.print_id and r.employee_id = p.employee_id;";
+            String query = "select p.print_id, p.employee_id, r.paper_type, r.colour_type, r.page_type, p.no_of_pages, p.no_of_copies, p.status from request_details r, print_details p where p.status in ('queue','Print Completed') and r.print_id = p.print_id and r.employee_id = p.employee_id;";
             rs = st.executeQuery(query);
 
         } catch (Exception e) {
