@@ -12,6 +12,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+
 
 import main.Person;
 
@@ -27,11 +32,13 @@ class Status extends JFrame implements ActionListener {
     JTextField statusTextField;
 
     Person user;
+    
 
     Status() {
 
         user = new Person();
 
+        JFrame frame = new JFrame();
         id = new JLabel("Request ID");
         idTextField = new JTextField();
         submit = new JButton("SUBMIT");
@@ -45,14 +52,17 @@ class Status extends JFrame implements ActionListener {
         setLocationAndSize();
         setFont();
         addComponentsToContainer();
-        setTitle("Status");
+        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        setIconImage(image.getImage());
+
+        setTitle("ICTS PRINTING SYSTEM");
         setBounds(450, 75, 600, 450);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
         setResizable(false);
-
+        
     }
-
+    
     public void setLayoutManager() {
         panel.setLayout(null);
     }

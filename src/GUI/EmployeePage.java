@@ -1,6 +1,8 @@
 package GUI;
 
 import main.Employee;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -67,7 +69,9 @@ class EmployeePage extends JFrame implements ActionListener {
 
 		getContentPane().setLayout(null);
 
-		setTitle("Employee Login");
+        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        setIconImage(image.getImage());
+        setTitle("ICTS PRINTING SYSTEM");
 		setBounds(270, 75, 1015, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);

@@ -1,6 +1,7 @@
 package GUI;
 import main.Employee;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -54,7 +55,9 @@ class Payment extends JFrame {
         setFont();
         addComponentsToContainer();
 
-        setTitle("Payment");
+        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        setIconImage(image.getImage());
+        setTitle("ICTS PRINTING SYSTEM");
         setBounds(450, 75, 800, 600);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);

@@ -3,6 +3,7 @@ package GUI;
 import main.Person;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -36,6 +37,9 @@ class LoginPage extends JFrame implements ActionListener {
     Person user;
 
     LoginPage() {
+        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        setIconImage(image.getImage());
+        setTitle("ICTS PRINTING SYSTEM");
         userTextField = new JTextField();
         userTextField.setFont(new Font("Arial ", Font.PLAIN, 15));
         passwordField = new JPasswordField();

@@ -84,6 +84,10 @@ public class ClerksPage extends JFrame implements ActionListener {
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
         /* ****************************** PAGE 1 ****************************** */
+    
+        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        setIconImage(image.getImage());
+        setTitle("ICTS PRINTING SYSTEM");
         ClerkPanel1 = new JPanel();
         pendingRequestsLabel = new JLabel("PENDING REQUESTS");
         pendingRequestsLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 24));

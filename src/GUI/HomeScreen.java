@@ -5,6 +5,7 @@ import main.Person;
 import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
@@ -100,6 +101,9 @@ public class HomeScreen extends JFrame implements ActionListener {
 
         /* ****************************** REQUEST_PANEL_SECTION ****************************** */
         requestFormPanel = new JPanel();
+        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        setIconImage(image.getImage());
+        setTitle("ICTS PRINTING SYSTEM");
 
         requestFormPanel = new JPanel();
         usernameLabel = new JLabel("Username : ");

@@ -1,6 +1,7 @@
 package GUI;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -60,7 +61,9 @@ class DeliveryPage extends JFrame implements ActionListener {
         setFont();
         addComponentsToContainer();
 
-        setTitle("Delivery boy Login");
+        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        setIconImage(image.getImage());
+        setTitle("ICTS PRINTING SYSTEM");
         setBounds(150, 75, 1250, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
