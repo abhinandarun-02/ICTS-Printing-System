@@ -4,6 +4,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -16,101 +17,99 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-
-
 import main.Person;
 
 class Status extends JFrame implements ActionListener {
 
-    JPanel panel = (JPanel) getContentPane();
+	JPanel panel = (JPanel) getContentPane();
 
-    JLabel id;
-    JTextField idTextField;
-    JButton submit;
+	JLabel id;
+	JTextField idTextField;
+	JButton submit;
 
-    JLabel status;
-    JTextField statusTextField;
+	JLabel status;
+	JTextField statusTextField;
 
-    Person user;
-    
+	Person user;
 
-    Status() {
+	Status() {
 
-        user = new Person();
+		user = new Person();
 
-        JFrame frame = new JFrame();
-        id = new JLabel("Request ID");
-        idTextField = new JTextField();
-        submit = new JButton("SUBMIT");
-        status = new JLabel("Status of Print:  ");
-        statusTextField = new JTextField();
+		JFrame frame = new JFrame();
+		id = new JLabel("Request ID");
+		idTextField = new JTextField();
+		submit = new JButton("SUBMIT");
+		status = new JLabel("Status of Print:  ");
+		statusTextField = new JTextField();
 
-        submit.addActionListener(this);
+		submit.addActionListener(this);
 
-        //Calling methods inside constructor.
-        setLayoutManager();
-        setLocationAndSize();
-        setFont();
-        addComponentsToContainer();
-        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
-        setIconImage(image.getImage());
+		// Calling methods inside constructor.
+		setLayoutManager();
+		setLocationAndSize();
+		setFont();
+		addComponentsToContainer();
+		ImageIcon image = new ImageIcon("assets/images/Logo.jpg");
+		setIconImage(image.getImage());
 
-        setTitle("ICTS PRINTING SYSTEM");
-        setBounds(450, 75, 600, 450);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
-        setResizable(false);
-        
-    }
-    
-    public void setLayoutManager() {
-        panel.setLayout(null);
-    }
+		setTitle("ICTS PRINTING SYSTEM");
+		setBounds(450, 75, 600, 450);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setVisible(true);
+		setResizable(false);
 
-    public void setLocationAndSize() {
-        //Setting location and Size of each component using setBounds() method.
+	}
 
-        id.setBounds(150, 100, 100, 30);
-        idTextField.setBounds(300, 100, 100, 20);
-        submit.setBounds(230, 160, 100, 20);
+	public void setLayoutManager() {
+		panel.setLayout(null);
+	}
 
-        status.setBounds(120, 260, 200, 30);
-        statusTextField.setBounds(280, 260, 150, 20);
-        statusTextField.setEditable(false);
-    }
+	public void setLocationAndSize() {
+		// Setting location and Size of each component using setBounds() method.
 
-    public void setFont() {
-        id.setFont(new Font("Calibri", Font.PLAIN, 16));
-        status.setFont(new Font("Calibri", Font.PLAIN, 16));
-    }
+		id.setBounds(150, 100, 100, 30);
+		idTextField.setBounds(300, 100, 100, 20);
+		submit.setBounds(230, 160, 100, 20);
 
-    public void addComponentsToContainer() {
-        //Adding each component to the Container
+		status.setBounds(120, 260, 200, 30);
+		statusTextField.setBounds(280, 260, 150, 20);
+		statusTextField.setEditable(false);
+	}
 
-        panel.add(id);
-        panel.add(idTextField);
-        panel.add(submit);
+	public void setFont() {
+		id.setFont(new Font("Calibri", Font.PLAIN, 16));
+		status.setFont(new Font("Calibri", Font.PLAIN, 16));
+	}
 
-        panel.add(status);
-        panel.add(statusTextField);
+	public void addComponentsToContainer() {
+		// Adding each component to the Container
 
+		panel.add(id);
+		panel.add(idTextField);
+		panel.add(submit);
 
-        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "CHECK STATUS", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
-        panel.setBorder(titledBorder);
-    }
+		panel.add(status);
+		panel.add(statusTextField);
 
+		TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3),
+				"CHECK STATUS", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
+		panel.setBorder(titledBorder);
+	}
 
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("SUBMIT")) {
-            String print_id = idTextField.getText();
-            String status = user.checkStatus(print_id);
-            statusTextField.setText(status);
-        }
-    }
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand().equals("SUBMIT")) {
+			String print_id = idTextField.getText();
+			String status = user.checkStatus(print_id);
+			if (status.equals("NotFound")) {
+				JOptionPane.showMessageDialog(submit, "Request not found! ",
+						"Request ID invalid", JOptionPane.ERROR_MESSAGE);
+			} else
+				statusTextField.setText(status);
+		}
+	}
 
-    public static void main(String[] args) {
-        new Status();
-    }
+	public static void main(String[] args) {
+		new Status();
+	}
 }
-
-

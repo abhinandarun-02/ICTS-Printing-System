@@ -131,21 +131,35 @@ class EmployeePage extends JFrame implements ActionListener {
 						JOptionPane.QUESTION_MESSAGE);
 				if (opt == JOptionPane.YES_OPTION) {
 					int res = user.deleteRequest(username, ans);
-					if (res == 1)
-						{JOptionPane.showMessageDialog(null, "Request deleted. Deletion successful");
-						 reqTextField.setText("");
-						}
-					else if (res == 0)
+					if (res == 1) {
+						JOptionPane.showMessageDialog(null, "Request deleted. Deletion successful");
+						reqTextField.setText("");
+					} else if (res == 0)
 						JOptionPane.showMessageDialog(null, "Print already in queue", "Deletion period exceeded",
 								JOptionPane.WARNING_MESSAGE);
 					else if (res == 2)
 						JOptionPane.showMessageDialog(null, "Request ID does not correspond to your Employee ID",
 								"Invalid request", JOptionPane.ERROR_MESSAGE);
-					else if(res==-1)
+					else if (res == -1)
 						JOptionPane.showMessageDialog(null, "Record not found ", "Error", JOptionPane.ERROR_MESSAGE);
 					else
 						JOptionPane.showMessageDialog(null, "Deletion failed", "Error!!", JOptionPane.ERROR_MESSAGE);
 				}
+			}
+		});
+		submit1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String id = statusTextField.getText();
+				String ans = user.checkStatus(id, username);
+				if (ans.equals("NoMatch"))
+					JOptionPane.showMessageDialog(null, "Request ID does not correspond to your Employee ID", "ERROR!",
+							JOptionPane.ERROR_MESSAGE);
+				else if (ans.equals("NotFound"))
+					JOptionPane.showMessageDialog(null, "Request not found! ", "Request ID invalid",
+							JOptionPane.ERROR_MESSAGE);
+				else
+					JOptionPane.showMessageDialog(null, "Status: " + ans, "Request valid",
+							JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
