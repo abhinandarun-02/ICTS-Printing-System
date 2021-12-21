@@ -20,7 +20,7 @@ public abstract class Staff extends Person {
         return rs;
     }
 
-    public ResultSet getPrintTable() {
+    public ResultSet getPrinterQueue() {
         ResultSet rs = null;
         try {
             Connection connection = getConnection();
@@ -34,18 +34,6 @@ public abstract class Staff extends Person {
         return rs;
     }
 
-    public ResultSet getDeliveryTable() {
-        ResultSet rs = null;
-        try {
-            Connection connection = getConnection();
-            Statement st = connection.createStatement();
-            String query = "select print_id, employee_id, employee_name, room_no, phone_no, status from employee natural join print_details pd where pd.status = 'To be Delivered';";
-            rs = st.executeQuery(query);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return rs;
-    }
+    public abstract ResultSet getDeliveryTable();
 
 }

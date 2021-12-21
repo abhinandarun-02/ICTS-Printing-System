@@ -84,4 +84,18 @@ public class Clerk extends Staff {
     }
 
 
+    @Override
+    public ResultSet getDeliveryTable() {
+        ResultSet rs = null;
+        try {
+            Connection connection = getConnection();
+            Statement st = connection.createStatement();
+            String query = "SELECT print_id, employee_id, status FROM print_details WHERE status = 'To be Delivered';";
+            rs = st.executeQuery(query);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
 }
