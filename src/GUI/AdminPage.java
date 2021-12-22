@@ -460,7 +460,7 @@ public class AdminPage extends JFrame implements ActionListener {
         homeTab.add(pendingRequestPanel);
         pendingRequestPanel.setLayout(null);
 
-        JLabel reqPending = new JLabel("  7");
+        JLabel reqPending = new JLabel(String.valueOf(admin.getNoOfPendingRequests()));
         reqPending.setIcon(new ImageIcon("assets\\images\\Admin\\home-page\\pending requests.png"));
         reqPending.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 56));
         reqPending.setBounds(10, 50, 230, 90);
@@ -518,7 +518,7 @@ public class AdminPage extends JFrame implements ActionListener {
         homeTab.add(revenuePanel);
         revenuePanel.setLayout(null);
 
-        JLabel revenue = new JLabel("12,342");
+        JLabel revenue = new JLabel(String.valueOf(admin.getTotalRevenue()));
         revenue.setIcon(new ImageIcon("assets\\images\\Admin\\home-page\\revenue.png"));
         revenue.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 36));
         revenue.setBounds(10, 50, 235, 90);
