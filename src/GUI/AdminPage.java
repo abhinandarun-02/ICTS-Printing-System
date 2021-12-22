@@ -1,5 +1,7 @@
 package GUI;
+
 import main.Admin;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -29,6 +31,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 
 import main.Admin;
@@ -36,7 +39,7 @@ import main.Person;
 
 public class AdminPage extends JFrame implements ActionListener {
 
-	Admin admin = new Admin();
+    Admin admin = new Admin();
     JPanel contentPane;
     JTextField user_idText;
     JTable orderTable;
@@ -61,19 +64,19 @@ public class AdminPage extends JFrame implements ActionListener {
     JPanel deliveryButtonPanel;
     JPanel manageButtonPanel;
 
+    DefaultTableModel queueModel;
+
     JComboBox staffTypeCB;
 
     Color primaryColor = new Color(255, 255, 255);
     Color secondaryColor = new Color(70, 100, 130);
-    int s=0;
-
-   
+    int s = 0;
 
 
     public AdminPage() {
 
         admin = new Admin();
-        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        ImageIcon image = new ImageIcon("assets/images/Logo.jpg");
         setIconImage(image.getImage());
         setTitle("ICTS PRINTING SYSTEM");
 
@@ -93,7 +96,6 @@ public class AdminPage extends JFrame implements ActionListener {
         JButton DeleteButton;
 
 
-        String[][] data4 = {};
         String[] column4 = {"Print ID", "User ID", "Paper size", "Print Type", "Single/Double side", "No. of pages", "Printer#"};
 
         TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "PRINTER QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
@@ -437,7 +439,16 @@ public class AdminPage extends JFrame implements ActionListener {
         AddButton.setFont(new Font("Arial", Font.PLAIN, 20));
         DeleteButton = new JButton("DELETE");
         DeleteButton.setFont(new Font("Arial", Font.PLAIN, 20));
-        JTable printerQueue = new JTable(data4, column4);
+
+        queueModel = new DefaultTableModel();
+        String[] columns = {"Print ID", "User ID", "Paper size", "Colour Type", "Single/Double side", "No. of pages", "No of Copies", "Status"};
+        for (String value : columns) {
+            queueModel.addColumn(value);
+        }
+        JTable printerQueue = new JTable(queueModel);
+
+        loadPrintTable();
+
         JScrollPane sp4 = new JScrollPane(printerQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         printerTab.add(printerQueueLabel);
@@ -472,44 +483,43 @@ public class AdminPage extends JFrame implements ActionListener {
         completedOrdersPanel.setBounds(390, 70, 230, 175);
         homeTab.add(completedOrdersPanel);
         completedOrdersPanel.setLayout(null);
-        
-        
-        if(admin.getNotification()==false)
-        {
-        	s =1;
+
+
+        if (admin.getNotification() == false) {
+            s = 1;
         }
-        JLabel completedOrder = new JLabel(String.valueOf(s)+"..");
+        JLabel completedOrder = new JLabel(String.valueOf(s) + "..");
         completedOrder.setIcon(new ImageIcon("assets\\images\\Admin\\home-page\\queue.png"));
         completedOrder.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 56));
         completedOrder.setBounds(10, 50, 210, 90);
         completedOrdersPanel.add(completedOrder);
-        
-        
+
+
         completedOrder.addMouseListener(new MouseAdapter() {
-			@Override
+            @Override
             public void mouseClicked(MouseEvent e) {
-				if (s!=0)
-				{
-            	int ans=JOptionPane.showConfirmDialog(null, "Resources have depleted..\nUpdate status if replenished","Clerk's notification",JOptionPane.YES_NO_OPTION);
-            	if(JOptionPane.YES_NO_OPTION==ans)
-					{
-            		admin.updateResources();
-            		completedOrder.setText(" 0");
-            		s=0;
-            		
-					}
-				}
+                if (s != 0) {
+                    int ans = JOptionPane.showConfirmDialog(null, "Resources have depleted..\nUpdate status if replenished", "Clerk's notification", JOptionPane.YES_NO_OPTION);
+                    if (JOptionPane.YES_NO_OPTION == ans) {
+                        admin.updateResources();
+                        completedOrder.setText(" 0");
+                        s = 0;
+
+                    }
+                }
             }
+
             public void mouseEntered(MouseEvent e) {
-                 completedOrdersPanel.setBackground(Color.GRAY);
-                
+                completedOrdersPanel.setBackground(Color.GRAY);
+
             }
-            public void mouseExited(MouseEvent e) {               
-                 completedOrdersPanel.setBackground(Color.LIGHT_GRAY);
-                
+
+            public void mouseExited(MouseEvent e) {
+                completedOrdersPanel.setBackground(Color.LIGHT_GRAY);
+
             }
-            });
-        
+        });
+
 
         JPanel revenuePanel = new JPanel();
         revenuePanel.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
@@ -543,7 +553,7 @@ public class AdminPage extends JFrame implements ActionListener {
         recentOrderLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
         recentOrderLabel.setBounds(70, 263, 183, 46);
         homeTab.add(recentOrderLabel);
-        
+
         JLabel recentOrderLabel2 = new JLabel("RECENT ORDERS");
         recentOrderLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
         recentOrderLabel.setBounds(70, 263, 183, 46);
@@ -554,7 +564,7 @@ public class AdminPage extends JFrame implements ActionListener {
         pendingRequestsLabel.setBounds(70, 37, 230, 30);
         homeTab.add(pendingRequestsLabel);
 
-        
+
         JLabel notificationLabel = new JLabel("NOTIFICATIONS");
         notificationLabel.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 20));
         notificationLabel.setBounds(390, 37, 230, 30);
@@ -724,6 +734,21 @@ public class AdminPage extends JFrame implements ActionListener {
         }
 
     }
+
+    public void loadPrintTable() {
+
+        int i = 0;
+        ResultSet rs = admin.getPrintTable();
+        try {
+            while (rs.next()) {
+                queueModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8)});
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         new AdminPage();
     }
