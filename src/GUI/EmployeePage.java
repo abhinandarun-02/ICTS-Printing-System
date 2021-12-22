@@ -10,10 +10,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 class EmployeePage extends JFrame implements ActionListener {
 
@@ -36,6 +39,9 @@ class EmployeePage extends JFrame implements ActionListener {
 	JLabel credits;
 	String[] list;
 	JButton submit3;
+
+	DefaultTableModel queueModel;
+	JTable printerQueue;
 
 	String[] column;
 	String[][] data;
@@ -62,16 +68,34 @@ class EmployeePage extends JFrame implements ActionListener {
 		amountField = new JTextField("");
 		creditsField = new JTextField("");
 
-		column = new String[] { "Print ID", "Date", "Time", "Use", "Status", "Credit" };
-		data = new String[][] {};
-		table = new JTable(data, column);
-		sp = new JScrollPane(table);
+		queueModel = new DefaultTableModel();
+		printerQueue = new JTable(queueModel);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		printerQueue.setDefaultRenderer(String.class, centerRenderer);
 
+
+
+		queueModel.addColumn("Print ID");
+		queueModel.addColumn("Date");
+		queueModel.addColumn("Time");
+		queueModel.addColumn("Use");
+		queueModel.addColumn("Status");
+		queueModel.addColumn("Cost");
+
+		this.loadPrintTable();
+
+		for (int x = 0; x < printerQueue.getColumnCount(); x++) {
+			printerQueue.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
+		}
+
+
+		JScrollPane sp = new JScrollPane(printerQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		getContentPane().setLayout(null);
 
-        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
-        setIconImage(image.getImage());
-        setTitle("ICTS PRINTING SYSTEM");
+		ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+		setIconImage(image.getImage());
+		setTitle("ICTS PRINTING SYSTEM");
 		setBounds(270, 75, 1015, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -135,8 +159,9 @@ class EmployeePage extends JFrame implements ActionListener {
 						JOptionPane.showMessageDialog(null, "Request deleted. Deletion successful");
 						reqTextField.setText("");
 					} else if (res == 0)
-						JOptionPane.showMessageDialog(null, "Print already in queue", "Deletion period exceeded",
-								JOptionPane.WARNING_MESSAGE);
+					{ String STATUS = user.checkStatus(ans,u);
+					JOptionPane.showMessageDialog(null, STATUS, "Deletion period exceeded",
+							JOptionPane.WARNING_MESSAGE);}
 					else if (res == 2)
 						JOptionPane.showMessageDialog(null, "Request ID does not correspond to your Employee ID",
 								"Invalid request", JOptionPane.ERROR_MESSAGE);
@@ -177,5 +202,19 @@ class EmployeePage extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 		new EmployeePage("/null");
 	}
+	public void loadPrintTable() {
+
+		int i = 0;
+		ResultSet rs = user.viewPrintHistory(username);
+		try {
+			while (rs.next()) {
+				queueModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)});
+				i++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 }

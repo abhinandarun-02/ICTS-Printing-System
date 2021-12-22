@@ -72,8 +72,25 @@ public class Employee extends Person {
 
 	}
 
-	public void viewPrintHistory() {
+	public ResultSet viewPrintHistory(String username) {
+		ResultSet rs = null;
+		String e_id="";
+		try {
+			Connection connection = getConnection();
+			Statement st = connection.createStatement();
+			String query0 = "SELECT employee_id FROM employee where username='"+username+"';";
+			rs = st.executeQuery(query0);
+			if(rs.next())
+			{
+				e_id = rs.getString(1);
+			}
+			String query = "SELECT print_id, date, time, priority, status, total_cost FROM print_details where employee_id = '"+e_id+"';";
+			rs = st.executeQuery(query);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rs;
 	}
 
 	public int deleteRequest(String username, String req_id) {
