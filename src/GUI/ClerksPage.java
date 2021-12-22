@@ -530,16 +530,21 @@ public class ClerksPage extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Submit")) {
             if (buttonGroup1.getSelection().getActionCommand().equals("Accept")) {
-                String print_id = printer_id_tf.getText();
 
-                if (!print_id.equals("")) {
+                try {
+                    String print_id = requestModel.getValueAt(pendingRequests.getSelectedRow(), 0).toString();
+                    String emp_id = requestModel.getValueAt(pendingRequests.getSelectedRow(), 1).toString();
+                    String page_type = requestModel.getValueAt(pendingRequests.getSelectedRow(), 3).toString();
+                    String paper_type = requestModel.getValueAt(pendingRequests.getSelectedRow(), 4).toString();
+                    String colour_type = requestModel.getValueAt(pendingRequests.getSelectedRow(), 5).toString();
+
+
                     clerk.verifyPrintouts(print_id);
                     printer_id_tf.setText("");
                     requestModel.removeRow(pendingRequests.getSelectedRow());
-                }
-                else {
+                    queueModel.addRow(new Object[]{print_id, emp_id, paper_type, colour_type, page_type, "", "", "queue"});
+                } catch (ArrayIndexOutOfBoundsException ex) {
                     JOptionPane.showMessageDialog(null, "Please Select a Row", "TRY AGAIN", JOptionPane.ERROR_MESSAGE);
-
                 }
             }
             /*TODO*/
