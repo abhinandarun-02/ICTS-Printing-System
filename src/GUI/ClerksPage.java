@@ -545,7 +545,11 @@ public class ClerksPage extends JFrame implements ActionListener {
                 clerk.verifyPrintouts(print_id, option);
 
                 if (option.equals("Accepted")) {
-                    queueModel.addRow(new Object[]{print_id, emp_id, paper_type, colour_type, page_type, "", "", "queue"});
+                    int rowCount = queueModel.getRowCount();
+                    for (int i = rowCount - 1; i >= 0; i--) {
+                        queueModel.removeRow(i);
+                    }
+                    loadPrintTable();
                 }
 
             }
@@ -576,7 +580,14 @@ public class ClerksPage extends JFrame implements ActionListener {
                 String print_status = queueModel.getValueAt(printerQueue.getSelectedRow(), 7).toString();
                 if (print_status.equals("Print Completed")) {
                     clerk.updatePrinterStatus(print_id, "To be Delivered");
+
                     queueModel.removeRow(printerQueue.getSelectedRow());
+
+                    int rowCount = deliveryModel.getRowCount();
+                    for (int i = rowCount - 1; i >= 0; i--) {
+                        deliveryModel.removeRow(i);
+                    }
+                    loadDeliveryTable();
                 }
                 else {
                     JOptionPane.showMessageDialog(DeleteButton, "PLEASE GENERATE BILL", "ERROR", JOptionPane.INFORMATION_MESSAGE);
