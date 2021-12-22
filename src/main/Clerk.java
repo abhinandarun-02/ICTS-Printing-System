@@ -23,17 +23,26 @@ public class Clerk extends Staff {
     }
     
 
-    public void verifyPrintouts(String print_id) {
+    public void verifyPrintouts(String print_id, String status) {
 
 
         try {
             Connection connection = getConnection();
 
-            PreparedStatement preparedStatement1 = connection.prepareStatement("update request_details set status = 'Accepted' where print_id = ?");
-            preparedStatement1.setString(1, print_id);
+            PreparedStatement preparedStatement1 = connection.prepareStatement("update request_details set status = ? where print_id = ?");
+            PreparedStatement preparedStatement2 = connection.prepareStatement("update print_details set status = ? where print_id = ? ");
 
-            PreparedStatement preparedStatement2 = connection.prepareStatement("update print_details set status = 'queue' where print_id = ? ");
-            preparedStatement2.setString(1, print_id);
+            preparedStatement1.setString(1, status);
+
+            if (status.equals("Accepted")) {
+                preparedStatement2.setString(1, "queue");
+            }
+            else {
+                preparedStatement2.setString(1, status);
+            }
+
+            preparedStatement1.setString(2, print_id);
+            preparedStatement2.setString(2, print_id);
 
             preparedStatement1.executeUpdate();
             preparedStatement2.executeUpdate();
