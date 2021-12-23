@@ -45,9 +45,9 @@ class EmployeePage extends JFrame implements ActionListener {
 	JTable table;
 	JScrollPane sp;
 
-	EmployeePage(String u) {
+	EmployeePage(String username) {
 
-		this.username = u;
+		this.username = username;
 		status = new JLabel("CHECK STATUS");
 		id1 = new JLabel("REQUEST ID");
 		statusTextField = new JTextField();
@@ -136,7 +136,7 @@ class EmployeePage extends JFrame implements ActionListener {
 				int opt = JOptionPane.showConfirmDialog(null, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE);
 				if (opt == JOptionPane.YES_OPTION) {
-					int res = employee.deleteRequest(username, ans);
+					int res = employee.deleteRequest(EmployeePage.this.username, ans);
 					if (res == 1)
 						{JOptionPane.showMessageDialog(null, "Request deleted. Deletion successful");
 						 reqTextField.setText("");

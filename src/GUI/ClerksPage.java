@@ -74,11 +74,15 @@ public class ClerksPage extends JFrame implements ActionListener {
 
 
     Clerk clerk;
+    String username;
 
 
-    public ClerksPage() {
 
-        clerk = new Clerk("CLK");
+    public ClerksPage(String username) {
+
+        this.username = username;
+
+        clerk = new Clerk(username);
 
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -523,7 +527,7 @@ public class ClerksPage extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new ClerksPage();
+        new ClerksPage("CLK");
     }
 
     @Override
@@ -534,10 +538,6 @@ public class ClerksPage extends JFrame implements ActionListener {
                 String option = buttonGroup1.getSelection().getActionCommand();
 
                 String print_id = requestModel.getValueAt(pendingRequests.getSelectedRow(), 0).toString();
-                String emp_id = requestModel.getValueAt(pendingRequests.getSelectedRow(), 1).toString();
-                String page_type = requestModel.getValueAt(pendingRequests.getSelectedRow(), 3).toString();
-                String paper_type = requestModel.getValueAt(pendingRequests.getSelectedRow(), 4).toString();
-                String colour_type = requestModel.getValueAt(pendingRequests.getSelectedRow(), 5).toString();
 
                 printer_id_tf.setText("");
                 requestModel.removeRow(pendingRequests.getSelectedRow());
@@ -578,8 +578,10 @@ public class ClerksPage extends JFrame implements ActionListener {
             try {
                 String print_id = queueModel.getValueAt(printerQueue.getSelectedRow(), 0).toString();
                 String print_status = queueModel.getValueAt(printerQueue.getSelectedRow(), 7).toString();
+
                 if (print_status.equals("Print Completed")) {
                     clerk.updatePrinterStatus(print_id, "To be Delivered");
+                    clerk.saveData(print_id, clerk.getUser_Id(username));
 
                     queueModel.removeRow(printerQueue.getSelectedRow());
 

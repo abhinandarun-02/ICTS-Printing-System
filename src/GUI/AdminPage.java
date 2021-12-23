@@ -88,9 +88,13 @@ public class AdminPage extends JFrame implements ActionListener {
     Color primary = Color.WHITE;
     Color secondary = Color.LIGHT_GRAY;
 
-    public AdminPage() {
+    String username;
 
-        admin = new Admin("ADM");
+    public AdminPage(String username) {
+        this.username = username;
+
+        admin = new Admin(username);
+
         ImageIcon image = new ImageIcon("assets/images/Logo.jpg");
         setIconImage(image.getImage());
         setTitle("ICTS PRINTING SYSTEM");
@@ -744,6 +748,7 @@ public class AdminPage extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new AdminPage();
+        new AdminPage("ADM");
+
     }
 }

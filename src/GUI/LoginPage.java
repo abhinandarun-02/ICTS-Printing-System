@@ -118,16 +118,16 @@ class LoginPage extends JFrame implements ActionListener {
                 System.gc();
                 for (Window window : Window.getWindows()) window.dispose();
                 if (usertype.equals("ADM")) {
-                    new AdminPage();
+                    new AdminPage(username);
                 }
                 if (usertype.equals("CLK")) {
-                    new ClerksPage();
+                    new ClerksPage(username);
                 }
                 if (usertype.equals("EMP")) {
                     new EmployeePage(username);
                 }
                 if (usertype.equals("DEL")) {
-                    new DeliveryPage();
+                    new DeliveryPage(username);
                 }
                 this.dispose();
             }

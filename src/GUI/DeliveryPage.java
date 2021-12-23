@@ -37,10 +37,13 @@ class DeliveryPage extends JFrame implements ActionListener {
     
     private JLabel pendingRequestsLabel;
 
-    DeliveryPage() {
+    String username;
 
+    DeliveryPage(String username) {
+
+        this.username = username;
         //TODO
-        deliveryPerson = new DeliveryPerson("DEL123123");
+        deliveryPerson = new DeliveryPerson(username);
  
         status = new JLabel("UPDATE STATUS");
         id = new JLabel("Print ID :");
@@ -162,7 +165,7 @@ class DeliveryPage extends JFrame implements ActionListener {
     }
 
     public static void main(String[] a) {
-        new DeliveryPage();
+        new DeliveryPage("DEL");
     }
     
    public void loadDeliveryTable() {
