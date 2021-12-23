@@ -74,7 +74,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
     public AdminPage() {
 
-        admin = new Admin();
+        admin = new Admin("ADM");
         ImageIcon image = new ImageIcon("assets/images/Logo.jpg");
         setIconImage(image.getImage());
         setTitle("ICTS PRINTING SYSTEM");

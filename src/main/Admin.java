@@ -7,6 +7,10 @@ public class Admin extends Staff {
 
     private boolean resourcesStatus;
 
+    public Admin(String username) {
+        super(username);
+    }
+
 
     public boolean getNotification() {
         ResultSet rs = null;

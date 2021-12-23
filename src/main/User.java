@@ -35,10 +35,15 @@ public class User implements Login {
             ResultSet resultSet2 = preparedStatement2.executeQuery();
             if (resultSet2.next()) this.person_id = resultSet2.getString(1);
 
-            PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT room_no FROM employee WHERE username = ?;");
-            preparedStatement3.setString(1, username);
-            ResultSet resultSet3 = preparedStatement3.executeQuery();
-            if (resultSet3.next()) this.address = resultSet3.getString(1);
+            if(getUser_Id(username).startsWith("EMP")){
+                PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT room_no FROM employee WHERE username = ?;");
+                preparedStatement3.setString(1, username);
+                ResultSet resultSet3 = preparedStatement3.executeQuery();
+                if (resultSet3.next()) this.address = resultSet3.getString(1);
+            }
+            else{
+                this.address = "Office";
+            }
 
             PreparedStatement preparedStatement4 = connection.prepareStatement("select phone_no from(select username,phone_no from Employee union select username, phone_no from staff) as uEiusi where username=?;");
             preparedStatement4.setString(1, username);

@@ -6,6 +6,10 @@ import java.sql.Statement;
 
 public abstract class Staff extends User {
 
+    public Staff(String username) {
+        super(username);
+    }
+
 
     public ResultSet getRequestTable() {
         ResultSet rs = null;

@@ -78,7 +78,7 @@ public class ClerksPage extends JFrame implements ActionListener {
 
     public ClerksPage() {
 
-        clerk = new Clerk();
+        clerk = new Clerk("CLK");
 
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);

@@ -8,6 +8,10 @@ public class Clerk extends Staff {
     private int approvedRequests;
     private int rejectedRequests;
 
+    public Clerk(String username) {
+        super(username);
+    }
+
 
     public void alertAdmin()
     {

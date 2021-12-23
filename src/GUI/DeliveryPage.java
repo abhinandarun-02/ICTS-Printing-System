@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 class DeliveryPage extends JFrame implements ActionListener {
 	
-    DeliveryPerson dguy = new DeliveryPerson();
+    DeliveryPerson deliveryPerson;
     JPanel panel = (JPanel) getContentPane();
     JLabel status;
     JScrollPane sp;
@@ -38,6 +38,9 @@ class DeliveryPage extends JFrame implements ActionListener {
     private JLabel pendingRequestsLabel;
 
     DeliveryPage() {
+
+        //TODO
+        deliveryPerson = new DeliveryPerson("DEL123123");
  
         status = new JLabel("UPDATE STATUS");
         id = new JLabel("Print ID :");
@@ -57,7 +60,7 @@ class DeliveryPage extends JFrame implements ActionListener {
         		int opt = JOptionPane.showConfirmDialog(null, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         		if(opt==JOptionPane.YES_OPTION)
         		{
-        		int res=dguy.updateDeliveryStatus(statusTextField.getText(),statusCB.getSelectedItem().toString());
+        		int res= deliveryPerson.updateDeliveryStatus(statusTextField.getText(),statusCB.getSelectedItem().toString());
         		if(res==1)
         		{
         			JOptionPane.showMessageDialog(null, "Status updated successfully!");
@@ -165,7 +168,7 @@ class DeliveryPage extends JFrame implements ActionListener {
    public void loadDeliveryTable() {
 
 		int i = 0;
-	    ResultSet rs = dguy.checkDeliveryQueue();
+	    ResultSet rs = deliveryPerson.checkDeliveryQueue();
 		try {
 			while (rs.next()) {
 				delivery.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7), rs.getString(8)});
