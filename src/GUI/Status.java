@@ -13,12 +13,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 
 
-
-import main.Person;
+import main.User;
 
 class Status extends JFrame implements ActionListener {
 
@@ -31,12 +28,12 @@ class Status extends JFrame implements ActionListener {
     JLabel status;
     JTextField statusTextField;
 
-    Person user;
+    User user;
     
 
     Status() {
 
-        user = new Person();
+        user = new User();
 
         JFrame frame = new JFrame();
         id = new JLabel("Request ID");

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public abstract class Staff extends Person {
+public abstract class Staff extends User {
 
 
     public ResultSet getRequestTable() {

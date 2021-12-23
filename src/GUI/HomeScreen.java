@@ -1,6 +1,6 @@
 package GUI;
 
-import main.Person;
+import main.User;
 
 import java.util.Random;
 import javax.swing.BorderFactory;
@@ -314,7 +314,7 @@ public class HomeScreen extends JFrame implements ActionListener {
             String username = usernameTextField.getText();
             String password = String.valueOf(passwordField.getPassword());
 
-            Person user = new Person(username);
+            User user = new User(username);
 
             if (user.verifyUser(username, password)) {
 

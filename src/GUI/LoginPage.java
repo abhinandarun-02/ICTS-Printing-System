@@ -1,6 +1,6 @@
 package GUI;
 
-import main.Person;
+import main.User;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -34,7 +34,7 @@ class LoginPage extends JFrame implements ActionListener {
     JCheckBox showPassword;
 
     // Using Person Class
-    Person user;
+    User user;
 
     LoginPage() {
         ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
@@ -52,7 +52,7 @@ class LoginPage extends JFrame implements ActionListener {
         resetButton = new JButton("RESET");
         showPassword = new JCheckBox("Show Password");
 
-        user = new Person();
+        user = new User();
 
         //Calling methods inside constructor.
         setLayoutManager();

@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Person implements Login {
+public class User implements Login {
 
     private String name;
     private String person_id;
@@ -16,11 +16,11 @@ public class Person implements Login {
     private String address;
 
 
-    public Person() {
+    public User() {
 
     }
 
-    public Person(String username) {
+    public User(String username) {
 
         Connection connection = getConnection();
 

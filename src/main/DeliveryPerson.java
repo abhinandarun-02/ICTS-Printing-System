@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DeliveryPerson extends Person {
+public class DeliveryPerson extends User {
 
 	private String deliveryCompleted;
 	private String deliveryPending;
