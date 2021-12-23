@@ -10,8 +10,8 @@ import java.sql.Statement;
 public class Employee extends Person {
 
     private String department;
-    
-/*TODO*/
+
+    /*TODO*/
 //    private int usageCount;
 //    private int requestCount;
 //    private int pendingCash;
@@ -24,7 +24,7 @@ public class Employee extends Person {
         super(username);
         Connection connection = getConnection();
         try {
-            PreparedStatement preparedstatement1 = connection.prepareStatement("SELECT dept_name from employee WHERE username = ?");
+            PreparedStatement preparedstatement1 = connection.prepareStatement("SELECT dept_name FROM employee WHERE username = ?");
             preparedstatement1.setString(1, username);
             ResultSet resultSet1 = preparedstatement1.executeQuery();
             if (resultSet1.next()) this.department = resultSet1.getString(1);
@@ -34,12 +34,34 @@ public class Employee extends Person {
     }
 
 
-    public void checkStatus() {
-
+    @Override
+    public String checkStatus(String print_id) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT status FROM print_details WHERE print_id=?;");
+            preparedStatement.setString(1, print_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
-    public void viewPrintHistory() {
 
+    public ResultSet viewPrintHistory() {
+        ResultSet rs = null;
+        try {
+            Connection connection = getConnection();
+            Statement st = connection.createStatement();
+            String query = "SELECT print_details.print_id, request_details.date,request_details.time, print_details.priority, print_details.status, print_details.total_cost FROM print_details, request_details WHERE print_details.employee_id = 'EMP679' AND print_details.print_id = request_details.print_id ORDER BY date, time;";
+            rs = st.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
 
     public int deleteRequest(String username, String req_id) {

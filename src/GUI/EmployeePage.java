@@ -10,14 +10,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 class EmployeePage extends JFrame implements ActionListener {
 
-	Employee user = new Employee();
+	Employee employee = new Employee();
+
 	String username;
 	JLabel status;
 	JLabel id1;
@@ -38,7 +41,7 @@ class EmployeePage extends JFrame implements ActionListener {
 	JButton submit3;
 
 	String[] column;
-	String[][] data;
+	DefaultTableModel historyModel;
 	JTable table;
 	JScrollPane sp;
 
@@ -62,10 +65,13 @@ class EmployeePage extends JFrame implements ActionListener {
 		amountField = new JTextField("");
 		creditsField = new JTextField("");
 
+		historyModel = new DefaultTableModel();
 		column = new String[] { "Print ID", "Date", "Time", "Use", "Status", "Credit" };
-		data = new String[][] {};
-		table = new JTable(data, column);
+		for (String x: column) historyModel.addColumn(x);
+		table = new JTable(historyModel);
 		sp = new JScrollPane(table);
+
+		loadHistoryTable();
 
 		getContentPane().setLayout(null);
 
@@ -130,7 +136,7 @@ class EmployeePage extends JFrame implements ActionListener {
 				int opt = JOptionPane.showConfirmDialog(null, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE);
 				if (opt == JOptionPane.YES_OPTION) {
-					int res = user.deleteRequest(username, ans);
+					int res = employee.deleteRequest(username, ans);
 					if (res == 1)
 						{JOptionPane.showMessageDialog(null, "Request deleted. Deletion successful");
 						 reqTextField.setText("");
@@ -153,15 +159,28 @@ class EmployeePage extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		double x = user.viewAmount(username);
-		double y = user.viewCredit(username);
+		double x = employee.viewAmount(username);
+		double y = employee.viewCredit(username);
 		amountField.setText(String.valueOf(x));
 		creditsField.setText(String.valueOf(y));
 
 	}
 
+	public void loadHistoryTable() {
+		int i = 0;
+		ResultSet rs = employee.viewPrintHistory();
+		try {
+			while (rs.next()) {
+				historyModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)});
+				i++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String[] args) {
-		new EmployeePage("/null");
+		new EmployeePage("abhinand_02");
 	}
 
 }
