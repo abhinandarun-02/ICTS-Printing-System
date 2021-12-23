@@ -1,5 +1,7 @@
 package GUI;
+
 import main.Admin;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -29,14 +31,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import javax.swing.ImageIcon;
-
-import main.Admin;
-import main.Person;
 
 public class AdminPage extends JFrame implements ActionListener {
 
-	Admin admin = new Admin();
+    Admin admin;
     JPanel contentPane;
     JTextField user_idText;
     JTable orderTable;
@@ -47,7 +47,7 @@ public class AdminPage extends JFrame implements ActionListener {
     JTextField emailText;
     JTextField staffPhNoText;
     JTextField staffDateText;
-    JTextField staffpassText;
+    JTextField staffPassText;
 
     JTabbedPane homeTabbedPane;
 
@@ -61,19 +61,21 @@ public class AdminPage extends JFrame implements ActionListener {
     JPanel deliveryButtonPanel;
     JPanel manageButtonPanel;
 
-    JComboBox staffTypeCB;
+    DefaultTableModel queueModel;
+
+    JComboBox<String> staffTypeCB;
+    JComboBox<String> comboBox;
+
 
     Color primaryColor = new Color(255, 255, 255);
     Color secondaryColor = new Color(70, 100, 130);
-    int s=0;
-
-   
+    int s = 0;
 
 
     public AdminPage() {
 
         admin = new Admin();
-        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        ImageIcon image = new ImageIcon("assets/images/Logo.jpg");
         setIconImage(image.getImage());
         setTitle("ICTS PRINTING SYSTEM");
 
@@ -93,8 +95,7 @@ public class AdminPage extends JFrame implements ActionListener {
         JButton DeleteButton;
 
 
-        String[][] data4 = {};
-        String[] column4 = {"Print ID", "User ID", "Paper size", "Print Type", "Single/Double side", "No. of pages", "Printer#"};
+//        String[] column4 = {"Print ID", "User ID", "Paper size", "Print Type", "Single/Double side", "No. of pages", "Printer#"};
 
         TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "PRINTER QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
         /* *********************************************************************************************************************************************************/
@@ -380,14 +381,13 @@ public class AdminPage extends JFrame implements ActionListener {
         scrollPane_1.setBounds(10, 10, 942, 552);
         searchReqPanel.add(scrollPane_1);
 
-        reqTable = new JTable();
+        DefaultTableModel reqModel;
+        reqModel = new DefaultTableModel();
+        String[] req_cols = new String[]{"Name", "Status", "Date", "Type", "Copies", "Paper"};
+        for (String req_col : req_cols) reqModel.addColumn(req_col);
+
+        reqTable = new JTable(reqModel);
         scrollPane_1.setViewportView(reqTable);
-        reqTable.setModel(new DefaultTableModel(
-                new String[][]{
-                },
-                new String[]{
-                        "Name", "Status", "Date", "Type", "Copies", "Paper"
-                }));
 
         JPanel searchPaymentPanel = new JPanel();
         searchTabbedPane.addTab("Payment", null, searchPaymentPanel, null);
@@ -397,15 +397,12 @@ public class AdminPage extends JFrame implements ActionListener {
         scrollPane_2.setBounds(10, 10, 942, 552);
         searchPaymentPanel.add(scrollPane_2);
 
-        paymentTable = new JTable();
+        DefaultTableModel paymentModel = new DefaultTableModel();
+        String[] payment_cols = new String[]{"Name", "Status", "Amount", "Method", "Payment ID"};
+        for(String payment_col:payment_cols) paymentModel.addColumn(payment_col);
+
+        paymentTable = new JTable(paymentModel);
         scrollPane_2.setViewportView(paymentTable);
-        paymentTable.setModel(new DefaultTableModel(
-                new Object[][]{
-                },
-                new String[]{
-                        "Name", "Status", "Amount", "Method", "Payment ID"
-                }
-        ));
 
         JPanel searchOrderPanel = new JPanel();
         searchTabbedPane.addTab("Order", null, searchOrderPanel, null);
@@ -417,16 +414,13 @@ public class AdminPage extends JFrame implements ActionListener {
         scrollPane.setBounds(10, 10, 942, 552);
         searchOrderPanel.add(scrollPane);
 
-        orderTable = new JTable();
+        DefaultTableModel orderModel = new DefaultTableModel();
+        String[] order_cols = new String[]{"Print ID", "Clerk", "Date", "Type", "Delivered By", "Cost"};
+        for(String order_col:order_cols) orderModel.addColumn(order_col);
+
+        orderTable = new JTable(orderModel);
         orderTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(orderTable);
-        orderTable.setModel(new DefaultTableModel(
-                new String[][]{
-                },
-                new String[]{
-                        "Print ID", "Clerk", "Date", "Type", "Delivered By", "Cost"
-                }
-        ));
 
         orderTable.setBorder(new LineBorder(new Color(0, 0, 0)));
         JPanel printerTab = new JPanel();
@@ -437,7 +431,14 @@ public class AdminPage extends JFrame implements ActionListener {
         AddButton.setFont(new Font("Arial", Font.PLAIN, 20));
         DeleteButton = new JButton("DELETE");
         DeleteButton.setFont(new Font("Arial", Font.PLAIN, 20));
-        JTable printerQueue = new JTable(data4, column4);
+
+        queueModel = new DefaultTableModel();
+        String[] columns = {"Print ID", "User ID", "Paper size", "Colour Type", "Single/Double side", "No. of pages", "No of Copies", "Status"};
+        for (String value : columns) queueModel.addColumn(value);
+        JTable printerQueue = new JTable(queueModel);
+
+        loadPrintTable();
+
         JScrollPane sp4 = new JScrollPane(printerQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         printerTab.add(printerQueueLabel);
@@ -460,7 +461,7 @@ public class AdminPage extends JFrame implements ActionListener {
         homeTab.add(pendingRequestPanel);
         pendingRequestPanel.setLayout(null);
 
-        JLabel reqPending = new JLabel("  7");
+        JLabel reqPending = new JLabel(String.valueOf(admin.getNoOfPendingRequests()));
         reqPending.setIcon(new ImageIcon("assets\\images\\Admin\\home-page\\pending requests.png"));
         reqPending.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 56));
         reqPending.setBounds(10, 50, 230, 90);
@@ -472,44 +473,40 @@ public class AdminPage extends JFrame implements ActionListener {
         completedOrdersPanel.setBounds(390, 70, 230, 175);
         homeTab.add(completedOrdersPanel);
         completedOrdersPanel.setLayout(null);
-        
-        
-        if(admin.getNotification()==false)
-        {
-        	s =1;
+
+
+        if (!admin.getNotification()) {
+            s = 1;
         }
-        JLabel completedOrder = new JLabel(String.valueOf(s)+"..");
+        JLabel completedOrder = new JLabel(String.valueOf(s) + "..");
         completedOrder.setIcon(new ImageIcon("assets\\images\\Admin\\home-page\\queue.png"));
         completedOrder.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 56));
         completedOrder.setBounds(10, 50, 210, 90);
         completedOrdersPanel.add(completedOrder);
-        
-        
+
+
         completedOrder.addMouseListener(new MouseAdapter() {
-			@Override
+            @Override
             public void mouseClicked(MouseEvent e) {
-				if (s!=0)
-				{
-            	int ans=JOptionPane.showConfirmDialog(null, "Resources have depleted..\nUpdate status if replenished","Clerk's notification",JOptionPane.YES_NO_OPTION);
-            	if(JOptionPane.YES_NO_OPTION==ans)
-					{
-            		admin.updateResources();
-            		completedOrder.setText(" 0");
-            		s=0;
-            		
-					}
-				}
+                if (s != 0) {
+                    int ans = JOptionPane.showConfirmDialog(null, "Resources have depleted..\nUpdate status if replenished", "Clerk's notification", JOptionPane.YES_NO_OPTION);
+                    if (JOptionPane.YES_NO_OPTION == ans) {
+                        admin.updateResources();
+                        completedOrder.setText(" 0");
+                        s = 0;
+                    }
+                }
             }
+
             public void mouseEntered(MouseEvent e) {
-                 completedOrdersPanel.setBackground(Color.GRAY);
-                
+                completedOrdersPanel.setBackground(Color.GRAY);
             }
-            public void mouseExited(MouseEvent e) {               
-                 completedOrdersPanel.setBackground(Color.LIGHT_GRAY);
-                
+
+            public void mouseExited(MouseEvent e) {
+                completedOrdersPanel.setBackground(Color.LIGHT_GRAY);
             }
-            });
-        
+        });
+
 
         JPanel revenuePanel = new JPanel();
         revenuePanel.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
@@ -518,7 +515,7 @@ public class AdminPage extends JFrame implements ActionListener {
         homeTab.add(revenuePanel);
         revenuePanel.setLayout(null);
 
-        JLabel revenue = new JLabel("12,342");
+        JLabel revenue = new JLabel(String.valueOf(admin.getTotalRevenue()));
         revenue.setIcon(new ImageIcon("assets\\images\\Admin\\home-page\\revenue.png"));
         revenue.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 36));
         revenue.setBounds(10, 50, 235, 90);
@@ -529,21 +526,19 @@ public class AdminPage extends JFrame implements ActionListener {
         scrollPane_3.setBounds(70, 319, 895, 311);
         homeTab.add(scrollPane_3);
 
-        recentPaymentsTable = new JTable();
+        DefaultTableModel recentModel = new DefaultTableModel();
+        String[] recent_cols = new String[]{"User ID", "Name", "Amount/Credit", "Date", "Clerk"};
+        for(String recent_col:recent_cols) recentModel.addColumn(recent_col);
+
+        recentPaymentsTable = new JTable(recentModel);
         scrollPane_3.setViewportView(recentPaymentsTable);
-        recentPaymentsTable.setModel(new DefaultTableModel(
-                new String[][]{
-                },
-                new String[]{
-                        "User ID", "Name", "Amount/Credit", "Date", "Clerk"
-                }
-        ));
+
 
         JLabel recentOrderLabel = new JLabel("RECENT ORDERS");
         recentOrderLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
         recentOrderLabel.setBounds(70, 263, 183, 46);
         homeTab.add(recentOrderLabel);
-        
+
         JLabel recentOrderLabel2 = new JLabel("RECENT ORDERS");
         recentOrderLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
         recentOrderLabel.setBounds(70, 263, 183, 46);
@@ -554,7 +549,7 @@ public class AdminPage extends JFrame implements ActionListener {
         pendingRequestsLabel.setBounds(70, 37, 230, 30);
         homeTab.add(pendingRequestsLabel);
 
-        
+
         JLabel notificationLabel = new JLabel("NOTIFICATIONS");
         notificationLabel.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 20));
         notificationLabel.setBounds(390, 37, 230, 30);
@@ -566,15 +561,12 @@ public class AdminPage extends JFrame implements ActionListener {
         homeTab.add(lblNetRevenue);
 
         JPanel deliveryTab = new JPanel();
+
         homeTabbedPane.addTab("DELIVERY", null, deliveryTab, null);
-        JTable deliveryQueueTable = new JTable(data, column);
-        deliveryQueueTable.setModel(new DefaultTableModel(
-                new String[][]{
-                },
-                new String[]{
-                        "Print ID", "User ID", "Name", "Room no", "Phone no", "Bill Status"
-                }
-        ));
+        DefaultTableModel deliveryModel = new DefaultTableModel();
+        String [] delivery_cols = {"Print ID", "User ID", "Name", "Room no", "Phone no", "Status"};
+        for (String delivery_col: delivery_cols) deliveryModel.addColumn(delivery_col);
+        JTable deliveryQueueTable = new JTable(deliveryModel);
 
         deliveryQueueTable.setFillsViewportHeight(true);
         JScrollPane scrollPaneDelQueue = new JScrollPane(deliveryQueueTable);
@@ -605,7 +597,6 @@ public class AdminPage extends JFrame implements ActionListener {
         JComboBox comboBox_1 = new JComboBox(new String[]{"NOT DELIVERED", "DELIVERED"});
         comboBox_1.setBounds(544, 504, 150, 30);
         comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        //        comboBox_1.setModel(new DefaultComboBoxModel());
         deliveryTab.add(comboBox_1);
 
         JLabel print_idLabel_1 = new JLabel("Status :");
@@ -691,11 +682,11 @@ public class AdminPage extends JFrame implements ActionListener {
         staffDateText.setBounds(386, 392, 150, 40);
         addUserPanel.add(staffDateText);
 
-        staffpassText = new JTextField();
-        staffpassText.setFont(new Font("Arial", Font.PLAIN, 16));
-        staffpassText.setColumns(10);
-        staffpassText.setBounds(386, 471, 150, 40);
-        addUserPanel.add(staffpassText);
+        staffPassText = new JTextField();
+        staffPassText.setFont(new Font("Arial", Font.PLAIN, 16));
+        staffPassText.setColumns(10);
+        staffPassText.setBounds(386, 471, 150, 40);
+        addUserPanel.add(staffPassText);
 
         JButton staffSubmitButton = new JButton("SUBMIT");
         staffSubmitButton.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -714,7 +705,7 @@ public class AdminPage extends JFrame implements ActionListener {
             String phone = staffPhNoText.getText();
             String value = staffTypeCB.getItemAt(staffTypeCB.getSelectedIndex()).toString();
             String username = staffDateText.getText();
-            String pass = staffpassText.getText();
+            String pass = staffPassText.getText();
 
             try {
                 admin.addUser(name, mail, phone, username, pass);
@@ -724,6 +715,21 @@ public class AdminPage extends JFrame implements ActionListener {
         }
 
     }
+
+    public void loadPrintTable() {
+
+        int i = 0;
+        ResultSet rs = admin.getPrintTable();
+        try {
+            while (rs.next()) {
+                queueModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8)});
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         new AdminPage();
     }
