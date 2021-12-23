@@ -15,6 +15,25 @@ public class User implements Login {
     private String phoneNO;
     private String address;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getPerson_id() {
+        return person_id;
+    }
+
+    public String getEmail_id() {
+        return email_id;
+    }
+
+    public String getPhoneNO() {
+        return phoneNO;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 
     public User() {
 
