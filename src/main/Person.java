@@ -118,7 +118,7 @@ public class Person implements Login {
         return null;
     }
 
-    public void sendRequest(String print_id, String username, String phone_no, String paper_type, String page_type, String colour_type, String status) {
+    public void sendRequest(String print_id, String username, String paper_type, String page_type, String colour_type, String status) {
 
         java.util.Date utilDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -130,7 +130,7 @@ public class Person implements Login {
             preparedStatement.setString(1, print_id);
             preparedStatement.setString(2, this.person_id);
             preparedStatement.setString(3, this.name);
-            preparedStatement.setLong(4, Long.parseLong(this.phoneNO));
+            preparedStatement.setLong(4, Long.parseLong(phoneNO));
             preparedStatement.setString(5, this.address);
             preparedStatement.setString(6, paper_type);
             preparedStatement.setString(7, page_type);

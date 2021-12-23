@@ -44,22 +44,16 @@ public class HomeScreen extends JFrame implements ActionListener {
 
     JLabel usernameLabel;
     JLabel passLabel;
-    JLabel nameLabel;
     JLabel printTypeLabel;
     JLabel paperSizeLabel;
     JLabel printPageTypeLabel;
     JLabel colourLabel;
     JLabel pageNoLabel;
     JLabel copyNoLabel;
-    JLabel phoneLabel;
-    JLabel roomLabel;
     JLabel dateLabel;
 
     JTextField usernameTextField;
     JPasswordField passwordField;
-    JTextField nameTextField;
-    JTextField phoneTextField;
-    JTextField roomTextField;
 
     ButtonGroup buttonGroup1 = new ButtonGroup();
     JRadioButton officialRButton;
@@ -107,16 +101,21 @@ public class HomeScreen extends JFrame implements ActionListener {
 
         requestFormPanel = new JPanel();
         usernameLabel = new JLabel("Username : ");
+        usernameLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         passLabel = new JLabel("Password : ");
-        nameLabel = new JLabel("Name");
+        passLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         printTypeLabel = new JLabel("Print Type");
+        printTypeLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         paperSizeLabel = new JLabel("Paper Size");
+        paperSizeLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         printPageTypeLabel = new JLabel("Page Type");
+        printPageTypeLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         colourLabel = new JLabel("Colour Type");
+        colourLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         pageNoLabel = new JLabel("No of Pages");
+        pageNoLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         copyNoLabel = new JLabel("No of Copies");
-        phoneLabel = new JLabel("Phone No");
-        roomLabel = new JLabel("Room No");
+        copyNoLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
         dateLabel = new JLabel("Date");
 
         format = new SimpleDateFormat("dd-MMMM-yyyy");
@@ -141,41 +140,44 @@ public class HomeScreen extends JFrame implements ActionListener {
         usernameTextField.setFont(new Font("Arial", Font.PLAIN, 14));
         passwordField = new JPasswordField();
         passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
-        nameTextField = new JTextField();
-        nameTextField.setFont(new Font("Arial", Font.PLAIN, 14));
-        phoneTextField = new JTextField();
-        phoneTextField.setFont(new Font("Arial", Font.PLAIN, 14));
-        roomTextField = new JTextField();
-        roomTextField.setFont(new Font("Arial", Font.PLAIN, 14));
 
 
         officialRButton = new JRadioButton("Official");
+        officialRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
         officialRButton.setActionCommand("Official");
         personalRButton = new JRadioButton("Personal");
+        personalRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
         personalRButton.setActionCommand("Personal");
         buttonGroup1.add(officialRButton);
         buttonGroup1.add(personalRButton);
 
         a3RButton = new JRadioButton("A3");
+        a3RButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
         a3RButton.setActionCommand("A3");
         a4RButton = new JRadioButton("A4");
+        a4RButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
         a4RButton.setActionCommand("A4");
         a5RButton = new JRadioButton("A5");
+        a5RButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
         a5RButton.setActionCommand("A5");
         buttonGroup2.add(a3RButton);
         buttonGroup2.add(a4RButton);
         buttonGroup2.add(a5RButton);
 
         singlePrintRButton = new JRadioButton("Single Side");
+        singlePrintRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
         singlePrintRButton.setActionCommand("Single");
         doublePrintRButton = new JRadioButton("Double Side");
+        doublePrintRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
         doublePrintRButton.setActionCommand("Double");
         buttonGroup3.add(singlePrintRButton);
         buttonGroup3.add(doublePrintRButton);
 
         grayscaleRButton = new JRadioButton("Grayscale");
+        grayscaleRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
         grayscaleRButton.setActionCommand("Grayscale");
         colourRButton = new JRadioButton("Colour");
+        colourRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
         colourRButton.setActionCommand("Colour");
         buttonGroup4.add(grayscaleRButton);
         buttonGroup4.add(colourRButton);
@@ -197,8 +199,6 @@ public class HomeScreen extends JFrame implements ActionListener {
         requestFormPanel.add(usernameTextField);
         requestFormPanel.add(passLabel);
         requestFormPanel.add(passwordField);
-        requestFormPanel.add(nameLabel);
-        requestFormPanel.add(nameTextField);
         requestFormPanel.add(printTypeLabel);
         requestFormPanel.add(officialRButton);
         requestFormPanel.add(personalRButton);
@@ -216,10 +216,7 @@ public class HomeScreen extends JFrame implements ActionListener {
         requestFormPanel.add(pageNoSpinner);
         requestFormPanel.add(copyNoLabel);
         requestFormPanel.add(copyNoSpinner);
-        requestFormPanel.add(phoneLabel);
-        requestFormPanel.add(phoneTextField);
-        requestFormPanel.add(roomLabel);
-        requestFormPanel.add(roomTextField);
+
         requestFormPanel.add(dateField);
         requestFormPanel.add(timeField);
         requestFormPanel.add(fileButton);
@@ -229,34 +226,28 @@ public class HomeScreen extends JFrame implements ActionListener {
 
         dateField.setBounds(350, 50, 140, 24);
         timeField.setBounds(520, 50, 140, 24);
-        usernameLabel.setBounds(185, 110, 100, 30);
-        usernameTextField.setBounds(355, 110, 100, 24);
-        passLabel.setBounds(505, 110, 100, 30);
-        passwordField.setBounds(655, 110, 100, 24);
-        nameLabel.setBounds(185, 150, 100, 30);
-        nameTextField.setBounds(355, 150, 100, 24);
-        printTypeLabel.setBounds(185, 190, 100, 30);
-        officialRButton.setBounds(355, 190, 100, 25);
-        personalRButton.setBounds(505, 190, 100, 25);
-        paperSizeLabel.setBounds(185, 230, 100, 30);
-        a3RButton.setBounds(355, 230, 100, 25);
-        a4RButton.setBounds(505, 230, 100, 25);
-        a5RButton.setBounds(655, 230, 100, 25);
-        printPageTypeLabel.setBounds(185, 270, 100, 30);
-        singlePrintRButton.setBounds(355, 270, 100, 25);
-        doublePrintRButton.setBounds(505, 270, 100, 25);
-        colourLabel.setBounds(185, 310, 100, 30);
-        grayscaleRButton.setBounds(355, 310, 100, 25);
-        colourRButton.setBounds(505, 310, 100, 25);
-        pageNoLabel.setBounds(185, 350, 100, 30);
-        pageNoSpinner.setBounds(355, 350, 42, 25);
-        copyNoLabel.setBounds(185, 390, 100, 30);
-        copyNoSpinner.setBounds(355, 390, 42, 25);
-        phoneLabel.setBounds(185, 430, 100, 30);
-        phoneTextField.setBounds(355, 430, 120, 24);
-        roomLabel.setBounds(185, 470, 100, 30);
-        roomTextField.setBounds(355, 470, 120, 24);
-        fileButton.setBounds(185, 528, 100, 25);
+        usernameLabel.setBounds(185, 105, 100, 30);
+        usernameTextField.setBounds(355, 110, 130, 24);
+        passLabel.setBounds(185, 161, 100, 30);
+        passwordField.setBounds(355, 164, 130, 24);
+        printTypeLabel.setBounds(185, 236, 100, 30);
+        officialRButton.setBounds(355, 239, 100, 25);
+        personalRButton.setBounds(505, 239, 100, 25);
+        paperSizeLabel.setBounds(185, 276, 100, 30);
+        a3RButton.setBounds(355, 279, 100, 25);
+        a4RButton.setBounds(505, 279, 100, 25);
+        a5RButton.setBounds(665, 279, 100, 25);
+        printPageTypeLabel.setBounds(185, 316, 100, 30);
+        singlePrintRButton.setBounds(355, 319, 100, 25);
+        doublePrintRButton.setBounds(505, 319, 100, 25);
+        colourLabel.setBounds(185, 364, 100, 30);
+        grayscaleRButton.setBounds(355, 367, 100, 25);
+        colourRButton.setBounds(505, 367, 100, 25);
+        pageNoLabel.setBounds(185, 419, 100, 30);
+        pageNoSpinner.setBounds(355, 421, 42, 25);
+        copyNoLabel.setBounds(185, 459, 100, 30);
+        copyNoSpinner.setBounds(355, 461, 42, 25);
+        fileButton.setBounds(185, 516, 100, 25);
         fileButton.setFont(new Font("Arial", Font.PLAIN, 10));
         submitButton.setBounds(370, 580, 100, 30);
         resetButton.setBounds(490, 580, 100, 30);
@@ -326,7 +317,6 @@ public class HomeScreen extends JFrame implements ActionListener {
             Person user = new Person(username);
 
             if (user.verifyUser(username, password)) {
-                String phone_no = phoneTextField.getText();
 
                 String print_type = buttonGroup1.getSelection().getActionCommand();
                 String paper_type = buttonGroup2.getSelection().getActionCommand();
@@ -349,7 +339,7 @@ public class HomeScreen extends JFrame implements ActionListener {
 
 
                 try {
-                    user.sendRequest(print_id, username, phone_no, paper_type, page_type, colour_type, status);
+                    user.sendRequest(print_id, username, paper_type, page_type, colour_type, status);
                     user.sendRequest(print_id, print_type, colour_type, no_of_pages, no_of_copies);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -366,7 +356,6 @@ public class HomeScreen extends JFrame implements ActionListener {
 
         if (e.getActionCommand().equals("Reset")) {
             usernameTextField.setText("");
-            nameTextField.setText("");
             passwordField.setText("");
             buttonGroup1.clearSelection();
             buttonGroup2.clearSelection();
@@ -374,8 +363,6 @@ public class HomeScreen extends JFrame implements ActionListener {
             buttonGroup4.clearSelection();
             pageNoSpinner.setValue(1);
             copyNoSpinner.setValue(1);
-            phoneTextField.setText("");
-            roomTextField.setText("");
             dateField.setValue(new Date());
         }
 
