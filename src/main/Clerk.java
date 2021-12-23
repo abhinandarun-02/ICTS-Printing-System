@@ -68,12 +68,42 @@ public class Clerk extends Staff {
             preparedStatement.setString(1, status);
             preparedStatement.setString(2, print_id);
             preparedStatement.executeUpdate();
-
             connection.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void saveData(String print_id, String clerk_id) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO log_details (employee_id, print_id, clerk_id, delivery_status) VALUES (?, ?, ?, ?)");
+            preparedStatement.setString(1, getEmployeeID(print_id));
+            preparedStatement.setString(2, print_id);
+            preparedStatement.setString(3, clerk_id);
+            preparedStatement.setString(4, "To be Delivered");
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getEmployeeID(String print_id) {
+        try{
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT employee_id FROM print_details WHERE print_id = ?;");
+            preparedStatement.setString(1, print_id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+            return resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  "";
     }
 
 
@@ -89,7 +119,16 @@ public class Clerk extends Staff {
             preparedStatement.setInt(4, total_cost);
             preparedStatement.setString(5, print_id);
 
+            java.util.Date utilDate = new java.util.Date();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
+            PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE print_details SET date = ?, time = ? WHERE  print_id = ?;");
+            preparedStatement1.setDate(1, sqlDate);
+            preparedStatement1.setTime(2, sqlTime);
+            preparedStatement1.setString(3, print_id);
+
             preparedStatement.executeUpdate();
+            preparedStatement1.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
