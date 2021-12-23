@@ -5,7 +5,6 @@ import main.Admin;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,6 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
+
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
@@ -37,6 +37,23 @@ import javax.swing.ImageIcon;
 public class AdminPage extends JFrame implements ActionListener {
 
     Admin admin;
+
+    //SIDEBAR
+    JPanel sideBarPanel;
+    JPanel homePanel;
+    JPanel homeButtonPanel;
+    JLabel homeLabel;
+    JPanel tabPanel;
+    JPanel searchButtonPanel;
+    JLabel searchLabel;
+    JPanel printerButtonPanel;
+    JLabel printerLabel;
+    JPanel deliveryButtonPanel;
+    JLabel deliveryLabel;
+    JPanel manageButtonPanel;
+    JLabel manageLabel;
+
+
     JPanel contentPane;
     JTextField user_idText;
     JTable orderTable;
@@ -50,27 +67,26 @@ public class AdminPage extends JFrame implements ActionListener {
     JTextField staffPassText;
 
     JTabbedPane homeTabbedPane;
-
-    JPanel sideBarPanel;
-    JPanel homePanel;
-    JPanel tabPanel;
-
-    JPanel homeButtonPanel;
-    JPanel searchButtonPanel;
-    JPanel printerButtonPanel;
-    JPanel deliveryButtonPanel;
-    JPanel manageButtonPanel;
+    JPanel homeTab;
+    JPanel searchTab;
+    JPanel printerTab;
+    JPanel deliveryTab;
+    JPanel manageTab;
 
     DefaultTableModel queueModel;
 
+    TitledBorder printerQueueBorder;
+
+
     JComboBox<String> staffTypeCB;
-    JComboBox<String> comboBox;
 
 
     Color primaryColor = new Color(255, 255, 255);
     Color secondaryColor = new Color(70, 100, 130);
     int s = 0;
 
+    Color primary = Color.WHITE;
+    Color secondary = Color.LIGHT_GRAY;
 
     public AdminPage() {
 
@@ -95,14 +111,9 @@ public class AdminPage extends JFrame implements ActionListener {
         JButton DeleteButton;
 
 
-//        String[] column4 = {"Print ID", "User ID", "Paper size", "Print Type", "Single/Double side", "No. of pages", "Printer#"};
 
-        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "PRINTER QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
+        printerQueueBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "PRINTER QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
         /* *********************************************************************************************************************************************************/
-
-
-        String[] column = {"Print ID", "User ID", "Name", "Room no", "Phone no", "Bill Status"};
-        String[][] data = {{"", "", "", "", "", ""}, {"", "", "", "", "", ""}};
 
         TitledBorder titledBorder1;
         titledBorder1 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "DELIVERY QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Ariel", Font.PLAIN, 24));
@@ -125,7 +136,7 @@ public class AdminPage extends JFrame implements ActionListener {
         homeButtonPanel.setBackground(Color.WHITE);
 
 
-        JLabel homeLabel = new JLabel("   HOME");
+        homeLabel = new JLabel("   HOME");
         homeLabel.setBounds(10, 2, 209, 66);
         homeLabel.setIcon(new ImageIcon("assets\\images\\Admin\\tabPanel\\home.png"));
         homeLabel.addMouseListener(new MouseAdapter() {
@@ -173,7 +184,7 @@ public class AdminPage extends JFrame implements ActionListener {
         searchButtonPanel.setBounds(10, 20, 230, 60);
         tabPanel.add(searchButtonPanel);
 
-        JLabel searchLabel = new JLabel("   SEARCH");
+        searchLabel = new JLabel("   SEARCH");
         searchLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         searchLabel.setBounds(10, 0, 210, 60);
         searchLabel.setIcon(new ImageIcon("assets\\images\\Admin\\tabPanel\\search.png"));
@@ -211,7 +222,7 @@ public class AdminPage extends JFrame implements ActionListener {
         printerButtonPanel.setBounds(10, 140, 230, 60);
         tabPanel.add(printerButtonPanel);
 
-        JLabel printerLabel = new JLabel("  PRINTER");
+        printerLabel = new JLabel("  PRINTER");
         printerLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         printerLabel.setBounds(10, 2, 220, 56);
         printerLabel.setIcon(new ImageIcon("assets\\images\\Admin\\tabPanel\\print.png"));
@@ -250,7 +261,7 @@ public class AdminPage extends JFrame implements ActionListener {
         tabPanel.add(deliveryButtonPanel);
 
 
-        JLabel deliveryLabel = new JLabel("  DELIVERY");
+        deliveryLabel = new JLabel("  DELIVERY");
         deliveryLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         deliveryLabel.setIcon(new ImageIcon("assets\\images\\Admin\\tabPanel\\delivery.png"));
         deliveryLabel.setBounds(10, 2, 218, 56);
@@ -288,7 +299,7 @@ public class AdminPage extends JFrame implements ActionListener {
         manageButtonPanel.setBounds(10, 390, 230, 60);
         tabPanel.add(manageButtonPanel);
 
-        JLabel manageLabel = new JLabel("  MANAGE");
+        manageLabel = new JLabel("  MANAGE");
         manageLabel.setIcon(new ImageIcon("assets\\images\\Admin\\tabPanel\\manage.png"));
         manageLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         manageLabel.setBounds(10, 2, 218, 56);
@@ -325,23 +336,25 @@ public class AdminPage extends JFrame implements ActionListener {
         homeTabbedPane.setBounds(242, -30, 1006, 697);
         contentPane.add(homeTabbedPane);
 
-        JPanel homeTab = new JPanel();
+        homeTab = new JPanel();
         homeTabbedPane.addTab("HOME", null, homeTab, null);
         homeTab.setLayout(null);
 
-        JPanel searchTab = new JPanel();
+        searchTab = new JPanel();
         homeTabbedPane.addTab("SEARCH", null, searchTab, null);
         searchTab.setLayout(null);
 
-        JPanel headerPanel = new JPanel();
+        JPanel headerPanel;
+        headerPanel = new JPanel();
         headerPanel.setBounds(10, 10, 1022, 60);
         searchTab.add(headerPanel);
         headerPanel.setLayout(null);
 
-        JLabel lblNewLabel_3 = new JLabel("User ID :");
-        lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        lblNewLabel_3.setBounds(50, 10, 81, 40);
-        headerPanel.add(lblNewLabel_3);
+        JLabel user_idLabel;
+        user_idLabel = new JLabel("User ID :");
+        user_idLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        user_idLabel.setBounds(50, 10, 81, 40);
+        headerPanel.add(user_idLabel);
 
         user_idText = new JTextField();
         user_idText.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -349,12 +362,12 @@ public class AdminPage extends JFrame implements ActionListener {
         headerPanel.add(user_idText);
         user_idText.setColumns(10);
 
-        JComboBox comboBox = new JComboBox(new String[]{"Orders", "Requests", "Payment"});
-        comboBox.setFont(new Font("Arial", Font.PLAIN, 18));
-        //        comboBox.setModel(new DefaultComboBoxModel(new String[]{"Orders", "Requests", "Payment"}));
-        comboBox.setSelectedIndex(0);
-        comboBox.setBounds(400, 10, 120, 40);
-        headerPanel.add(comboBox);
+        JComboBox searchOptions;
+        searchOptions = new JComboBox(new String[]{"Orders", "Requests", "Payment"});
+        searchOptions.setFont(new Font("Arial", Font.PLAIN, 18));
+        searchOptions.setSelectedIndex(0);
+        searchOptions.setBounds(400, 10, 120, 40);
+        headerPanel.add(searchOptions);
 
         JLabel lblNewLabel_3_1 = new JLabel("Type :");
         lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -423,7 +436,7 @@ public class AdminPage extends JFrame implements ActionListener {
         scrollPane.setViewportView(orderTable);
 
         orderTable.setBorder(new LineBorder(new Color(0, 0, 0)));
-        JPanel printerTab = new JPanel();
+        printerTab = new JPanel();
         homeTabbedPane.addTab("PRINTER", null, printerTab, null);
         printerQueueLabel = new JLabel("QUEUE");
         printerQueueLabel.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -450,13 +463,13 @@ public class AdminPage extends JFrame implements ActionListener {
         sp4.setBounds(100, 152, 850, 150);
         AddButton.setBounds(320, 390, 150, 50);
         DeleteButton.setBounds(498, 390, 150, 50);
-        printerTab.setBorder(titledBorder);
+        printerTab.setBorder(printerQueueBorder);
         printerTab.setLayout(null);
 
 
         JPanel pendingRequestPanel = new JPanel();
         pendingRequestPanel.setBackground(Color.LIGHT_GRAY);
-        pendingRequestPanel.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
+        pendingRequestPanel.setBorder(new MatteBorder(15, 0, 0, 0, new Color(0, 0, 0)));
         pendingRequestPanel.setBounds(70, 70, 230, 175);
         homeTab.add(pendingRequestPanel);
         pendingRequestPanel.setLayout(null);
@@ -468,7 +481,7 @@ public class AdminPage extends JFrame implements ActionListener {
         pendingRequestPanel.add(reqPending);
 
         JPanel completedOrdersPanel = new JPanel();
-        completedOrdersPanel.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
+        completedOrdersPanel.setBorder(new MatteBorder(15, 0, 0, 0, new Color(0, 0, 0)));
         completedOrdersPanel.setBackground(Color.LIGHT_GRAY);
         completedOrdersPanel.setBounds(390, 70, 230, 175);
         homeTab.add(completedOrdersPanel);
@@ -509,7 +522,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
 
         JPanel revenuePanel = new JPanel();
-        revenuePanel.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(0, 0, 0)));
+        revenuePanel.setBorder(new MatteBorder(15, 0, 0, 0, new Color(0, 0, 0)));
         revenuePanel.setBackground(Color.LIGHT_GRAY);
         revenuePanel.setBounds(710, 70, 255, 175);
         homeTab.add(revenuePanel);
@@ -521,17 +534,17 @@ public class AdminPage extends JFrame implements ActionListener {
         revenue.setBounds(10, 50, 235, 90);
         revenuePanel.add(revenue);
 
-        JScrollPane scrollPane_3 = new JScrollPane();
-        scrollPane_3.setViewportBorder(new EmptyBorder(0, 0, 0, 0));
-        scrollPane_3.setBounds(70, 319, 895, 311);
-        homeTab.add(scrollPane_3);
+        JScrollPane recentPaymentsSP = new JScrollPane();
+        recentPaymentsSP.setViewportBorder(new EmptyBorder(0, 0, 0, 0));
+        recentPaymentsSP.setBounds(70, 319, 895, 311);
+        homeTab.add(recentPaymentsSP);
 
         DefaultTableModel recentModel = new DefaultTableModel();
         String[] recent_cols = new String[]{"User ID", "Name", "Amount/Credit", "Date", "Clerk"};
         for(String recent_col:recent_cols) recentModel.addColumn(recent_col);
 
         recentPaymentsTable = new JTable(recentModel);
-        scrollPane_3.setViewportView(recentPaymentsTable);
+        recentPaymentsSP.setViewportView(recentPaymentsTable);
 
 
         JLabel recentOrderLabel = new JLabel("RECENT ORDERS");
@@ -560,7 +573,7 @@ public class AdminPage extends JFrame implements ActionListener {
         lblNetRevenue.setBounds(710, 37, 255, 30);
         homeTab.add(lblNetRevenue);
 
-        JPanel deliveryTab = new JPanel();
+        deliveryTab = new JPanel();
 
         homeTabbedPane.addTab("DELIVERY", null, deliveryTab, null);
         DefaultTableModel deliveryModel = new DefaultTableModel();
@@ -592,7 +605,7 @@ public class AdminPage extends JFrame implements ActionListener {
         deliveryTab.add(print_idLabel);
         deliveryTab.add(print_idText);
         deliveryTab.add(updateStatusButton);
-        ((JComponent) deliveryTab).setBorder(titledBorder1);
+        deliveryTab.setBorder(titledBorder1);
 
         JComboBox comboBox_1 = new JComboBox(new String[]{"NOT DELIVERED", "DELIVERED"});
         comboBox_1.setBounds(544, 504, 150, 30);
@@ -605,7 +618,7 @@ public class AdminPage extends JFrame implements ActionListener {
         deliveryTab.add(print_idLabel_1);
 
 
-        JPanel manageTab = new JPanel();
+        manageTab = new JPanel();
         homeTabbedPane.addTab("MANAGE", null, manageTab, null);
         manageTab.setLayout(null);
 
