@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -114,6 +115,8 @@ class LoginPage extends JFrame implements ActionListener {
             usertype = usertype.substring(0, 3);
 
             if (user.verifyUser(username, password)) {
+                System.gc();
+                for (Window window : Window.getWindows()) window.dispose();
                 if (usertype.equals("ADM")) {
                     new AdminPage();
                 }
