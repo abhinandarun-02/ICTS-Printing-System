@@ -22,7 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
-
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
@@ -52,6 +52,7 @@ public class AdminPage extends JFrame implements ActionListener {
     JLabel deliveryLabel;
     JPanel manageButtonPanel;
     JLabel manageLabel;
+    DefaultTableModel recentModel ;
 
 
     JPanel contentPane;
@@ -65,6 +66,7 @@ public class AdminPage extends JFrame implements ActionListener {
     JTextField staffPhNoText;
     JTextField staffDateText;
     JTextField staffPassText;
+    JTable recentTable;
 
     JTabbedPane homeTabbedPane;
     JPanel homeTab;
@@ -543,9 +545,19 @@ public class AdminPage extends JFrame implements ActionListener {
         recentPaymentsSP.setBounds(70, 319, 895, 311);
         homeTab.add(recentPaymentsSP);
 
-        DefaultTableModel recentModel = new DefaultTableModel();
+        recentModel = new DefaultTableModel();
+        recentTable = new JTable(recentModel);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		recentTable.setDefaultRenderer(String.class, centerRenderer);
         String[] recent_cols = new String[]{"User ID", "Name", "Amount/Credit", "Date", "Clerk"};
+        this.loadRecentTable();
         for(String recent_col:recent_cols) recentModel.addColumn(recent_col);
+        for (int x = 0; x < recentTable.getColumnCount(); x++) {
+			recentTable.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
+		}
+        JScrollPane sp = new JScrollPane(recentTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        homeTab.add(sp);
 
         recentPaymentsTable = new JTable(recentModel);
         recentPaymentsSP.setViewportView(recentPaymentsTable);
@@ -751,4 +763,17 @@ public class AdminPage extends JFrame implements ActionListener {
         new AdminPage("ADM");
 
     }
+    public void loadRecentTable() {
+
+ 		int i = 0;
+ 	    ResultSet rs = admin.getRecentOrders();
+ 		try {
+ 			while (rs.next()) {
+ 				recentModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)});
+ 				i++;
+ 			}
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}
+ 	}
 }

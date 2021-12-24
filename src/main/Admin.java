@@ -128,18 +128,19 @@ public class Admin extends Staff {
             e.printStackTrace();
         }
     }
-
-    /*TODO
-    public void getRecentOrders() {
+    
+    public ResultSet getRecentOrders() {
         Connection connection = getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT employee_id, total_cost, date  FROM print_details");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT p.employee_id, e.employee_name,l.total_cost, p.date,l.clerk_id  FROM print_details p, log_details l, employee e where e.employee_id=l.employee_id AND l.employee_id=p.employee_id AND p.employee_id=e.employee_id;");
             ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+        return null;
+    }
 
     /*TODO
     public void getDeliveryQueue() {
