@@ -211,14 +211,12 @@ public class ClerksPage extends JFrame implements ActionListener {
         deliveryModel = new DefaultTableModel();
         deliveryQueue = new JTable(deliveryModel);
         deliveryQueue.setModel(deliveryModel);
-        deliveryModel.addColumn("Print ID");
-        deliveryModel.addColumn("User ID");
-        deliveryModel.addColumn("Name");
-        deliveryModel.addColumn("Room No");
-        deliveryModel.addColumn("Phone NO");
-        deliveryModel.addColumn("Status");
+        String[] delivery_cols = new String[]{"Print ID", "User ID", "Name", "Room No", "Phone No", "Status", "Total Cost"};
+        for (String delivery_col : delivery_cols) deliveryModel.addColumn(delivery_col);
 
         this.loadDeliveryTable();
+
+        for (int i = 0; i < deliveryQueue.getColumnCount(); i++) deliveryQueue.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 
         JScrollPane sp5 = new JScrollPane(deliveryQueue, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -518,7 +516,7 @@ public class ClerksPage extends JFrame implements ActionListener {
         ResultSet rs = clerk.getDeliveryTable();
         try {
             while (rs.next()) {
-                deliveryModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBigDecimal(5), rs.getString(6)});
+                deliveryModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBigDecimal(5), rs.getString(6), rs.getString(7)});
                 i++;
             }
         } catch (Exception e) {
