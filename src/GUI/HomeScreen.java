@@ -21,6 +21,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 
+import java.awt.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -34,6 +35,8 @@ import javax.swing.text.DateFormatter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class HomeScreen extends JFrame implements ActionListener {
+
+    Container container;
 
     /* *************** REQUEST_PANEL *************** */
     JPanel requestFormPanel;
@@ -93,11 +96,14 @@ public class HomeScreen extends JFrame implements ActionListener {
 
     public HomeScreen() {
 
+        setContentPane(new JLabel(new ImageIcon("assets/images/bg.jpg")));
+
         /* ****************************** REQUEST_PANEL_SECTION ****************************** */
         requestFormPanel = new JPanel();
         ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
         setIconImage(image.getImage());
         setTitle("ICTS PRINTING SYSTEM");
+        container = getContentPane();
 
         requestFormPanel = new JPanel();
         usernameLabel = new JLabel("Username : ");
@@ -123,6 +129,7 @@ public class HomeScreen extends JFrame implements ActionListener {
         dateField = new JFormattedTextField(df);
         dateField.setValue(new Date());
         dateField.setEditable(false);
+        dateField.setOpaque(false);
         Font f1 = new Font("Sans", Font.BOLD, 15);
         dateField.setFont(f1);
         dateField.setForeground(Color.black);
@@ -134,6 +141,7 @@ public class HomeScreen extends JFrame implements ActionListener {
         timeField.setForeground(Color.black);
         timeField.setFont(f1);
         timeField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        timeField.setOpaque(false);
 
 
         usernameTextField = new JTextField();
@@ -144,21 +152,26 @@ public class HomeScreen extends JFrame implements ActionListener {
 
         officialRButton = new JRadioButton("Official");
         officialRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        officialRButton.setOpaque(false);
         officialRButton.setActionCommand("Official");
         personalRButton = new JRadioButton("Personal");
         personalRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        personalRButton.setOpaque(false);
         personalRButton.setActionCommand("Personal");
         buttonGroup1.add(officialRButton);
         buttonGroup1.add(personalRButton);
 
         a3RButton = new JRadioButton("A3");
         a3RButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        a3RButton.setOpaque(false);
         a3RButton.setActionCommand("A3");
         a4RButton = new JRadioButton("A4");
         a4RButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        a4RButton.setOpaque(false);
         a4RButton.setActionCommand("A4");
         a5RButton = new JRadioButton("A5");
         a5RButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        a5RButton.setOpaque(false);
         a5RButton.setActionCommand("A5");
         buttonGroup2.add(a3RButton);
         buttonGroup2.add(a4RButton);
@@ -166,18 +179,22 @@ public class HomeScreen extends JFrame implements ActionListener {
 
         singlePrintRButton = new JRadioButton("Single Side");
         singlePrintRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        singlePrintRButton.setOpaque(false);
         singlePrintRButton.setActionCommand("Single");
         doublePrintRButton = new JRadioButton("Double Side");
         doublePrintRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        doublePrintRButton.setOpaque(false);
         doublePrintRButton.setActionCommand("Double");
         buttonGroup3.add(singlePrintRButton);
         buttonGroup3.add(doublePrintRButton);
 
         grayscaleRButton = new JRadioButton("Grayscale");
         grayscaleRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        grayscaleRButton.setOpaque(false);
         grayscaleRButton.setActionCommand("Grayscale");
         colourRButton = new JRadioButton("Colour");
         colourRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        colourLabel.setOpaque(false);
         colourRButton.setActionCommand("Colour");
         buttonGroup4.add(grayscaleRButton);
         buttonGroup4.add(colourRButton);
@@ -222,6 +239,7 @@ public class HomeScreen extends JFrame implements ActionListener {
         requestFormPanel.add(fileButton);
         requestFormPanel.add(submitButton);
         requestFormPanel.add(resetButton);
+        requestFormPanel.setOpaque(false);
 
 
         dateField.setBounds(350, 50, 140, 24);
@@ -286,12 +304,14 @@ public class HomeScreen extends JFrame implements ActionListener {
         paymentButton.addActionListener(this);
 
         sidePanel.setLayout(null);
-
         sidePanel.add(loginButton);
         sidePanel.add(checkStatusButton);
         sidePanel.add(paymentButton);
+        sidePanel.setOpaque(false);
         /* *************************************************************************** */
 
+        container.add(sidePanel);
+        container.add(requestFormPanel);
 
         /* ****************************** FRAME_CONFIGURATION ****************************** */
         setBounds(150, 75, 1250, 700);
@@ -300,8 +320,7 @@ public class HomeScreen extends JFrame implements ActionListener {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        getContentPane().add(requestFormPanel);
-        getContentPane().add(sidePanel);
+       
         /* *************************************************************************** */
 
 
