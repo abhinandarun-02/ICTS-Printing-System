@@ -11,8 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import java.awt.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -22,10 +24,12 @@ import java.sql.ResultSet;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import static javax.swing.BorderFactory.createEmptyBorder;
+
 class DeliveryPage extends JFrame implements ActionListener {
 	
     DeliveryPerson deliveryPerson;
-    JPanel panel = (JPanel) getContentPane();
+    Container container;
     JLabel status;
     JScrollPane sp;
     JLabel id;
@@ -44,6 +48,11 @@ class DeliveryPage extends JFrame implements ActionListener {
         this.username = username;
         //TODO
         deliveryPerson = new DeliveryPerson(username);
+        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        setIconImage(image.getImage());
+        setTitle("ICTS PRINTING SYSTEM");
+        setContentPane(new JLabel(new ImageIcon("assets/images/bg.jpg")));
+        container = getContentPane();
  
         status = new JLabel("UPDATE STATUS");
         id = new JLabel("Print ID :");
@@ -54,10 +63,10 @@ class DeliveryPage extends JFrame implements ActionListener {
         statusLabel.setFont(new Font("Arial", Font.PLAIN, 18));
 
         String[] options = new String[]{"Delivered", "Out for delivery", "File missing"};
-        JComboBox<String> statusCB = new JComboBox<>(options);
+        JComboBox statusCB = new JComboBox(options);
         statusCB.setFont(new Font("Arial", Font.PLAIN, 16));
         statusCB.setBounds(810, 495, 150, 30);
-        this.add(statusCB);
+        getContentPane().add(statusCB);
         submit.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		int opt = JOptionPane.showConfirmDialog(null, "Are You Sure?", "CONFIRM", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
@@ -80,6 +89,7 @@ class DeliveryPage extends JFrame implements ActionListener {
     	
     	delivery = new DefaultTableModel();
 		deliveryTable = new JTable(delivery);
+		deliveryTable.setFillsViewportHeight(true);
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		deliveryTable.setDefaultRenderer(String.class, centerRenderer);
@@ -100,8 +110,13 @@ class DeliveryPage extends JFrame implements ActionListener {
 			deliveryTable.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
 		}
    
-		sp = new JScrollPane(deliveryTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 	
+		sp = new JScrollPane(deliveryTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         submit.setFont(new Font("Arial", Font.PLAIN, 20));
+        deliveryTable.setOpaque(false);
+        sp.setOpaque(false);
+        sp.getViewport().setOpaque(false);
+        sp.setBorder(createEmptyBorder());
+        deliveryTable.setBorder(null);
 
 
         setLayoutManager();
@@ -109,9 +124,7 @@ class DeliveryPage extends JFrame implements ActionListener {
         setFont();
         addComponentsToContainer();
 
-        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
-        setIconImage(image.getImage());
-        setTitle("ICTS PRINTING SYSTEM");
+
         setBounds(150, 75, 1250, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -120,7 +133,7 @@ class DeliveryPage extends JFrame implements ActionListener {
     }
 
     public void setLayoutManager() {
-        panel.setLayout(null);
+        container.setLayout(null);
     }
 
     public void setLocationAndSize() {
@@ -142,21 +155,21 @@ class DeliveryPage extends JFrame implements ActionListener {
 
     public void addComponentsToContainer() {
         //Adding each component to the Container
-        panel.add(sp);
+        container.add(sp);
 
-        panel.add(status);
-        panel.add(id);
-        panel.add(statusTextField);
-        panel.add(statusLabel);
-        panel.add(submit);
+        container.add(status);
+        container.add(id);
+        container.add(statusTextField);
+        container.add(statusLabel);
+        container.add(submit);
         
         pendingRequestsLabel = new JLabel("PENDING REQUESTS");
         pendingRequestsLabel.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 20));
         pendingRequestsLabel.setBounds(50, 80, 230, 30);
         getContentPane().add(pendingRequestsLabel);
 
-        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "DELIVERY QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
-        panel.setBorder(titledBorder);
+        /*TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "DELIVERY QUEUE", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
+        panel.setBorder(titledBorder);*/
     }
 
     @Override
