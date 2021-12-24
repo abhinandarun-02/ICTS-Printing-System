@@ -1,8 +1,6 @@
 package main;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public abstract class Staff extends User {
 
@@ -11,6 +9,21 @@ public abstract class Staff extends User {
     }
 
 
+    public void updatePrinterStatus(String print_id, String status) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement;
+
+            preparedStatement = connection.prepareStatement("UPDATE print_details SET status = ? WHERE print_id = ? ");
+            preparedStatement.setString(1, status);
+            preparedStatement.setString(2, print_id);
+            preparedStatement.executeUpdate();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public ResultSet getRequestTable() {
         ResultSet rs = null;
         try {
