@@ -33,6 +33,7 @@ class LoginPage extends JFrame implements ActionListener {
     JButton loginButton;
     JButton resetButton;
     JCheckBox showPassword;
+    JLabel picLabel;
 
     // Using Person Class
     User user;
@@ -41,6 +42,9 @@ class LoginPage extends JFrame implements ActionListener {
         ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
         setIconImage(image.getImage());
         setTitle("ICTS PRINTING SYSTEM");
+        setContentPane(new JLabel(new ImageIcon("assets/images/background.jpg")));
+        //picLabel = new JLabel(new ImageIcon("assets/images/Icon.png"));
+        
         userTextField = new JTextField();
         userTextField.setFont(new Font("Arial ", Font.PLAIN, 15));
         passwordField = new JPasswordField();
@@ -48,10 +52,13 @@ class LoginPage extends JFrame implements ActionListener {
 
         container = getContentPane();
         userLabel = new JLabel("USERNAME");
+        userLabel.setFont(new Font("Arial ", Font.BOLD, 15));
         passwordLabel = new JLabel("PASSWORD");
+        passwordLabel.setFont(new Font("Arial ", Font.BOLD, 15));
         loginButton = new JButton("LOGIN");
         resetButton = new JButton("RESET");
         showPassword = new JCheckBox("Show Password");
+        showPassword.setOpaque(false);
 
         user = new User();
 
@@ -78,6 +85,7 @@ class LoginPage extends JFrame implements ActionListener {
 
     public void setLocationAndSize() {
         //Setting location and Size of each component using setBounds() method.
+        //picLabel.setBounds(200, 100, 50, 50);
         userLabel.setBounds(150, 150, 100, 30);
         passwordLabel.setBounds(150, 220, 100, 30);
         userTextField.setBounds(250, 150, 150, 30);
@@ -90,6 +98,7 @@ class LoginPage extends JFrame implements ActionListener {
 
     public void addComponentsToContainer() {
         //Adding each component to the Container
+       // container.add(picLabel);
         container.add(userLabel);
         container.add(passwordLabel);
         container.add(userTextField);
@@ -99,8 +108,7 @@ class LoginPage extends JFrame implements ActionListener {
         container.add(resetButton);
 
 
-        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "ICTS PRINTING SYSTEM", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
-        ((JComponent) container).setBorder(titledBorder);
+       
     }
 
 

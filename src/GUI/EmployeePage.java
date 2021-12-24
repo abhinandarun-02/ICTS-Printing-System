@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import java.awt.*;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +21,7 @@ import java.sql.ResultSet;
 class EmployeePage extends JFrame implements ActionListener {
 
 	Employee employee = new Employee();
+	Container container;
 
 	String username;
 	JLabel status;
@@ -47,7 +49,13 @@ class EmployeePage extends JFrame implements ActionListener {
 
 	EmployeePage(String username) {
 
+		setContentPane(new JLabel(new ImageIcon("assets/images/bg.jpg")));
+		ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
+        setIconImage(image.getImage());
+        setTitle("ICTS PRINTING SYSTEM");
+
 		this.username = username;
+		container = getContentPane();
 		status = new JLabel("CHECK STATUS");
 		id1 = new JLabel("REQUEST ID");
 		statusTextField = new JTextField();
@@ -73,11 +81,9 @@ class EmployeePage extends JFrame implements ActionListener {
 
 		loadHistoryTable();
 
-		getContentPane().setLayout(null);
+		container.setLayout(null);
 
-        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
-        setIconImage(image.getImage());
-        setTitle("ICTS PRINTING SYSTEM");
+        
 		setBounds(270, 75, 1015, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -111,24 +117,24 @@ class EmployeePage extends JFrame implements ActionListener {
 		amount.setFont(new Font("Calibri", Font.PLAIN, 16));
 
 		// Adding each component to the Container
-		getContentPane().add(sp);
+		container.add(sp);
 
-		getContentPane().add(status);
-		getContentPane().add(id1);
-		getContentPane().add(statusTextField);
-		getContentPane().add(submit1);
+		container.add(status);
+		container.add(id1);
+		container.add(statusTextField);
+		container.add(submit1);
 
-		getContentPane().add(req);
-		getContentPane().add(id2);
-		getContentPane().add(reqTextField);
-		getContentPane().add(submit2);
+		container.add(req);
+		container.add(id2);
+		container.add(reqTextField);
+		container.add(submit2);
 
-		getContentPane().add(bill);
-		getContentPane().add(credits);
-		getContentPane().add(amount);
-		getContentPane().add(amountField);
-		getContentPane().add(creditsField);
-		getContentPane().add(submit3);
+		container.add(bill);
+		container.add(credits);
+		container.add(amount);
+		container.add(amountField);
+		container.add(creditsField);
+		container.add(submit3);
 		submit3.addActionListener(this);
 		submit2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
