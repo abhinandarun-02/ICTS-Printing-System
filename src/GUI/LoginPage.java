@@ -43,7 +43,7 @@ class LoginPage extends JFrame implements ActionListener {
         setIconImage(image.getImage());
         setTitle("ICTS PRINTING SYSTEM");
         setContentPane(new JLabel(new ImageIcon("assets/images/background.jpg")));
-        picLabel = new JLabel(new ImageIcon("assets/images/Icon.png"));
+        //picLabel = new JLabel(new ImageIcon("assets/images/Icon.png"));
         
         userTextField = new JTextField();
         userTextField.setFont(new Font("Arial ", Font.PLAIN, 15));
@@ -85,7 +85,7 @@ class LoginPage extends JFrame implements ActionListener {
 
     public void setLocationAndSize() {
         //Setting location and Size of each component using setBounds() method.
-        picLabel.setBounds(200, 100, 50, 50);
+        //picLabel.setBounds(200, 100, 50, 50);
         userLabel.setBounds(150, 150, 100, 30);
         passwordLabel.setBounds(150, 220, 100, 30);
         userTextField.setBounds(250, 150, 150, 30);
@@ -98,7 +98,7 @@ class LoginPage extends JFrame implements ActionListener {
 
     public void addComponentsToContainer() {
         //Adding each component to the Container
-        container.add(picLabel);
+       // container.add(picLabel);
         container.add(userLabel);
         container.add(passwordLabel);
         container.add(userTextField);

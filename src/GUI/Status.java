@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import java.awt.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,8 +20,7 @@ import main.User;
 
 class Status extends JFrame implements ActionListener {
 
-    JPanel panel = (JPanel) getContentPane();
-
+    Container container;
     JLabel id;
     JTextField idTextField;
     JButton submit;
@@ -35,37 +35,41 @@ class Status extends JFrame implements ActionListener {
 
         user = new User();
 
-        JFrame frame = new JFrame();
+        setContentPane(new JLabel(new ImageIcon("assets/images/background.jpg")));
+        ImageIcon image = new ImageIcon("assets/images/Logo.jpg");
+        setIconImage(image.getImage());
+        setTitle("ICTS PRINTING SYSTEM");
+
+        container = getContentPane();
         id = new JLabel("Request ID");
         idTextField = new JTextField();
         submit = new JButton("SUBMIT");
         status = new JLabel("Status of Print:  ");
+        id.setFont(new Font("Arial ", Font.BOLD, 15));
+        status.setFont(new Font("Arial ", Font.BOLD, 15));
         statusTextField = new JTextField();
 
         submit.addActionListener(this);
 
-        //Calling methods inside constructor.
+        // Calling methods inside constructor.
         setLayoutManager();
         setLocationAndSize();
         setFont();
         addComponentsToContainer();
-        ImageIcon image  = new ImageIcon("assets/images/Logo.jpg");
-        setIconImage(image.getImage());
 
-        setTitle("ICTS PRINTING SYSTEM");
         setBounds(450, 75, 600, 450);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
         setResizable(false);
-        
+
     }
-    
+
     public void setLayoutManager() {
-        panel.setLayout(null);
+        container.setLayout(null);
     }
 
     public void setLocationAndSize() {
-        //Setting location and Size of each component using setBounds() method.
+        // Setting location and Size of each component using setBounds() method.
 
         id.setBounds(150, 100, 100, 30);
         idTextField.setBounds(300, 100, 100, 20);
@@ -82,20 +86,23 @@ class Status extends JFrame implements ActionListener {
     }
 
     public void addComponentsToContainer() {
-        //Adding each component to the Container
+        // Adding each component to the Container
 
-        panel.add(id);
-        panel.add(idTextField);
-        panel.add(submit);
+        container.add(id);
+        container.add(idTextField);
+        container.add(submit);
 
-        panel.add(status);
-        panel.add(statusTextField);
+        container.add(status);
+        container.add(statusTextField);
 
-
-        TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray, 3), "CHECK STATUS", TitledBorder.CENTER, TitledBorder.CENTER, new Font("Serif", Font.PLAIN, 18));
-        panel.setBorder(titledBorder);
+        /*
+         * TitledBorder titledBorder =
+         * BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray,
+         * 3), "CHECK STATUS", TitledBorder.CENTER, TitledBorder.CENTER, new
+         * Font("Serif", Font.PLAIN, 18));
+         * container.setBorder(titledBorder);
+         */
     }
-
 
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("SUBMIT")) {
@@ -109,5 +116,3 @@ class Status extends JFrame implements ActionListener {
         new Status();
     }
 }
-
-
