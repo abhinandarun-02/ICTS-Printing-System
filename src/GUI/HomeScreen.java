@@ -194,7 +194,7 @@ public class HomeScreen extends JFrame implements ActionListener {
         grayscaleRButton.setActionCommand("Grayscale");
         colourRButton = new JRadioButton("Colour");
         colourRButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        colourLabel.setOpaque(false);
+        colourRButton.setOpaque(false);
         colourRButton.setActionCommand("Colour");
         buttonGroup4.add(grayscaleRButton);
         buttonGroup4.add(colourRButton);
