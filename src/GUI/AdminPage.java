@@ -82,6 +82,8 @@ public class AdminPage extends JFrame implements ActionListener {
 
     DefaultTableModel deliveryModel;
     JTable deliveryQueueTable;
+    JTable printerQueue;
+
 
 
     JComboBox<String> staffTypeCB;
@@ -451,14 +453,16 @@ public class AdminPage extends JFrame implements ActionListener {
         printerQueueLabel = new JLabel("QUEUE");
         printerQueueLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         AddButton = new JButton("ADD");
+        AddButton.addActionListener(this);
         AddButton.setFont(new Font("Arial", Font.PLAIN, 20));
         DeleteButton = new JButton("DELETE");
+        DeleteButton.addActionListener(this);
         DeleteButton.setFont(new Font("Arial", Font.PLAIN, 20));
 
         queueModel = new DefaultTableModel();
         String[] columns = {"Print ID", "User ID", "Paper size", "Colour Type", "Single/Double side", "No. of pages", "No of Copies", "Status"};
         for (String value : columns) queueModel.addColumn(value);
-        JTable printerQueue = new JTable(queueModel);
+        printerQueue = new JTable(queueModel);
 
         loadPrintTable();
 
@@ -742,6 +746,30 @@ public class AdminPage extends JFrame implements ActionListener {
                 admin.addUser(name, mail, phone, user_type, username, pass);
             } catch (Exception ex) {
                 ex.printStackTrace();
+            }
+        }
+
+        if (e.getActionCommand().equals("ADD")) {
+            try {
+                String print_id = queueModel.getValueAt(printerQueue.getSelectedRow(), 0).toString();
+
+                admin.updatePrinterStatus(print_id, "Print Completed");
+
+                queueModel.removeRow(printerQueue.getSelectedRow());
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(null, "Please Select a Row", "TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        if (e.getActionCommand().equals("DELETE")) {
+            try {
+                String print_id = deliveryModel.getValueAt(printerQueue.getSelectedRow(), 0).toString();
+
+                admin.updatePrinterStatus(print_id, "Deleted");
+
+                queueModel.removeRow(printerQueue.getSelectedRow());
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(null, "Please Select a Row", "TRY AGAIN", JOptionPane.ERROR_MESSAGE);
             }
         }
 
