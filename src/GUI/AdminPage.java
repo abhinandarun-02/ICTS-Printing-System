@@ -720,12 +720,12 @@ public class AdminPage extends JFrame implements ActionListener {
             String name = staffNameText.getText();
             String mail = emailText.getText();
             String phone = staffPhNoText.getText();
-            String value = staffTypeCB.getItemAt(staffTypeCB.getSelectedIndex()).toString();
+            String user_type = staffTypeCB.getItemAt(staffTypeCB.getSelectedIndex()).toString();
             String username = staffDateText.getText();
             String pass = staffPassText.getText();
 
             try {
-                admin.addUser(name, mail, phone, username, pass);
+                admin.addUser(name, mail, phone, user_type, username, pass);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

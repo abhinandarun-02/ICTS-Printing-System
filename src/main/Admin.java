@@ -45,7 +45,7 @@ public class Admin extends Staff {
     }
 
 
-    public void addUser(String name, String email, String no, String username, String pass) {
+    public void addUser(String name, String email, String PhoneNo, String user_type, String username, String pass) {
 
 
         try {
@@ -56,12 +56,12 @@ public class Admin extends Staff {
 
             Random random = new Random();
             int id = random.nextInt(1000);
+            
             String s_id;
-            if (username.substring(0, 3) == "CLK") s_id = "CLK" + id;
+            if (user_type.equals("CLERK")) s_id = "CLK" + id;
             else s_id = "DEL" + id;
 
-            String user_type;
-            if (username.substring(0, 3) == "CLK") user_type = "Clerk";
+            if (user_type.equals("CLERK")) user_type = "Clerk";
             else user_type = "Delivery";
 
             PreparedStatement ps1 = connection.prepareStatement("insert into login values(?,?);");
@@ -72,7 +72,7 @@ public class Admin extends Staff {
             PreparedStatement ps2 = connection.prepareStatement("INSERT INTO staff values(?, ?, ?, ?, ?, ?, ?);");
             ps2.setString(1, s_id);
             ps2.setString(2, name);
-            ps2.setInt(3, Integer.parseInt(no));
+            ps2.setInt(3, Integer.parseInt(PhoneNo));
             ps2.setString(4, user_type);
             ps2.setString(5, email);
             ps2.setDate(6, sqlDate);
