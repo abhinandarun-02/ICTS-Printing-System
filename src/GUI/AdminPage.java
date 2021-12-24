@@ -550,7 +550,7 @@ public class AdminPage extends JFrame implements ActionListener {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		recentTable.setDefaultRenderer(String.class, centerRenderer);
-        String[] recent_cols = new String[]{"User ID", "Name", "Amount/Credit", "Date", "Clerk"};
+        String[] recent_cols = new String[]{"Print ID", "Name", "Amount/Credit", "Date", "Clerk"};
         this.loadRecentTable();
         for(String recent_col:recent_cols) recentModel.addColumn(recent_col);
         for (int x = 0; x < recentTable.getColumnCount(); x++) {
