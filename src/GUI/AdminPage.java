@@ -66,6 +66,9 @@ public class AdminPage extends JFrame implements ActionListener {
     JTextField staffDateText;
     JTextField staffPassText;
 
+    JTextField print_idText;
+
+
     JTabbedPane homeTabbedPane;
     JPanel homeTab;
     JPanel searchTab;
@@ -76,6 +79,9 @@ public class AdminPage extends JFrame implements ActionListener {
     DefaultTableModel queueModel;
 
     TitledBorder printerQueueBorder;
+
+    DefaultTableModel deliveryModel;
+    JTable deliveryQueueTable;
 
 
     JComboBox<String> staffTypeCB;
@@ -580,10 +586,17 @@ public class AdminPage extends JFrame implements ActionListener {
         deliveryTab = new JPanel();
 
         homeTabbedPane.addTab("DELIVERY", null, deliveryTab, null);
-        DefaultTableModel deliveryModel = new DefaultTableModel();
-        String [] delivery_cols = {"Print ID", "User ID", "Name", "Room no", "Phone no", "Status"};
+        deliveryModel = new DefaultTableModel();
+        String [] delivery_cols = {"Print ID", "User ID", "Name", "Room no", "Phone no", "Status", "Total Cost"};
         for (String delivery_col: delivery_cols) deliveryModel.addColumn(delivery_col);
-        JTable deliveryQueueTable = new JTable(deliveryModel);
+        deliveryQueueTable = new JTable(deliveryModel);
+        deliveryQueueTable.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+                print_idText.setText(deliveryModel.getValueAt(deliveryQueueTable.getSelectedRow(), 0).toString());
+        	}
+        });
+
+        loadDeliveryTable();
 
         deliveryQueueTable.setFillsViewportHeight(true);
         JScrollPane scrollPaneDelQueue = new JScrollPane(deliveryQueueTable);
@@ -596,10 +609,11 @@ public class AdminPage extends JFrame implements ActionListener {
         JLabel print_idLabel = new JLabel("Print ID :");
         print_idLabel.setBounds(222, 493, 84, 50);
         print_idLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        JTextField print_idText = new JTextField();
+        print_idText = new JTextField();
         print_idText.setFont(new Font("Arial", Font.PLAIN, 16));
         print_idText.setBounds(316, 503, 110, 30);
         JButton updateStatusButton = new JButton("UPDATE");
+        updateStatusButton.addActionListener(this);
         updateStatusButton.setBounds(422, 578, 95, 36);
         updateStatusButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         deliveryTab.setLayout(null);
@@ -731,6 +745,15 @@ public class AdminPage extends JFrame implements ActionListener {
             }
         }
 
+        if (e.getActionCommand().equals("UPDATE")) {
+            try {
+                String print_id = deliveryModel.getValueAt(deliveryQueueTable.getSelectedRow(), 0).toString();
+                admin.updateDeliveryStatus(print_id, "Delivered");
+                deliveryModel.removeRow(deliveryQueueTable.getSelectedRow());
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(null, "Please Select a Row", "TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     public void loadPrintTable() {
@@ -740,6 +763,19 @@ public class AdminPage extends JFrame implements ActionListener {
         try {
             while (rs.next()) {
                 queueModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8)});
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadDeliveryTable() {
+        int i = 0;
+        ResultSet rs = admin.getDeliveryTable();
+        try {
+            while (rs.next()) {
+                deliveryModel.insertRow(i, new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBigDecimal(5), rs.getString(6), rs.getString(7)});
                 i++;
             }
         } catch (Exception e) {
