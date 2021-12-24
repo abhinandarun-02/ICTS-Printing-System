@@ -23,9 +23,6 @@ public class DeliveryPerson extends User {
 			Statement st = connection.createStatement();
 			String query = "SELECT l.print_id,l.clerk_id, l.employee_id,e.employee_name,e.room_no, e.dept_name, e.phone_no, l.total_cost FROM log_details l, employee e WHERE e.employee_id=l.employee_id;";
 			rs = st.executeQuery(query);
-			while (rs.next()) {
-				rs.getString(i++);
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
