@@ -132,7 +132,7 @@ public class Admin extends Staff {
     public ResultSet getRecentOrders() {
         Connection connection = getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT p.print_id, e.employee_name,l.total_cost, p.date,l.clerk_id  FROM print_details p, log_details l, employee e where e.employee_id=l.employee_id AND l.employee_id=p.employee_id AND p.employee_id=e.employee_id;");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT p.print_id, e.employee_name,p.total_cost, p.date,l.clerk_id  FROM print_details p, log_details l, employee e where e.employee_id=l.employee_id AND l.employee_id=p.employee_id AND p.employee_id=e.employee_id;");
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet;
 

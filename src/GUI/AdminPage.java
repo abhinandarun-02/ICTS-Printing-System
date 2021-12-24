@@ -551,11 +551,11 @@ public class AdminPage extends JFrame implements ActionListener {
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		recentTable.setDefaultRenderer(String.class, centerRenderer);
         String[] recent_cols = new String[]{"Print ID", "Name", "Amount/Credit", "Date", "Clerk"};
-        this.loadRecentTable();
         for(String recent_col:recent_cols) recentModel.addColumn(recent_col);
         for (int x = 0; x < recentTable.getColumnCount(); x++) {
 			recentTable.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
 		}
+        this.loadRecentTable();
         JScrollPane sp = new JScrollPane(recentTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         homeTab.add(sp);
 
