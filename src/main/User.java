@@ -108,14 +108,11 @@ public class User implements Login {
     public Connection getConnection() {
 
         String url = "jdbc:postgresql://localhost:5432/printing-system";
-        String username = "root";
-        String password = "root";
-
         Connection connection = null;
 
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(url, "root", "root");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

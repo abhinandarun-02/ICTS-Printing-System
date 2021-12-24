@@ -71,6 +71,7 @@ public class ClerksPage extends JFrame implements ActionListener {
 
 
     Clerk clerk;
+    Printer resources;
     String username;
 
 
@@ -337,6 +338,9 @@ public class ClerksPage extends JFrame implements ActionListener {
         resourcesPanel.setBounds(440, 275, 350, 300);
         ClerkPanel2.add(resourcesPanel);
         resourcesPanel.setLayout(null);
+        Printer resources = new Printer();
+        int[] result = new int[5];
+        result = resources.getResources();
 
         a3Label = new JLabel("A3 Paper");
         a3Label.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -363,40 +367,45 @@ public class ClerksPage extends JFrame implements ActionListener {
         colourLabel.setBounds(55, 210, 120, 30);
         resourcesPanel.add(colourLabel);
 
-        a3resLabel = new JTextField("2400");
+        a3resLabel = new JTextField();
+        a3resLabel.setText(String.valueOf(result[0]));
         a3resLabel.setEditable(false);
         a3resLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         a3resLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         a3resLabel.setBounds(210, 50, 80, 30);
         resourcesPanel.add(a3resLabel);
+        
+        a4resLabel = new JTextField();
+        a4resLabel.setText(String.valueOf(result[1]));
+        a4resLabel.setEditable(false);
+        a4resLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+        a4resLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        a4resLabel.setBounds(210, 90, 80, 30);
+        resourcesPanel.add(a4resLabel);
 
-        a5resLabel = new JTextField("1700");
+        a5resLabel = new JTextField();
+        a5resLabel.setText(String.valueOf(result[2]));
         a5resLabel.setEditable(false);
         a5resLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         a5resLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         a5resLabel.setBounds(210, 130, 80, 30);
         resourcesPanel.add(a5resLabel);
 
-        blackresLabel = new JTextField("90");
+        blackresLabel = new JTextField();
+        blackresLabel.setText(String.valueOf(result[3]));
         blackresLabel.setEditable(false);
         blackresLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         blackresLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         blackresLabel.setBounds(210, 170, 80, 30);
         resourcesPanel.add(blackresLabel);
 
-        colourresLabel = new JTextField("120");
+        colourresLabel = new JTextField();
+        colourresLabel.setText(String.valueOf(result[4]));
         colourresLabel.setEditable(false);
         colourresLabel.setHorizontalAlignment(SwingConstants.TRAILING);
         colourresLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         colourresLabel.setBounds(210, 210, 80, 30);
         resourcesPanel.add(colourresLabel);
-
-        a4resLabel = new JTextField("3200");
-        a4resLabel.setEditable(false);
-        a4resLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-        a4resLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        a4resLabel.setBounds(210, 90, 80, 30);
-        resourcesPanel.add(a4resLabel);
 
         notifyButton = new JButton("Notify Admin");
         notifyButton.addActionListener(this);
