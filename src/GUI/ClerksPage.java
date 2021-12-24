@@ -6,13 +6,10 @@ import main.Printer;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 
 public class ClerksPage extends JFrame implements ActionListener {
@@ -201,12 +198,15 @@ public class ClerksPage extends JFrame implements ActionListener {
         ClerkPanel2 = new JPanel();
         deliveryQueueLabel = new JLabel("DELIVERY QUEUE");
         deliveryQueueLabel.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 24));
-        AddButton2 = new JButton("Add record");
-        DeleteButton2 = new JButton("Delete record");
+
         PrevButton = new JButton("Previous Page");
         PrevButton.setFont(new Font("Arial", Font.BOLD, 14));
-
         PrevButton.addActionListener(e -> tabbedPane.setSelectedIndex(0));
+
+        AddButton2 = new JButton("Delivered");
+        DeleteButton2 = new JButton("Delete");
+        AddButton2.addActionListener(this);
+        DeleteButton2.addActionListener(this);
 
         deliveryModel = new DefaultTableModel();
         deliveryQueue = new JTable(deliveryModel);
@@ -604,6 +604,24 @@ public class ClerksPage extends JFrame implements ActionListener {
                 String print_id = queueModel.getValueAt(printerQueue.getSelectedRow(), 0).toString();
                 clerk.updatePrinterStatus(print_id, "Removed");
                 queueModel.removeRow(printerQueue.getSelectedRow());
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(null, "Please Select a Row", "TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        if (e.getActionCommand().equals("Delivered")) {
+            try {
+                String print_id = deliveryModel.getValueAt(deliveryQueue.getSelectedRow(), 0).toString();
+                clerk.updatePrinterStatus(print_id, "Delivered");
+                deliveryModel.removeRow(deliveryQueue.getSelectedRow());
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(null, "Please Select a Row", "TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        if (e.getActionCommand().equals("Delete")) {
+            try {
+                String print_id = deliveryModel.getValueAt(deliveryQueue.getSelectedRow(), 0).toString();
+                clerk.updatePrinterStatus(print_id, "Deleted");
+                deliveryModel.removeRow(deliveryQueue.getSelectedRow());
             } catch (ArrayIndexOutOfBoundsException ex) {
                 JOptionPane.showMessageDialog(null, "Please Select a Row", "TRY AGAIN", JOptionPane.ERROR_MESSAGE);
             }
